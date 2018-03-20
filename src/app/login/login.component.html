@@ -1,0 +1,17 @@
+<div class="logo">
+  <h1>MyChatApp</h1>
+</div>
+<div *ngIf="!(authService.user | async)">
+
+  <form action="" [formGroup]="newUserForm" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
+    <input *ngIf="!!(newUserForm.controls.hasOwnProperty('newLogin'))" type="text" formControlName="newLogin" placeholder="login" required>
+    <input type="text" formControlName="email" placeholder="email" required>
+    <input type="password" formControlName="password" placeholder="password" required>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <button *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" (click)="signup()">Signup</button>
+
+</div>
+<button class="logout" (click)="authService.logout()" *ngIf="authService.user | async">Logout</button>

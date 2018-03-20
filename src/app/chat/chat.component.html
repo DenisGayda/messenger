@@ -1,0 +1,26 @@
+<div class="chat">
+  <div class="chat-block">
+    <div class="messages-block">
+      <div *ngFor="let message of messages" class="mes-block">
+        <h5 [class.user-mi]="message.user === mi">
+          <span *ngIf="message.type === 'text'">{{ message.text }}</span>
+          <img *ngIf="message.type === 'img'" [src]="message.text">
+
+          <span class="date-span">{{ checkDate(message.date)}}</span>
+        </h5>
+      </div>
+    </div>
+  </div>
+
+    <div>
+      <input (keyup.enter)="addNewContent()" type="text" [(ngModel)]="newContent" placeholder="New message">
+
+      <input type="file" (change)="addFile($event)">
+
+      <button (click)="addNewContent()">
+        Send message
+      </button>
+    </div>
+
+  <span></span>
+  </div>

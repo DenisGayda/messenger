@@ -1,0 +1,44 @@
+.chat-block{
+  height: 500px;
+  width: 100%;
+  background-color: #5d6777;
+}
+.messages-block{
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
+  background-color: #4e535b;
+  padding: 20px;
+  overflow-y: scroll;
+}
+h5 {
+  padding: 20px;
+  background-color: #939aa5;
+  border-radius: 20px;
+  font-weight: bold;
+  max-width: 70%;
+}
+.user-mi{
+  background-color: skyblue;
+  text-align: right;
+  float: right;
+}
+.user-login{
+  font-size: 12px;
+}
+.mes-block {
+  width: 100%;
+  clear: both;
+}
+button{
+  float: right;
+  width: 150px;
+  height: 100px;
+  padding: 0;
+}
+.date-span{
+  font-size: 12px;
+}
+img{
+  max-width: 300px;
+}

@@ -1,0 +1,12 @@
+.user-btns{
+  width: 350px;
+  display: inline-block;
+}
+.user-btns > div {
+  margin: 10px;
+}
+.chats{
+  position: absolute;
+  width: 50%;
+  display: inline-block;
+}
