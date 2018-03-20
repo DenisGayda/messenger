@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {MyUser} from '../../interfaces/all-interfaces';
+import {MyUser} from '../../interfaces/IMyUser';
 
 
 @Injectable()

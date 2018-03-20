@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {MyUser} from '../../interfaces/all-interfaces';
+import {MyUser} from '../../interfaces/IMyUser';
 import {AngularFireDatabase} from 'angularfire2/database';
 
 

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {DbService} from '../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
-import {Mes, MyUser} from '../interfaces/all-interfaces';
 import {StoreService} from '../services/store/store.service';
 import {Title} from '@angular/platform-browser';
 import {FirebaseApp} from 'angularfire2';
 import 'firebase/storage';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
-
+import {IMes} from '../interfaces/IMes';
+import {IMyUser} from '../interfaces/IMyUser';
 
 @Component({
   selector: 'app-chat',
@@ -15,7 +15,7 @@ import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} 
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  messages: Mes[] = [];
+  messages: IMes[] = [];
   newContent = '';
   usersInChat: string;
 
@@ -37,13 +37,10 @@ export class ChatComponent implements OnInit {
     });
   }
 
-
-
-
   initChat(): void {
-    this.storeService.user.subscribe((user: MyUser) => {
+    this.storeService.user.subscribe((user: IMyUser) => {
       this.mi = user.login;
-      this.db.selectDB<Mes>('/chats/' + this.usersInChat + '/messages/', ref => {
+      this.db.selectDB<IMes>('/chats/' + this.usersInChat + '/messages/', ref => {
         return ref.orderByChild('date');
       }).subscribe(messages => this.messages = messages);
       return;
@@ -56,7 +53,7 @@ export class ChatComponent implements OnInit {
   }
 
   addNewContent(): void {
-    this.storeService.user.subscribe((user: MyUser) => {
+    this.storeService.user.subscribe((user: IMyUser) => {
       this.db.insertDB('/chats/' + this.usersInChat + '/messages/', {
         text: this.newContent,
         date: Date.now(),
@@ -76,7 +73,7 @@ export class ChatComponent implements OnInit {
     this.task = this.ref.put(file);
     this.task.downloadURL().subscribe(response => {
 
-      this.storeService.user.subscribe((user: MyUser) => {
+      this.storeService.user.subscribe((user: IMyUser) => {
         this.db.insertDB('/chats/' + this.usersInChat + '/messages/', {
           text: response,
           date: Date.now(),

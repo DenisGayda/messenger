@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
 import {DbService} from '../db/db.service';
-import {MyUser} from '../../interfaces/all-interfaces';
+import {MyUser} from '../../interfaces/IMyUser';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
