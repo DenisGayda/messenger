@@ -71,7 +71,7 @@ describe('component: RoutingComponent', () => {
 
     fixture.detectChanges();
     router.navigate(['/home']).then(() => {
-      expect(ChatComponent.checkDate);
+      expect(component.checkDate);
     });
   }));
 
