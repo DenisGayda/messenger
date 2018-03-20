@@ -2,9 +2,11 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {StoreService} from '../services/store/store.service';
 import {DbService} from '../services/db/db.service';
 import {Router} from '@angular/router';
-import {DictionaryInterface, Mes, MyUser} from '../interfaces/all-interfaces';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
+import {IMyUser} from '../interfaces/IMyUser';
+import {IDictionary} from '../interfaces/IDictionary';
+import {IMessage} from '../interfaces/IMessage';
 
 @Component({
   selector: 'app-users',
@@ -14,9 +16,9 @@ import {FormControl} from '@angular/forms';
 @Injectable()
 export class UsersComponent implements OnInit {
 
-  users: MyUser[] = [];
-  usersStart: MyUser[] = [];
-  currentUser: MyUser;
+  users: IMyUser[] = [];
+  usersStart: IMyUser[] = [];
+  currentUser: IMyUser;
   find = new FormControl();
 
   constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {
@@ -24,17 +26,17 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.db.selectDB<MyUser>('users').subscribe(users => {
+    this.db.selectDB<IMyUser>('users').subscribe(users => {
         this.usersStart = users;
         this.users = users;
       }
     );
-    this.storeService.user.subscribe((user: MyUser) => {
+    this.storeService.user.subscribe((user: IMyUser) => {
       this.currentUser = user;
     });
 
     this.find.valueChanges.subscribe(find => {
-      this.users = this.usersStart.filter(({login}: MyUser) => login.toUpperCase().includes(find.toUpperCase()));
+      this.users = this.usersStart.filter(({login}: IMyUser) => login.toUpperCase().includes(find.toUpperCase()));
     });
   }
 
@@ -48,7 +50,7 @@ export class UsersComponent implements OnInit {
 
   enterInRealChat(check: string): void {
     this.db.selectDB('chats/' + check, ref => ref)
-      .map((items: (string | DictionaryInterface<Mes>)[]) => items.find(el => typeof el === 'string'))
+      .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
       .subscribe(id => this.router.navigate(['/users/chat/', id]));
   }
 

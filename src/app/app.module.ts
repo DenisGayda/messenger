@@ -1,16 +1,16 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AngularFireModule} from 'angularfire2';
+import { UsersModule } from './users/users.module';
 
 import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
-import {UsersComponent} from './users/users.component';
-import {ChatComponent} from './chat/chat.component';
-import {LoginComponent} from './login/login.component';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {ReactiveFormsModule} from '@angular/forms';
+import {LoginModule} from './login/login.module';
+import {ChatModule} from './chat/chat.module';
 
 import {AuthService} from './services/auth/auth.service';
 import {StoreService} from './services/store/store.service';
@@ -30,10 +30,7 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    UsersComponent,
-    ChatComponent,
-    LoginComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +41,10 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     ReactiveFormsModule,
-    MyRoutesModule
+    MyRoutesModule,
+    UsersModule,
+    LoginModule,
+    ChatModule
   ],
   providers: [AuthService, StoreService, DbService],
   bootstrap: [AppComponent],

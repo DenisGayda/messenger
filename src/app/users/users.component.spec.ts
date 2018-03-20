@@ -48,17 +48,13 @@ describe('UsersComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Method "start" test', () => {
-    expect(component.start({target: {value: ''}}));
-  });
-
   it('Method "checkChat" test', () => {
     component.currentUser = {
       id: '',
       login: '',
       mail: '',
       password: '',
-      chats: { '0' : undefined}
+      chats: {}
     };
     expect(component.checkChat('0'));
   });
@@ -73,7 +69,7 @@ describe('UsersComponent', () => {
       login: '',
       mail: '',
       password: '',
-      chats: { '0' : undefined}
+      chats: {}
     };
     expect(component.createChat('0'));
   });
@@ -84,13 +80,9 @@ describe('UsersComponent', () => {
       login: '',
       mail: '',
       password: '',
-      chats: ''
+      chats: {}
     };
     expect(component.addChatToClient('someId1', 'someId2', 'someKey'));
   });
-
-  /*it('Проверка подключения к чату', () => {
-    expect(component.enterInRealChat('some text')).toBe(true);
-  });*/
 
 });

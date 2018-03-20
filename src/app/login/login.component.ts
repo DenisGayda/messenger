@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../services/auth/auth.service';
-import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
-import {Login} from '../interfaces/all-interfaces';
+import {ILogin} from './ILogin';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit({newLogin, email, password}: Login): void {
+  onSubmit({newLogin, email, password}: ILogin): void {
     if (newLogin) {
       this.authService.signup(email, password, newLogin);
       return;
