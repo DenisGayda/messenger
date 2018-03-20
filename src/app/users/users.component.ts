@@ -11,7 +11,7 @@ import {IMessage} from '../interfaces/IMessage';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.less']
 })
 @Injectable()
 export class UsersComponent implements OnInit {

@@ -10,6 +10,7 @@ export class StoreServiceMock {
     console.log('Test Set User');
   }
 
+
   get user(): Observable<IMyUser> {
     return Observable.of({
       id: '0',
