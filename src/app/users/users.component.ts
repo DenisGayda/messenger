@@ -6,7 +6,7 @@ import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
 import {IMyUser} from '../interfaces/IMyUser';
 import {IDictionary} from '../interfaces/IDictionary';
-import {IMes} from '../interfaces/IMes';
+import {IMessage} from '../interfaces/IMessage';
 
 @Component({
   selector: 'app-users',
@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
 
   enterInRealChat(check: string): void {
     this.db.selectDB('chats/' + check, ref => ref)
-      .map((items: (string | IDictionary<IMes>)[]) => items.find(el => typeof el === 'string'))
+      .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
       .subscribe(id => this.router.navigate(['/users/chat/', id]));
   }
 

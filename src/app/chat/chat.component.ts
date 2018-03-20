@@ -6,7 +6,7 @@ import {Title} from '@angular/platform-browser';
 import {FirebaseApp} from 'angularfire2';
 import 'firebase/storage';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
-import {IMes} from '../interfaces/IMes';
+import {IMessage} from '../interfaces/IMessage';
 import {IMyUser} from '../interfaces/IMyUser';
 
 @Component({
@@ -15,7 +15,7 @@ import {IMyUser} from '../interfaces/IMyUser';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  messages: IMes[] = [];
+  messages: IMessage[] = [];
   newContent = '';
   usersInChat: string;
 
@@ -40,7 +40,7 @@ export class ChatComponent implements OnInit {
   initChat(): void {
     this.storeService.user.subscribe((user: IMyUser) => {
       this.mi = user.login;
-      this.db.selectDB<IMes>('/chats/' + this.usersInChat + '/messages/', ref => {
+      this.db.selectDB<IMessage>('/chats/' + this.usersInChat + '/messages/', ref => {
         return ref.orderByChild('date');
       }).subscribe(messages => this.messages = messages);
       return;
