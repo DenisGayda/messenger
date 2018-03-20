@@ -6,7 +6,7 @@ import {MyUser} from '../../interfaces/all-interfaces';
 @Injectable()
 export class StoreServiceMock {
 
-  static setUser(user: MyUser): void {
+  public setUser(user: MyUser): void {
     console.log('Test Set User');
   }
 
