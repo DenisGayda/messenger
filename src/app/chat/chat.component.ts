@@ -12,7 +12,7 @@ import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.less']
 })
 export class ChatComponent implements OnInit {
   messages: Mes[] = [];
