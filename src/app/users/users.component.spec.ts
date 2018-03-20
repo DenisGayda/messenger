@@ -85,8 +85,4 @@ describe('UsersComponent', () => {
     expect(component.addChatToClient('someId1', 'someId2', 'someKey'));
   });
 
-  /*it('Проверка подключения к чату', () => {
-    expect(component.enterInRealChat('some text')).toBe(true);
-  });*/
-
 });
