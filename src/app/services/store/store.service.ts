@@ -13,7 +13,7 @@ export class StoreService {
 
   _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
 
-  setUser(user: IMyUser): void {
+  public setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
   }
 

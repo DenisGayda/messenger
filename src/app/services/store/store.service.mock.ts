@@ -6,7 +6,7 @@ import {MyUser} from '../../interfaces/IMyUser';
 @Injectable()
 export class StoreServiceMock {
 
-  setUser(user: MyUser): void {
+  public setUser(user: MyUser): void {
     console.log('Test Set User');
   }
 
@@ -16,7 +16,7 @@ export class StoreServiceMock {
       login: 'Test',
       mail: 'test@gmail.com',
       password: 'testtest',
-      chats: '',
+      chats: {},
     });
   }
 }
