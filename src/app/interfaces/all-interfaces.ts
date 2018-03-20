@@ -3,7 +3,7 @@ export interface MyUser {
   login: string;
   mail: string;
   password: string;
-  chats: any;
+  chats: DictionaryInterface<string>;
 }
 
 export interface Mes {
@@ -19,9 +19,9 @@ export interface Chat {
 }
 
 export interface Login {
-  newLogin?: any;
-  email: any;
-  password: any;
+  newLogin?: string;
+  email: string;
+  password: string;
 }
 
 export interface DictionaryInterface<T> {
