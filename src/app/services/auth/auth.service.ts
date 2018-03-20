@@ -6,10 +6,10 @@ import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
 import {DbService} from '../db/db.service';
-import {MyUser} from '../../interfaces/IMyUser';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
+import {IMyUser} from '../../interfaces/IMyUser';
 
 @Injectable()
 export class AuthService {
@@ -64,7 +64,7 @@ export class AuthService {
       .then(value => {
         this.logined = new BehaviorSubject<boolean>(true);
         this.myDb.selectDB('users', ref =>
-          ref.orderByChild('mail').equalTo(value.email)).subscribe((users: MyUser[]) => {
+          ref.orderByChild('mail').equalTo(value.email)).subscribe((users: IMyUser[]) => {
           this.storeService.setUser(users[0]);
         });
         this.router.navigateByUrl('/users');
