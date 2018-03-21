@@ -52,13 +52,13 @@ export class ChatComponent implements OnInit {
     return (new Date(mesDate).getHours() + ':' + new Date(mesDate).getMinutes());
   }
 
-  addNewContent(): void {
+  addNewContent(type: string, text: string): void {
     this.storeService.user.subscribe((user: IMyUser) => {
       this.db.insertDB('/chats/' + this.usersInChat + '/messages/', {
-        text: this.newContent,
+        text: text ? text : this.newContent,
         date: Date.now(),
         user: user.login,
-        type: 'text'
+        type: type
       }).then(() => {
         this.newContent = '';
       }).catch(err => {
@@ -72,15 +72,7 @@ export class ChatComponent implements OnInit {
     this.ref = this.afStor.ref(file.name);
     this.task = this.ref.put(file);
     this.task.downloadURL().subscribe(response => {
-
-      this.storeService.user.subscribe((user: IMyUser) => {
-        this.db.insertDB('/chats/' + this.usersInChat + '/messages/', {
-          text: response,
-          date: Date.now(),
-          user: user.login,
-          type: 'img'
-        });
-      });
+      this.addNewContent('img', response);
     });
   }
 }
