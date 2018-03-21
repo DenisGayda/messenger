@@ -29,7 +29,6 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
-        console.log('Success!', value);
         // Get a key for a new Post.
         const newPostKey = this.myDb.getNewId('users');
         const postData = {
@@ -53,14 +52,13 @@ export class AuthService {
         return this.db.database.ref().update(updates);
       })
       .catch(err => {
-        console.log('Something went wrong:', err.message);
       });
   }
 
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.logined = new BehaviorSubject<boolean>(true);
         this.myDb.selectDB('users', ref =>
@@ -70,7 +68,6 @@ export class AuthService {
         this.router.navigateByUrl('/users');
       })
       .catch(err => {
-        console.log('Something went wrong:', err.message);
       });
   }
 

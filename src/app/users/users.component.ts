@@ -72,7 +72,7 @@ export class UsersComponent implements OnInit {
 
   addChatToClient(id1: string, id2: string, key: string): void {
     const updates2 = {};
-    updates2['/users/' + id1 + '/chats/' + id2] = key;
+    updates2[`/users/${id1}/chats/${id2}`] = key;
     this.db.addNewChat(updates2);
   }
 

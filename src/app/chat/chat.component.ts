@@ -40,7 +40,7 @@ export class ChatComponent implements OnInit {
   initChat(): void {
     this.storeService.user.subscribe((user: IMyUser) => {
       this.mi = user.login;
-      this.db.selectDB<IMessage>('/chats/' + this.usersInChat + '/messages/', ref => {
+      this.db.selectDB<IMessage>(`/chats/${this.usersInChat}/messages/`, ref => {
         return ref.orderByChild('date');
       }).subscribe(messages => this.messages = messages);
       return;
@@ -48,13 +48,13 @@ export class ChatComponent implements OnInit {
 
   }
 
-  checkDate(mesDate: any): string {
-    return (new Date(mesDate).getHours() + ':' + new Date(mesDate).getMinutes());
+  checkDate(mesDate: Date): string {
+    return `${new Date(mesDate).getHours()}':'${new Date(mesDate).getMinutes()}`;
   }
 
   addNewContent(type: string, text: string): void {
     this.storeService.user.subscribe((user: IMyUser) => {
-      this.db.insertDB('/chats/' + this.usersInChat + '/messages/', {
+      this.db.insertDB(`/chats/${this.usersInChat}/messages/`, {
         text: text ? text : this.newContent,
         date: Date.now(),
         user: user.login,
@@ -62,12 +62,11 @@ export class ChatComponent implements OnInit {
       }).then(() => {
         this.newContent = '';
       }).catch(err => {
-        console.log('Something went wrong:', err.message);
       });
     });
   }
 
-  addFile(event) {
+  addFile(event): void {
     const file = event.target.files.item(0);
     this.ref = this.afStor.ref(file.name);
     this.task = this.ref.put(file);
