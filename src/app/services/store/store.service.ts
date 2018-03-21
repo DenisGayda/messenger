@@ -15,6 +15,7 @@ export class StoreService {
 
   setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
+    localStorage.setItem('userInMyApp', JSON.stringify(user));
   }
 
   get user(): Observable<IMyUser> {
