@@ -60,7 +60,7 @@ export class AuthService {
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.logined = new BehaviorSubject<boolean>(true);
         this.myDb.selectDB('users', ref =>
