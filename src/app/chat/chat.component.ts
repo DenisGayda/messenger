@@ -61,13 +61,12 @@ export class ChatComponent implements OnInit {
         type: type
       }).then(() => {
         this.newContent = '';
-      }).catch(err => {
-      });
+      }).catch(err => {});
     });
   }
 
-  addFile(event): void {
-    const file = event.target.files.item(0);
+  addFile(event: Event): void {
+    const file = event.target['files'].item(0);
     this.ref = this.afStor.ref(file.name);
     this.task = this.ref.put(file);
     this.task.downloadURL().subscribe(response => {
