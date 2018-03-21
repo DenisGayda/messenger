@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit {
   }
 
   addFile(event: Event): void {
-    const file = event.target['files'].item(0);
+    const file = (<HTMLInputElement>event.target).files.item(0);
     this.ref = this.afStor.ref(file.name);
     this.task = this.ref.put(file);
     this.task.downloadURL().subscribe(response => {
