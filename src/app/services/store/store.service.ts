@@ -14,7 +14,6 @@ export class StoreService {
   }
 
   setUser(user: IMyUser): void {
-    console.log('юзер', user);
     this._myUser.next({chats: {}, ...user});
     localStorage.setItem('userInMyApp', JSON.stringify(user));
   }
