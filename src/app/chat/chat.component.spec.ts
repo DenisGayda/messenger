@@ -24,7 +24,8 @@ class DummyComponent {
 }
 
 describe('component: RoutingComponent', () => {
-  let location, router;
+  let location;
+  let router;
   let component: ChatComponent;
 
   beforeEach(() => {
