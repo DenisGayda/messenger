@@ -4,7 +4,6 @@ import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {IMyUser} from '../../models/IMyUser';
 
-
 @Injectable()
 export class StoreService {
 
