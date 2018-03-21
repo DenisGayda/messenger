@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {IMyUser} from '../../interfaces/IMyUser';
-
+import {IMyUser} from '../../models/IMyUser';
 
 @Injectable()
 export class StoreServiceMock {
 
-  setUser(user: IMyUser): void {
-  }
-
+  setUser(user: IMyUser): void {}
 
   get user(): Observable<IMyUser> {
     return Observable.of({

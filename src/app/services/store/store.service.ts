@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AngularFireDatabase} from 'angularfire2/database';
-import {IMyUser} from '../../interfaces/IMyUser';
+import {IMyUser} from '../../models/IMyUser';
 
 
 @Injectable()

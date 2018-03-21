@@ -9,7 +9,7 @@ import {DbService} from '../db/db.service';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
-import {IMyUser} from '../../interfaces/IMyUser';
+import {IMyUser} from '../../models/IMyUser';
 
 @Injectable()
 export class AuthService {
