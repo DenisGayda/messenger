@@ -8,12 +8,12 @@ import {IMyUser} from '../../interfaces/IMyUser';
 @Injectable()
 export class StoreService {
 
+  _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
+
   constructor(public  db: AngularFireDatabase) {
   }
 
-  _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
-
-  public setUser(user: IMyUser): void {
+  setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
   }
 
