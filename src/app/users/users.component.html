@@ -3,7 +3,7 @@
 </div>
 <div class="user-btns">
   <div *ngFor="let user of users">
-    <button (click)="checkChat(user.id)">{{ user.login }}</button>
+    <button (click)="checkChat(user.id, el)" #el class="btn">{{ user.login }}</button>
   </div>
 </div>
 <div class="chats">

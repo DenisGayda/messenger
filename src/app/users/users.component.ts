@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   usersStart: IMyUser[] = [];
   currentUser: IMyUser;
   find = new FormControl();
-
+  tmpEl;
   constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {
   }
 
@@ -40,7 +40,8 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  checkChat(chat: string): void {
+  checkChat(chat: string, btn): void {
+    this.activeBtn(btn);
     if (this.currentUser.chats[chat] !== undefined) {
       this.enterInRealChat(this.currentUser.chats[chat]);
     } else {
@@ -76,4 +77,16 @@ export class UsersComponent implements OnInit {
     this.db.addNewChat(updates2);
   }
 
+  activeBtn(btn) {
+    if (!this.tmpEl){this.tmpEl = btn};
+    console.log(this.tmpEl.classList)
+    for (let clss of this.tmpEl.classList) {
+      if (clss === 'activeChat') {
+        this.tmpEl.classList.remove('activeChat');
+      }else{
+        btn.classList.add('activeChat');
+      }
+    }
+    this.tmpEl = btn;
+  }
 }
