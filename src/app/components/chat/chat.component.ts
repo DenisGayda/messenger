@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DbService} from '../../services/db/db.service';
-import {Component, OnInit} from '@angular/core';
-import {DbService} from '../../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
@@ -9,7 +7,7 @@ import {FirebaseApp} from 'angularfire2';
 import 'firebase/storage';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
 import {IMessage} from '../../models/IMessage';
-import {IMyUser} from '../../models//IMyUser';
+import {IMyUser} from '../../models/IMyUser';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Subscription} from 'rxjs/Subscription';
 
