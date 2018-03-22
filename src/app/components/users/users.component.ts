@@ -22,20 +22,17 @@ export class UsersComponent implements OnInit, OnDestroy {
   usersStart: IMyUser[];
   currentUser: IMyUser;
   find = new FormControl();
-
   private onDestroyStream$ = new Subject<boolean>();
-
-  constructor(public db: DbService,
+  constructor(public dbService: DbService,
               private storeService: StoreService,
               private router: Router,
               private titleService: Title) {
+
   }
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.db.selectDB<IMyUser>('users')
-      .takeUntil(this.onDestroyStream$)
-      .subscribe(users => {
+    this.dbService.selectDB<IMyUser>('users').subscribe(users => {
         this.usersStart = users;
         this.users = users;
       }
@@ -62,14 +59,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   enterInRealChat(check: string): void {
-    this.db.selectDB('chats/' + check, ref => ref)
+    this.dbService.selectDB('chats/' + check, ref => ref)
       .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
       .takeUntil(this.onDestroyStream$)
       .subscribe(id => this.router.navigate(['/users/chat/', id]));
   }
 
   createChat(chat: string): void {
-    const newPostKey = this.db.getNewId('chats');
+    const newPostKey = this.dbService.getNewId('chats');
     const postData = {
       idChat: newPostKey,
       messages: {}
@@ -78,7 +75,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.addChatToClient(this.currentUser.id, chat, newPostKey);
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
-    this.db.updateDB(updates).then(() => {
+    this.dbService.updateDB(updates).map(() => {
       this.router.navigate(['/users/chat', newPostKey]);
     });
   }
@@ -86,7 +83,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   addChatToClient(id1: string, id2: string, key: string): void {
     const updates2 = {};
     updates2[`/users/${id1}/chats/${id2}`] = key;
-    this.db.addNewChat(updates2);
+    this.dbService.addNewChat(updates2);
   }
 
 

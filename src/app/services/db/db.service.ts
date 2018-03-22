@@ -20,8 +20,9 @@ export class DbService implements OnDestroy {
     return list.valueChanges();
   }
 
-  updateDB(updates: any): Promise<any> {
-    return this.db.database.ref().update(updates);
+  updateDB(updates: any): Observable<any> {
+    this.db.database.ref().update(updates);
+    return new Observable();
   }
 
   insertDB(from: string, objToPush: any): ThenableReference {
