@@ -39,10 +39,10 @@ export class DbService {
 
   sendMessage(type: string, text: string, chat: string, user: string): void {
     this.insertDB(`/chats/${chat}/messages/`, {
-      text: text,
+      text,
       date: Date.now(),
-      user: user,
-      type: type
+      user,
+      type
     });
   }
 }
