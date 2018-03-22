@@ -9,14 +9,14 @@ const USERS_ROUTER: Routes = [
     { 
         path: '',
         component: UsersComponent,
-
+        canActivate: [CanActivateViaAuthGuard], 
         children:[
             {
                 path:'chat/:id',
                 loadChildren:'app/chat/chat.module#ChatModule'
             }
         ]
-        // canActivate: [CanActivateViaAuthGuard]
+        // 
     }
     // 
 ];
