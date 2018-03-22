@@ -2,7 +2,7 @@
   <div class="chat-block">
     <div class="messages-block" *ngIf="messages$">
       <div *ngFor="let message of messages$ | async" class="mes-block">
-        <h5 [class.user-mi]="message.user === myneLogin">
+        <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'" [src]="message.text">
 

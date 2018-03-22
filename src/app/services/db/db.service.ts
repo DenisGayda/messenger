@@ -5,6 +5,7 @@ import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'rxjs/add/operator/takeUntil';
 import {Subject} from 'rxjs/Subject';
+import {IMessage} from '../../models/IMessage';
 
 @Injectable()
 export class DbService implements OnDestroy {
@@ -52,6 +53,12 @@ export class DbService implements OnDestroy {
       date: Date.now(),
       user,
       type
+    });
+  }
+
+  getMesasges(chatId: string) {
+    return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => {
+      return ref.orderByChild('date');
     });
   }
 

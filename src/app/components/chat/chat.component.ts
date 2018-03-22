@@ -3,7 +3,6 @@ import {DbService} from '../../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
-import 'firebase/storage';
 import {IMessage} from '../../models/IMessage';
 import {IMyUser} from '../../models/IMyUser';
 import {Observable} from 'rxjs/Observable';
@@ -18,12 +17,12 @@ import 'rxjs/add/operator/takeUntil';
 export class ChatComponent implements OnInit, OnDestroy {
   messages$: Observable<IMessage[]>;
   newContent = '';
-  usersInChat: string;
-  myneLogin: string;
+  chatId: string;
+  userLogin: string;
 
   private onDestroyStream$ = new Subject<boolean>();
 
-  constructor(public  db: DbService,
+  constructor(public  dbService: DbService,
               private storeService: StoreService,
               public route: ActivatedRoute,
               private titleService: Title) {
@@ -32,18 +31,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.titleService.setTitle('Чат');
     this.storeService.user.takeUntil(this.onDestroyStream$).subscribe((user: IMyUser) => {
-      this.myneLogin = user.login;
+      this.userLogin = user.login;
     });
     this.route.paramMap.takeUntil(this.onDestroyStream$).subscribe(id => {
-      this.usersInChat = id.get('id');
+      this.chatId = id.get('id');
       this.initChat();
     });
   }
 
   initChat(): void {
-    this.messages$ = this.db.selectDB<IMessage>(`/chats/${this.usersInChat}/messages/`, ref => {
-      return ref.orderByChild('date');
-    });
+    this.messages$ = this.dbService.getMesasges(this.chatId);
   }
 
   checkDate(mesDate: Date): string {
@@ -51,14 +48,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addNewContent(): void {
-    this.db.sendMessage('text', this.newContent, this.usersInChat, this.myneLogin);
+    this.dbService.sendMessage('text', this.newContent, this.chatId, this.userLogin);
     this.newContent = '';
   }
 
   addFile(target: HTMLInputElement): void {
     const file = target.files.item(0);
     if (file) {
-      this.db.addFile(file, this.usersInChat, this.myneLogin);
+      this.dbService.addFile(file, this.chatId, this.userLogin);
     }
   }
 
