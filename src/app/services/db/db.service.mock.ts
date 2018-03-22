@@ -6,7 +6,7 @@ import {ThenableReference} from 'firebase/database';
 @Injectable()
 export class DbServiceMock {
 
-  selectDB<T>(from: string, callback: QueryFn = (ref) => ref): Observable<T[]> {
+  selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     return Observable.of([]);
   }
 

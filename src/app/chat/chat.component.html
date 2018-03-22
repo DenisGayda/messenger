@@ -1,7 +1,7 @@
 <div class="chat">
   <div class="chat-block">
     <div class="messages-block">
-      <div *ngFor="let message of messages" class="mes-block">
+      <div *ngFor="let message of messages$ | async" class="mes-block">
         <h5 [class.user-mi]="message.user === mi">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'" [src]="message.text">

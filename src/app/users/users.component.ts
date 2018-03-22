@@ -21,7 +21,10 @@ export class UsersComponent implements OnInit {
   currentUser: IMyUser;
   find = new FormControl();
 
-  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {
+  constructor(public db: DbService,
+              private storeService: StoreService,
+              private router: Router,
+              private titleService: Title) {
   }
 
   ngOnInit() {

@@ -10,18 +10,19 @@ import {StoreService} from '../services/store/store.service';
 import {FirebaseApp} from 'angularfire2';
 import {DbServiceMock} from '../services/db/db.service.mock';
 import {StoreServiceMock} from '../services/store/store.service.mock';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularFireStorage} from 'angularfire2/storage';
+import 'firebase/storage';
 
 @Component({
   template: `<router-outlet></router-outlet>`
 })
-class RoutingComponent {
-}
+class RoutingComponent {}
 
 @Component({
   template: ''
 })
-class DummyComponent {
-}
+class DummyComponent {}
 
 describe('component: RoutingComponent', () => {
   let location;
@@ -32,12 +33,12 @@ describe('component: RoutingComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([
         {path: 'home', component: DummyComponent}
-      ])],
+      ]), FormsModule, ReactiveFormsModule],
       declarations: [RoutingComponent, DummyComponent, ChatComponent],
       providers: [
         {provide: DbService, useClass: DbServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
-        AngularFireDatabaseModule, AngularFireDatabase, FirebaseApp]
+        AngularFireDatabaseModule, AngularFireDatabase, FirebaseApp, AngularFireStorage]
     });
   });
 
@@ -55,9 +56,6 @@ describe('component: RoutingComponent', () => {
   }));
 
   it('Method "initChat" test', async(() => {
-    // spyOn(this.route, 'paramMap').and.returnValue(Observable.of(0));
-    // spyOn(DbServiceMock, 'selectDB').and.returnValues([]);
-
     const fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

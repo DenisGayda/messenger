@@ -6,10 +6,6 @@ import {IMyUser} from '../../interfaces/IMyUser';
 @Injectable()
 export class StoreServiceMock {
 
-  setUser(user: IMyUser): void {
-  }
-
-
   get user(): Observable<IMyUser> {
     return Observable.of({
       id: '0',
