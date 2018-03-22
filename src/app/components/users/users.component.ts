@@ -1,12 +1,12 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {StoreService} from '../services/store/store.service';
-import {DbService} from '../services/db/db.service';
+import {StoreService} from '../../services/store/store.service';
+import {DbService} from '../../services/db/db.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
-import {IMyUser} from '../interfaces/IMyUser';
-import {IDictionary} from '../interfaces/IDictionary';
-import {IMessage} from '../interfaces/IMessage';
+import {IMyUser} from '../../models/IMyUser';
+import {IDictionary} from '../../models/IDictionary';
+import {IMessage} from '../../models/IMessage';
 
 @Component({
   selector: 'app-users',
@@ -21,8 +21,7 @@ export class UsersComponent implements OnInit {
   currentUser: IMyUser;
   find = new FormControl();
 
-  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {
-  }
+  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
@@ -62,7 +61,6 @@ export class UsersComponent implements OnInit {
     };
     this.addChatToClient(chat, this.currentUser.id, newPostKey);
     this.addChatToClient(this.currentUser.id, chat, newPostKey);
-
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
     this.db.updateDB(updates).then(() => {
