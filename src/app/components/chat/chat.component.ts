@@ -55,8 +55,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.newContent = '';
   }
 
-  addFile(file: File): void {
-    this.db.addFile(file, this.usersInChat, this.mi);
+  addFile(target: HTMLInputElement): void {
+    const file = target.files.item(0);
+    if (file) {
+      this.db.addFile(file, this.usersInChat, this.mi);
+    }
   }
 
   ngOnDestroy(): void {
