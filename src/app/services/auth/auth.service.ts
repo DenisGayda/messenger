@@ -1,7 +1,5 @@
-import {Injectable} from '@angular/core';
-
+import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
-
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
@@ -10,11 +8,15 @@ import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../models/IMyUser';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnDestroy {
   user: Observable<User>;
   logined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem('logged')));
+
+  private onDestroyStream$ = new Subject<boolean>();
 
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
@@ -61,9 +63,12 @@ export class AuthService {
       .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.myDb.selectDB('users', ref =>
-          ref.orderByChild('mail').equalTo(value.email)).subscribe((users: IMyUser[]) => {
-          this.storeService.setUser(users[0]);
-        });
+          ref.orderByChild('mail')
+            .equalTo(value.email))
+            .takeUntil(this.onDestroyStream$)
+            .subscribe((users: IMyUser[]) => {
+              this.storeService.setUser(users[0]);
+            });
         this.logined = new BehaviorSubject<boolean>(true);
         localStorage.setItem('logged', JSON.stringify(true));
         this.router.navigateByUrl('/users');
@@ -80,5 +85,8 @@ export class AuthService {
       .signOut();
   }
 
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next(true);
+  }
 
 }

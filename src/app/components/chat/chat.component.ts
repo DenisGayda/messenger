@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   usersInChat: string;
   myneLogin: string;
 
-  private onDestroyStream = new Subject<boolean>();
+  private onDestroyStream$ = new Subject<boolean>();
 
   constructor(public  db: DbService,
               private storeService: StoreService,
@@ -31,10 +31,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Чат');
-    this.storeService.user.takeUntil(this.onDestroyStream).subscribe((user: IMyUser) => {
+    this.storeService.user.takeUntil(this.onDestroyStream$).subscribe((user: IMyUser) => {
       this.myneLogin = user.login;
     });
-    this.route.paramMap.takeUntil(this.onDestroyStream).subscribe(id => {
+    this.route.paramMap.takeUntil(this.onDestroyStream$).subscribe(id => {
       this.usersInChat = id.get('id');
       this.initChat();
     });
@@ -63,6 +63,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onDestroyStream.next(true);
+    this.onDestroyStream$.next(true);
   }
 }

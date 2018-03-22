@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
 import {DbService} from '../../services/db/db.service';
 import {Router} from '@angular/router';
@@ -7,6 +7,8 @@ import {FormControl} from '@angular/forms';
 import {IMyUser} from '../../models/IMyUser';
 import {IDictionary} from '../../models/IDictionary';
 import {IMessage} from '../../models/IMessage';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-users',
@@ -14,12 +16,14 @@ import {IMessage} from '../../models/IMessage';
   styleUrls: ['./users.component.less']
 })
 @Injectable()
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
-  users: IMyUser[] = [];
-  usersStart: IMyUser[] = [];
+  users: IMyUser[];
+  usersStart: IMyUser[];
   currentUser: IMyUser;
   find = new FormControl();
+
+  private onDestroyStream$ = new Subject<boolean>();
 
   constructor(public db: DbService,
               private storeService: StoreService,
@@ -29,16 +33,22 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.db.selectDB<IMyUser>('users').subscribe(users => {
+    this.db.selectDB<IMyUser>('users')
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(users => {
         this.usersStart = users;
         this.users = users;
       }
     );
-    this.storeService.user.subscribe((user: IMyUser) => {
-      this.currentUser = user;
-    });
+    this.storeService.user
+      .takeUntil(this.onDestroyStream$)
+      .subscribe((user: IMyUser) => {
+        this.currentUser = user;
+      });
 
-    this.find.valueChanges.subscribe(find => {
+    this.find.valueChanges
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(find => {
       this.users = this.usersStart.filter(({login}: IMyUser) => login.toUpperCase().includes(find.toUpperCase()));
     });
   }
@@ -54,6 +64,7 @@ export class UsersComponent implements OnInit {
   enterInRealChat(check: string): void {
     this.db.selectDB('chats/' + check, ref => ref)
       .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
+      .takeUntil(this.onDestroyStream$)
       .subscribe(id => this.router.navigate(['/users/chat/', id]));
   }
 
@@ -78,4 +89,8 @@ export class UsersComponent implements OnInit {
     this.db.addNewChat(updates2);
   }
 
+
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next(true);
+  }
 }

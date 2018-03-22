@@ -1,11 +1,15 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFireDatabase, AngularFireList, QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
+import 'rxjs/add/operator/takeUntil';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
-export class DbService {
+export class DbService implements OnDestroy {
+
+  private onDestroyStream$ = new Subject<boolean>();
 
   constructor(public  db: AngularFireDatabase, public afStor: AngularFireStorage) {
   }
@@ -32,9 +36,14 @@ export class DbService {
   }
 
   addFile(file: File, chat: string, user: string): void {
-    this.afStor.ref(file.name).put(file).downloadURL().subscribe(response => {
-      this.sendMessage('img', response, chat, user);
-    });
+    this.afStor
+      .ref(file.name)
+      .put(file)
+      .downloadURL()
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(response => {
+        this.sendMessage('img', response, chat, user);
+      });
   }
 
   sendMessage(type: string, text: string, chat: string, user: string): void {
@@ -44,5 +53,9 @@ export class DbService {
       user,
       type
     });
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next(true);
   }
 }
