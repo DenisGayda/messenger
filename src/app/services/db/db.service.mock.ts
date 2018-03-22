@@ -23,6 +23,5 @@ export class DbServiceMock {
   }
 
   addNewChat(newChat: any) {
-    console.log('Тест добавил чат');
   }
 }

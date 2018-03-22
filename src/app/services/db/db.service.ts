@@ -9,7 +9,7 @@ export class DbService {
   constructor(public  db: AngularFireDatabase) {
   }
 
-  selectDB<T>(from: string, callback: QueryFn = (ref) => ref): Observable<T[]> {
+  selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     const list: AngularFireList<T> = this.db.list(from, callback);
     return list.valueChanges();
   }
