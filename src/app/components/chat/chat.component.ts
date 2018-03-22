@@ -6,8 +6,9 @@ import {Title} from '@angular/platform-browser';
 import 'firebase/storage';
 import {IMessage} from '../../models/IMessage';
 import {IMyUser} from '../../models/IMyUser';
-import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-chat',
@@ -20,8 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   usersInChat: string;
   myneLogin: string;
 
-  checkUser: Subscription;
-  checkRoute: Subscription;
+  private onDestroyStream = new Subject<boolean>();
 
   constructor(public  db: DbService,
               private storeService: StoreService,
@@ -31,10 +31,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Чат');
-    this.checkUser = this.storeService.user.subscribe((user: IMyUser) => {
+    this.storeService.user.takeUntil(this.onDestroyStream).subscribe((user: IMyUser) => {
       this.myneLogin = user.login;
     });
-    this.checkRoute = this.route.paramMap.subscribe(id => {
+    this.route.paramMap.takeUntil(this.onDestroyStream).subscribe(id => {
       this.usersInChat = id.get('id');
       this.initChat();
     });
@@ -63,7 +63,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.checkUser.unsubscribe();
-    this.checkRoute.unsubscribe();
+    this.onDestroyStream.next(true);
   }
 }
