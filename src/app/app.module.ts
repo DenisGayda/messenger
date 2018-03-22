@@ -16,8 +16,9 @@ import {AuthService} from './services/auth/auth.service';
 import {StoreService} from './services/store/store.service';
 import {DbService} from './services/db/db.service';
 
-import {MyRoutesModule} from './routes/my-routes.module';
+import {AppRouterModule} from './app.router.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
+import {OrdersModule} from './orders/orders.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -41,10 +42,11 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     ReactiveFormsModule,
-    MyRoutesModule,
+    AppRouterModule,
     UsersModule,
     LoginModule,
-    ChatModule
+    ChatModule,
+    OrdersModule
   ],
   providers: [AuthService, StoreService, DbService],
   bootstrap: [AppComponent],

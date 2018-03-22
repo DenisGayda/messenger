@@ -41,11 +41,14 @@ export class UsersComponent implements OnInit {
   }
 
   checkChat(chat: string): void {
-    if (this.currentUser.chats[chat] !== undefined) {
-      this.enterInRealChat(this.currentUser.chats[chat]);
-    } else {
-      this.createChat(chat);
-    }
+    console.log(this.currentUser);
+    // if (this.currentUser.chats[chat] !== undefined) {
+    //   this.enterInRealChat(this.currentUser.chats[chat]);
+    // } else {
+    //   this.createChat(chat);
+    // }
+    
+    // this.router.navigate(['/users/chat/', '-L872YQeZNmQ2RyEZnu5']);
   }
 
   enterInRealChat(check: string): void {
