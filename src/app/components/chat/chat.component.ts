@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   messages$: Observable<IMessage[]>;
   newContent = '';
   usersInChat: string;
-  mi: string;
+  myneLogin: string;
 
   checkUser: Subscription;
   checkRoute: Subscription;
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.titleService.setTitle('Чат');
     this.checkUser = this.storeService.user.subscribe((user: IMyUser) => {
-      this.mi = user.login;
+      this.myneLogin = user.login;
     });
     this.checkRoute = this.route.paramMap.subscribe(id => {
       this.usersInChat = id.get('id');
@@ -51,14 +51,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addNewContent(): void {
-    this.db.sendMessage('text', this.newContent, this.usersInChat, this.mi);
+    this.db.sendMessage('text', this.newContent, this.usersInChat, this.myneLogin);
     this.newContent = '';
   }
 
   addFile(target: HTMLInputElement): void {
     const file = target.files.item(0);
     if (file) {
-      this.db.addFile(file, this.usersInChat, this.mi);
+      this.db.addFile(file, this.usersInChat, this.myneLogin);
     }
   }
 

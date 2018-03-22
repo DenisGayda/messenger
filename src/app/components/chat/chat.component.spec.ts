@@ -5,14 +5,14 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {async, inject, TestBed} from '@angular/core/testing';
 import {ChatComponent} from './chat.component';
 import {AngularFireDatabase, AngularFireDatabaseModule} from 'angularfire2/database';
-import {DbService} from '../services/db/db.service';
-import {StoreService} from '../services/store/store.service';
 import {FirebaseApp} from 'angularfire2';
-import {DbServiceMock} from '../services/db/db.service.mock';
-import {StoreServiceMock} from '../services/store/store.service.mock';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'firebase/storage';
+import {DbService} from '../../services/db/db.service';
+import {StoreService} from '../../services/store/store.service';
+import {StoreServiceMock} from '../../services/store/store.service.mock';
+import {DbServiceMock} from '../../services/db/db.service.mock';
 
 @Component({
   template: `<router-outlet></router-outlet>`
@@ -38,7 +38,7 @@ describe('component: RoutingComponent', () => {
       providers: [
         {provide: DbService, useClass: DbServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
-        AngularFireDatabaseModule, AngularFireDatabase, FirebaseApp, AngularFireStorage]
+        FirebaseApp]
     });
   });
 

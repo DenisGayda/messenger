@@ -7,7 +7,7 @@ import {AngularFireStorage} from 'angularfire2/storage';
 @Injectable()
 export class DbService {
 
-  constructor(public  db: AngularFireDatabase, private afStor: AngularFireStorage) {
+  constructor(public  db: AngularFireDatabase, public afStor: AngularFireStorage) {
   }
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {

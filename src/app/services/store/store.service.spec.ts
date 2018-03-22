@@ -7,13 +7,14 @@ import {AngularFireModule} from 'angularfire2';
 import {DbService} from '../db/db.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MyRoutesModule} from '../../routes/my-routes.module';
-import {UsersComponent} from '../../users/users.component';
 import {AuthService} from '../auth/auth.service';
-import {ChatComponent} from '../../chat/chat.component';
 import {firebaseConfig} from '../../app.module';
-import {LoginComponent} from '../../login/login.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {UsersComponent} from '../../components/users/users.component';
+import {ChatComponent} from '../../components/chat/chat.component';
+import {LoginComponent} from '../../components/login/login.component';
+import {AngularFireStorageModule} from 'angularfire2/storage';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
