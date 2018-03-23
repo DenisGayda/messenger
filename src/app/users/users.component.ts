@@ -17,8 +17,6 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
   styleUrls: ['./users.component.less']
 })
 
-
-
 @Injectable()
 export class UsersComponent implements OnInit {
 
@@ -26,7 +24,7 @@ export class UsersComponent implements OnInit {
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
-  tmpEl;
+
   constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
 
   ngOnInit() {
@@ -40,7 +38,7 @@ export class UsersComponent implements OnInit {
           const users = res[1];
           const trueUsers = [];
           users.forEach((user: IMyUser) => {
-            if (txt.indexOf(user.login.toLowerCase()) !== -1) {
+            if (user.login.toLowerCase().indexOf(txt) !== -1) {
               trueUsers.push(user);
             }
           });
