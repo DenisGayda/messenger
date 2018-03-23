@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DbService} from '../../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
 import {IMessage} from '../../models/IMessage';
+import {IMyUser} from '../../models/IMyUser';
 import {IMyUser} from '../../models/IMyUser';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
