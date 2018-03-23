@@ -1,5 +1,4 @@
 import {Routes, RouterModule} from '@angular/router';
-import {CanActivateViaAuthGuard} from '../../services/guards/CanActivateViaAuthGuard';
 import {NgModule} from '@angular/core';
 import {ChatComponent} from "./chat.component";
 

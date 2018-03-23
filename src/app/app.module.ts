@@ -1,7 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AngularFireModule} from 'angularfire2';
-
 import {UsersModule} from './components/users/users.module';
 import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
@@ -17,7 +16,8 @@ import {StoreService} from './services/store/store.service';
 import {DbService} from './services/db/db.service';
 import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
-import { CanActivateViaAuthGuard } from './services/guards/CanActivateViaAuthGuard';
+import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
+
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -48,7 +48,8 @@ export const firebaseConfig = {
     StoreService, 
     DbService,
     Title,
-    CanActivateViaAuthGuard],
+    CanActivateViaAuthGuard
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

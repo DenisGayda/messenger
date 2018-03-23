@@ -1,6 +1,5 @@
 import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from "./login.component";
-import {CanActivateViaAuthGuard} from '../../services/guards/CanActivateViaAuthGuard';
 import {NgModule} from '@angular/core';
 
 const LOGIN_ROUTER: Routes = [

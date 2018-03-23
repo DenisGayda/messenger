@@ -14,7 +14,7 @@ import {IMyUser} from '../../models/IMyUser';
 @Injectable()
 export class AuthService {
   user: Observable<User>;
-  logined: boolean = JSON.parse(localStorage.getItem('logged'));
+  
  
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
@@ -44,7 +44,6 @@ export class AuthService {
           password: password,
           chats: {}
         });
-        this.logined = true;
         localStorage.setItem('logged', JSON.stringify(true));
         const updates = {};
         updates['/users/' + newPostKey] = postData;
@@ -64,7 +63,6 @@ export class AuthService {
           ref.orderByChild('mail').equalTo(value.email)).subscribe((users: IMyUser[]) => {
           this.storeService.setUser(users[0]);
         });
-        this.logined = true;
         localStorage.setItem('logged', JSON.stringify(true));
         this.router.navigateByUrl('/users');
       })
@@ -73,7 +71,6 @@ export class AuthService {
   }
 
   logout() {
-    this.logined = false;
     localStorage.setItem('logged', JSON.stringify(false));
     this.firebaseAuth
       .auth
