@@ -8,6 +8,7 @@ export class CanActivateViaAuthGuard implements CanActivate {
   constructor (private authService: AuthService) {}
 
   canActivate() {
-    return this.authService.logined.asObservable();
+    console.log(this.authService.logined);
+    return this.authService.logined;
   }
 }
