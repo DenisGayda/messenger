@@ -18,7 +18,6 @@ import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 
-
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
   authDomain: 'mychatapp-mf.firebaseapp.com',
@@ -52,5 +51,6 @@ export const firebaseConfig = {
   ],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {
 }

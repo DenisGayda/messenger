@@ -5,8 +5,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {UsersRoutingModule} from './users-routing.module'
 
-
-
 @NgModule({
   declarations: [
     UsersComponent

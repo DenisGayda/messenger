@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CanActivateViaAuthGuard} from '../services/guards/CanActivateViaAuthGuard';
 
-
-
 const routes: Routes = [
       {
         path: 'users', 
@@ -15,6 +13,7 @@ const routes: Routes = [
         loadChildren:'app/components/login/login.module#LoginModule'
       }
 ]
+
 @NgModule({
   imports: [
     RouterModule.forRoot(routes)
@@ -23,5 +22,6 @@ const routes: Routes = [
     RouterModule
   ]
 })
+
 export class AppRoutingModule {
 }

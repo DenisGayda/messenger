@@ -8,6 +8,7 @@ const CHAT_ROUTER: Routes = [
         component: ChatComponent
     }
 ];
+
 @NgModule({
     imports: [RouterModule.forChild(CHAT_ROUTER)],
     exports: [RouterModule]

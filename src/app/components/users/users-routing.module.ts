@@ -3,7 +3,6 @@ import {UsersComponent} from "./users.component";
 import {CanActivateViaAuthGuard} from '../../services/guards/CanActivateViaAuthGuard'
 import {NgModule} from '@angular/core';
 
-
 const USERS_ROUTER: Routes = [
     { 
         path: '',
