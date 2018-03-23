@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
 import {DbService} from '../../services/db/db.service';
 import {Router} from '@angular/router';
@@ -7,6 +7,8 @@ import {FormControl} from '@angular/forms';
 import {IMyUser} from '../../models/IMyUser';
 import {IDictionary} from '../../models/IDictionary';
 import {IMessage} from '../../models/IMessage';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
@@ -18,15 +20,20 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 })
 
 @Injectable()
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   users: Observable<IMyUser[]>;
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
   currentUserChat: IMyUser;
+  private onDestroyStream$ = new Subject<void>();
+  constructor(public dbService: DbService,
+              private storeService: StoreService,
+              private router: Router,
+              private titleService: Title) {
 
-  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
@@ -48,13 +55,14 @@ export class UsersComponent implements OnInit {
   }
 
   enterInRealChat(check: string): void {
-    this.db.selectDB('chats/' + check, ref => ref)
+    this.dbService.selectDB('chats/' + check, ref => ref)
       .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
+      .takeUntil(this.onDestroyStream$)
       .subscribe(id => this.router.navigate(['/users/chat/', id]));
   }
 
   createChat(chat: string): void {
-    const newPostKey = this.db.getNewId('chats');
+    const newPostKey = this.dbService.getNewId('chats');
     const postData = {
       idChat: newPostKey,
       messages: {}
@@ -66,7 +74,7 @@ export class UsersComponent implements OnInit {
 
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
-    this.db.updateDB(updates).then(() => {
+    this.dbService.updateDB(updates).map(() => {
       this.router.navigate(['/users/chat', newPostKey]);
     });
   }
@@ -74,7 +82,12 @@ export class UsersComponent implements OnInit {
   addChatToClient(id1: string, id2: string, key: string): void {
     const updates2 = {};
     updates2[`/users/${id1}/chats/${id2}`] = key;
-    this.db.addNewChat(updates2);
+    this.dbService.addNewChat(updates2);
   }
 
+
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
+  }
 }

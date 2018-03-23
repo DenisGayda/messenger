@@ -1,76 +1,64 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DbService} from '../../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
-import {FirebaseApp} from 'angularfire2';
-import 'firebase/storage';
-import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
 import {IMessage} from '../../models/IMessage';
 import {IMyUser} from '../../models/IMyUser';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.less']
 })
-export class ChatComponent implements OnInit {
-  messages: IMessage[] = [];
+export class ChatComponent implements OnInit, OnDestroy {
+  messages$: Observable<IMessage[]>;
   newContent = '';
-  usersInChat: string;
+  chatId: string;
+  userLogin: string;
 
-  mi: string;
+  private onDestroyStream$ = new Subject<void>();
 
-  ref: AngularFireStorageReference;
-  task: AngularFireUploadTask;
-
-  constructor(public  db: DbService, private storeService: StoreService, public route: ActivatedRoute,
-              private titleService: Title, private firebaseApp: FirebaseApp,
-              private afStor: AngularFireStorage) {
+  constructor(public dbService: DbService,
+              private storeService: StoreService,
+              public route: ActivatedRoute,
+              private titleService: Title) {
   }
 
   ngOnInit() {
     this.titleService.setTitle('Чат');
-    this.route.paramMap.subscribe(id => {
-      this.usersInChat = id.get('id');
-      this.initChat();
+    this.storeService.user.takeUntil(this.onDestroyStream$).subscribe((user: IMyUser) => {
+      this.userLogin = user.login;
     });
-  }
-
-  initChat(): void {
-    this.storeService.user.subscribe((user: IMyUser) => {
-      this.mi = user.login;
-      this.db.selectDB<IMessage>(`/chats/${this.usersInChat}/messages/`, ref => {
-        return ref.orderByChild('date');
-      }).subscribe(messages => this.messages = messages);
-      return;
+    this.route.paramMap.takeUntil(this.onDestroyStream$).subscribe(id => {
+      this.chatId = id.get('id');
+      this.messages$ = this.dbService.getMessages(this.chatId);
     });
-
   }
 
   checkDate(mesDate: Date): string {
-    return `${new Date(mesDate).getHours()}':'${new Date(mesDate).getMinutes()}`;
+    return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
   }
 
-  addNewContent(type: string, text: string): void {
-    this.storeService.user.subscribe((user: IMyUser) => {
-      this.db.insertDB(`/chats/${this.usersInChat}/messages/`, {
-        text: text ? text : this.newContent,
-        date: Date.now(),
-        user: user.login,
-        type: type
-      }).then(() => {
-        this.newContent = '';
-      }).catch(err => {});
-    });
+  addNewContent(): void {
+    this.dbService.sendMessage('text', this.newContent, this.chatId, this.userLogin);
+    this.newContent = '';
   }
 
-  addFile(event: Event): void {
-    const file = (<HTMLInputElement>event.target).files.item(0);
-    this.ref = this.afStor.ref(file.name);
-    this.task = this.ref.put(file);
-    this.task.downloadURL().subscribe(response => {
-      this.addNewContent('img', response);
-    });
+  addFile(target: HTMLInputElement): void {
+    const file = target.files.item(0);
+    if (file) {
+      this.dbService.addFile(file).takeUntil(this.onDestroyStream$).subscribe(response => {
+        this.dbService.sendMessage('img', response, this.chatId, this.userLogin);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
   }
 }

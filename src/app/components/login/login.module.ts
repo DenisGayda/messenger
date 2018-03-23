@@ -1,9 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { LoginComponent } from './login.component';
-import { AuthService } from '../../services/auth/auth.service';
-import { Title } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {LoginComponent} from './login.component';
+import {Title} from '@angular/platform-browser';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,9 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
-    AuthService,
     Title
   ]
 })
 
-export class LoginModule {}
+export class LoginModule {
+}

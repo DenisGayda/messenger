@@ -8,12 +8,13 @@ import {StoreService} from '../store/store.service';
 import {DbService} from '../db/db.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MyRoutesModule} from '../../routes/my-routes.module';
-import {UsersComponent} from '../../users/users.component';
-import {ChatComponent} from '../../chat/chat.component';
 import {firebaseConfig} from '../../app.module';
-import {LoginComponent} from '../../login/login.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {UsersComponent} from '../../components/users/users.component';
+import {ChatComponent} from '../../components/chat/chat.component';
+import {LoginComponent} from '../../components/login/login.component';
+import {AngularFireStorageModule} from 'angularfire2/storage';
 
 describe('AuthService', () => {
   beforeEach(async(() => {
@@ -24,6 +25,7 @@ describe('AuthService', () => {
         AngularFireAuthModule,
         AngularFirestoreModule,
         AngularFireDatabaseModule,
+        AngularFireStorageModule,
         ReactiveFormsModule,
         MyRoutesModule],
       providers: [AuthService, StoreService, DbService, {
