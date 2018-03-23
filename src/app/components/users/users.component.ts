@@ -26,12 +26,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
-  currentUserChat: IMyUser = {
-    id: '',
-    login: '',
-    mail: '',
-    password: ''
-  };
+  currentUserChat: IMyUser;
   private onDestroyStream$ = new Subject<void>();
 
   constructor(public dbService: DbService,
