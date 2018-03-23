@@ -9,11 +9,10 @@
       "node"
     ]
   },
-  "files": [
-    "test.ts"
-  ],
   "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.spec.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

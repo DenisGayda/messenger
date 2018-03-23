@@ -42,7 +42,6 @@ export const firebaseConfig = {
     MyRoutesModule,
     UsersModule,
     LoginModule,
-    ChatModule,
     BrowserAnimationsModule
   ],
   providers: [AuthService, StoreService, DbService],

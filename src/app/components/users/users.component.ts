@@ -9,53 +9,50 @@ import {IDictionary} from '../../models/IDictionary';
 import {IMessage} from '../../models/IMessage';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.less']
 })
+
 @Injectable()
 export class UsersComponent implements OnInit, OnDestroy {
 
-  users: IMyUser[];
-  usersStart: IMyUser[];
-  currentUser: IMyUser;
+  users: Observable<IMyUser[]>;
+  usersStart: Observable<IMyUser[]>;
+  currentUser: Observable<IMyUser>;
   find = new FormControl();
+  currentUserChat: IMyUser;
   private onDestroyStream$ = new Subject<void>();
+
   constructor(public dbService: DbService,
               private storeService: StoreService,
               private router: Router,
               private titleService: Title) {
-
   }
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.dbService.selectDB<IMyUser>('users').subscribe(users => {
-        this.usersStart = users;
-        this.users = users;
-      }
-    );
-    this.storeService.user
-      .takeUntil(this.onDestroyStream$)
-      .subscribe((user: IMyUser) => {
-        this.currentUser = user;
-      });
-
-    this.find.valueChanges
-      .takeUntil(this.onDestroyStream$)
-      .subscribe(find => {
-      this.users = this.usersStart.filter(({login}: IMyUser) => login.toUpperCase().includes(find.toUpperCase()));
-    });
+    this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB('users'))
+      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
+        .includes(searchString.toLowerCase())));
+    this.usersStart = this.dbService.selectDB<IMyUser>('users');
+    this.currentUser = this.storeService.user;
   }
 
-  checkChat(chat: string): void {
-    if (this.currentUser.chats[chat] !== undefined) {
-      this.enterInRealChat(this.currentUser.chats[chat]);
-    } else {
-      this.createChat(chat);
-    }
+  checkChat(user: IMyUser): void {
+    this.currentUserChat = user;
+    this.currentUser.subscribe(data => {
+      if (data.chats[user.id] !== undefined) {
+        this.enterInRealChat(data.chats[user.id]);
+      } else {
+        this.createChat(user.id);
+      }
+    });
   }
 
   enterInRealChat(check: string): void {
@@ -71,8 +68,11 @@ export class UsersComponent implements OnInit, OnDestroy {
       idChat: newPostKey,
       messages: {}
     };
-    this.addChatToClient(chat, this.currentUser.id, newPostKey);
-    this.addChatToClient(this.currentUser.id, chat, newPostKey);
+    this.currentUser.subscribe(data => {
+      this.addChatToClient(chat, data.id, newPostKey);
+      this.addChatToClient(data.id, chat, newPostKey);
+    });
+
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
     this.dbService.updateDB(updates).map(() => {
