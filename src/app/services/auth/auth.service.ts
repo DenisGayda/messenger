@@ -17,6 +17,7 @@ export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined:boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
+  private onDestroyStream$ = new Subject<void>();
  
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
@@ -63,7 +64,10 @@ export class AuthService implements OnDestroy {
       .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.myDb.selectDB('users', ref =>
-          ref.orderByChild('mail').equalTo(value.email)).subscribe((users: IMyUser[]) => {
+          ref.orderByChild('mail')
+          .equalTo(value.email))
+          .takeUntil(this.onDestroyStream$)
+          .subscribe((users: IMyUser[]) => {
           this.storeService.setUser(users[0]);
         });
         this.logined.next(true);

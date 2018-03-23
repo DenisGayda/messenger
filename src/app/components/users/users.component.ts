@@ -45,13 +45,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   checkChat(user: IMyUser): void {
-<<<<<<< HEAD
-    if (this.currentUser.chats[user.id] !== undefined) {
-      this.enterInRealChat(this.currentUser.chats[user.id]);
-    } else {
-      this.createChat(user.id);
-    }
-=======
     this.currentUserChat = user;
     this.currentUser.subscribe(data => {
       if (data.chats[user.id] !== undefined) {
@@ -60,7 +53,6 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.createChat(user.id);
       }
     });
->>>>>>> master
   }
 
   enterInRealChat(check: string): void {
@@ -94,13 +86,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dbService.addNewChat(updates2);
   }
 
-<<<<<<< HEAD
-}
-=======
 
   ngOnDestroy(): void {
     this.onDestroyStream$.next();
     this.onDestroyStream$.complete();
   }
 }
->>>>>>> master

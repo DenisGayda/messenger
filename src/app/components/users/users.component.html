@@ -2,10 +2,6 @@
   <input type="text" [formControl]="find" placeholder="Поиск">
 </div>
 <div class="user-btns">
-<<<<<<< HEAD
-  <div *ngFor="let user of users">
-    <button (click)="checkChat(user)">{{ user.login }}</button>
-=======
   <div *ngIf="!!currentUserChat">
     <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}</button>
   </div>
@@ -13,7 +9,6 @@
   <div *ngFor="let user of users | async">
     <button (click)="checkChat(user)"
     *ngIf="currentUserChat?.id !== user.id">{{ user.login }}</button>
->>>>>>> master
   </div>
 </div>
 <div class="chats">

@@ -7,14 +7,10 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
-<<<<<<< HEAD
-import {AppRouterModule} from '../routes/app.router.module';
-=======
->>>>>>> master
+import {AppRoutingModule} from '../routes/app-routing.module';
 import {ChatComponent} from '../chat/chat.component';
 import {LoginComponent} from '../login/login.component';
 import {firebaseConfig} from '../../app.module';
-import {MyRoutesModule} from '../../routes/my-routes.module';
 import {AuthService} from '../../services/auth/auth.service';
 import {StoreService} from '../../services/store/store.service';
 import {DbService} from '../../services/db/db.service';
