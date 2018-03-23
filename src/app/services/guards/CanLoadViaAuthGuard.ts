@@ -15,7 +15,7 @@ export class CanLoadViaAuthGuard implements CanLoad {
     // }
     // return false;
     // console.log()
-    console.log(JSON.parse(localStorage.getItem('logged'));
+    console.log(JSON.parse(localStorage.getItem('logged')));
     return JSON.parse(localStorage.getItem('logged'));
     
     // console.log(this.authService.logined);

@@ -17,6 +17,7 @@ import {StoreService} from './services/store/store.service';
 import {DbService} from './services/db/db.service';
 import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
+import { CanActivateViaAuthGuard } from './services/guards/CanActivateViaAuthGuard';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -46,7 +47,8 @@ export const firebaseConfig = {
     AuthService, 
     StoreService, 
     DbService,
-    Title],
+    Title,
+    CanActivateViaAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {

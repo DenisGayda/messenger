@@ -8,8 +8,8 @@ const routes: Routes = [
       {
         path: 'users', 
         loadChildren: 'app/components/users/users.module#UsersModule',
-        // canActivate:[CanActivateViaAuthGuard],
-        canLoad:[CanLoadViaAuthGuard]
+        canActivate:[CanActivateViaAuthGuard],
+        // canLoad:[CanLoadViaAuthGuard]
       },
       {
         path:'',
@@ -24,8 +24,8 @@ const routes: Routes = [
     RouterModule
   ],
   providers: [
-    CanLoadViaAuthGuard,
-    // CanActivateViaAuthGuard
+    // CanLoadViaAuthGuard,
+    CanActivateViaAuthGuard
   ]
 })
 export class AppRoutingModule {
