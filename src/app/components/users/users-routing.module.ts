@@ -8,7 +8,6 @@ const USERS_ROUTER: Routes = [
     { 
         path: '',
         component: UsersComponent,
-        // canLoad: [CanActivateViaAuthGuard], 
         children:[
             {
                 path:'chat/:id',
