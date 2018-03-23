@@ -3,17 +3,18 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UsersComponent} from './users.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
-import {AuthService} from '../services/auth/auth.service';
-import {StoreService} from '../services/store/store.service';
-import {DbService} from '../services/db/db.service';
-import {firebaseConfig} from '../app.module';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
-import {MyRoutesModule} from '../routes/my-routes.module';
 import {ChatComponent} from '../chat/chat.component';
 import {LoginComponent} from '../login/login.component';
+import {firebaseConfig} from '../../app.module';
+import {MyRoutesModule} from '../../routes/my-routes.module';
+import {AuthService} from '../../services/auth/auth.service';
+import {StoreService} from '../../services/store/store.service';
+import {DbService} from '../../services/db/db.service';
+import {AngularFireStorageModule} from 'angularfire2/storage';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -26,6 +27,7 @@ describe('UsersComponent', () => {
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
+        AngularFireStorageModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
         MyRoutesModule],

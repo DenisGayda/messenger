@@ -9,8 +9,7 @@ export class StoreService {
 
   _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
 
-  constructor(public  db: AngularFireDatabase) {
-  }
+  constructor(public  db: AngularFireDatabase) {}
 
   setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
