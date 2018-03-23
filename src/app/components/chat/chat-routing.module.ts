@@ -13,4 +13,3 @@ const CHAT_ROUTER: Routes = [
     exports: [RouterModule]
   })
 export class ChatRoutingModule {}
-

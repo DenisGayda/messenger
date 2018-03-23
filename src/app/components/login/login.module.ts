@@ -13,8 +13,7 @@ import {LoginRoutingModule} from './login-routing.module';
     CommonModule,
     ReactiveFormsModule,
     LoginRoutingModule
-  ],
-  providers: []
+  ]
 })
 
 export class LoginModule {}

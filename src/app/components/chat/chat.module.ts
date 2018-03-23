@@ -17,7 +17,6 @@ import {ChatRoutingModule} from './chat-routing.module'
     FormsModule,
     ChatRoutingModule
   ],
-  providers: [],
   exports: [ChatComponent]
 })
 

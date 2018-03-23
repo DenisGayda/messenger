@@ -18,7 +18,6 @@ import {UsersRoutingModule} from './users-routing.module'
     UsersRoutingModule
   ],
   exports: [ UsersComponent ],
-  providers: []
 })
 
 export class UsersModule {}
