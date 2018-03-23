@@ -1,16 +1,13 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireDatabase, AngularFireList, QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'rxjs/add/operator/takeUntil';
-import {Subject} from 'rxjs/Subject';
 import {IMessage} from '../../models/IMessage';
 
 @Injectable()
-export class DbService implements OnDestroy {
-
-  private onDestroyStream$ = new Subject<boolean>();
+export class DbService {
 
   constructor(public  db: AngularFireDatabase, public afStor: AngularFireStorage) {
   }
@@ -37,15 +34,11 @@ export class DbService implements OnDestroy {
     this.db.database.ref().update({...newChat});
   }
 
-  addFile(file: File, chat: string, user: string): void {
-    this.afStor
+  addFile(file: File): Observable<string> {
+    return this.afStor
       .ref(file.name)
       .put(file)
-      .downloadURL()
-      .takeUntil(this.onDestroyStream$)
-      .subscribe(response => {
-        this.sendMessage('img', response, chat, user);
-      });
+      .downloadURL();
   }
 
   sendMessage(type: string, text: string, chat: string, user: string): void {
@@ -57,13 +50,10 @@ export class DbService implements OnDestroy {
     });
   }
 
-  getMesasges(chatId: string) {
+  getMessages(chatId: string): Observable<IMessage[]> {
     return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => {
       return ref.orderByChild('date');
     });
   }
 
-  ngOnDestroy(): void {
-    this.onDestroyStream$.next(true);
-  }
 }

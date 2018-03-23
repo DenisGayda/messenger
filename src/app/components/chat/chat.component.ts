@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   private onDestroyStream$ = new Subject<boolean>();
 
-  constructor(public  dbService: DbService,
+  constructor(public dbService: DbService,
               private storeService: StoreService,
               public route: ActivatedRoute,
               private titleService: Title) {
@@ -35,12 +35,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
     this.route.paramMap.takeUntil(this.onDestroyStream$).subscribe(id => {
       this.chatId = id.get('id');
-      this.initChat();
+      this.messages$ = this.dbService.getMessages(this.chatId);
     });
-  }
-
-  initChat(): void {
-    this.messages$ = this.dbService.getMesasges(this.chatId);
   }
 
   checkDate(mesDate: Date): string {
@@ -55,7 +51,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   addFile(target: HTMLInputElement): void {
     const file = target.files.item(0);
     if (file) {
-      this.dbService.addFile(file, this.chatId, this.userLogin);
+      this.dbService.addFile(file).takeUntil(this.onDestroyStream$).subscribe(response => {
+        this.dbService.sendMessage('img', response, this.chatId, this.userLogin);
+      });
     }
   }
 

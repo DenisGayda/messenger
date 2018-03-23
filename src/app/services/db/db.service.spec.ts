@@ -1,6 +1,6 @@
 import {TestBed, inject, async} from '@angular/core/testing';
 
-import { DbService } from './db.service';
+import {DbService} from './db.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {Router, RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';

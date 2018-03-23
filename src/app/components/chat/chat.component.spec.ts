@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
-import {Location} from '@angular/common';
-import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {async, inject, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ChatComponent} from './chat.component';
 import {FirebaseApp} from 'angularfire2';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,9 +20,8 @@ class RoutingComponent {}
 class DummyComponent {}
 
 describe('component: RoutingComponent', () => {
-  let location;
-  let router;
   let component: ChatComponent;
+  let fixture: ComponentFixture<ChatComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,45 +36,20 @@ describe('component: RoutingComponent', () => {
     });
   });
 
-  beforeEach(inject([Router, Location], (_router: Router, _location: Location) => {
-    location = _location;
-    router = _router;
-  }));
-
-  it('should go home', async(() => {
-    const fixture = TestBed.createComponent(RoutingComponent);
-    fixture.detectChanges();
-    router.navigate(['/home']).then(() => {
-      expect(location.path()).toBe('/home');
-    });
-  }));
-
-  it('Method "initChat" test', async(() => {
-    const fixture = TestBed.createComponent(ChatComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router.navigate(['/home']).then(() => {
-      expect(component.initChat);
-    });
-  }));
+  });
 
   it('Method "checkDate" test', async(() => {
-    const fixture = TestBed.createComponent(ChatComponent);
-    component = fixture.componentInstance;
-
-    fixture.detectChanges();
-    router.navigate(['/home']).then(() => {
-      expect(component.checkDate);
-    });
+    const dateTest = Date.now();
+    const toBe = `${new Date(dateTest).getHours()}:${new Date(dateTest).getMinutes()}`;
+    expect(component.checkDate(new Date(dateTest))).toBe(toBe);
   }));
 
   it('Method "addNewContent" test', async(() => {
-    const fixture = TestBed.createComponent(ChatComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    router.navigate(['//home']).then(() => {
       expect(component.addNewContent);
-    });
   }));
 
 });

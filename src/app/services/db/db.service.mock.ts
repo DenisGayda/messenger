@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase, AngularFireList, QueryFn} from 'angularfire2/database';
+import {QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
+import {IMessage} from '../../models/IMessage';
 
 @Injectable()
 export class DbServiceMock {
@@ -23,5 +24,13 @@ export class DbServiceMock {
   }
 
   addNewChat(newChat: any) {
+  }
+
+  sendMessage(type: string, text: string, chat: string, user: string): void {
+    return;
+  }
+
+  getMessages(chatId: string): Observable<IMessage[]> {
+    return;
   }
 }

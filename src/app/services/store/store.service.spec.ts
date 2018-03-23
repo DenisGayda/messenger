@@ -1,5 +1,4 @@
 import {TestBed, inject, async} from '@angular/core/testing';
-
 import { StoreService } from './store.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {Router, RouterModule} from '@angular/router';
@@ -14,7 +13,6 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {UsersComponent} from '../../components/users/users.component';
 import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
-import {AngularFireStorageModule} from 'angularfire2/storage';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
