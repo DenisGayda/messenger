@@ -9,10 +9,12 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../models/IMyUser';
 
+
 @Injectable()
 export class AuthService {
   user: Observable<User>;
-  logined: BehaviorSubject<boolean> = new BehaviorSubject(JSON.parse(localStorage.getItem('logged')));
+  localLogined:boolean = JSON.parse(localStorage.getItem('logged'));
+  logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
  
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
