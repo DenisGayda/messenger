@@ -11,7 +11,7 @@ export class DbServiceMock {
     return Observable.of([]);
   }
 
-  updateDB(updates: any): Promise<any> {
+  updateDB(updates: any): Observable<any> {
     return;
   }
 

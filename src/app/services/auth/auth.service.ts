@@ -16,7 +16,7 @@ export class AuthService implements OnDestroy {
   user: Observable<User>;
   logined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem('logged')));
 
-  private onDestroyStream$ = new Subject<boolean>();
+  private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
@@ -86,7 +86,8 @@ export class AuthService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onDestroyStream$.next(true);
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
   }
 
 }

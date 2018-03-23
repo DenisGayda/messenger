@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   usersStart: IMyUser[];
   currentUser: IMyUser;
   find = new FormControl();
-  private onDestroyStream$ = new Subject<boolean>();
+  private onDestroyStream$ = new Subject<void>();
   constructor(public dbService: DbService,
               private storeService: StoreService,
               private router: Router,
@@ -88,6 +88,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.onDestroyStream$.next(true);
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
   }
 }

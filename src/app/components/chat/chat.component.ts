@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatId: string;
   userLogin: string;
 
-  private onDestroyStream$ = new Subject<boolean>();
+  private onDestroyStream$ = new Subject<void>();
 
   constructor(public dbService: DbService,
               private storeService: StoreService,
@@ -58,6 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onDestroyStream$.next(true);
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
   }
 }
