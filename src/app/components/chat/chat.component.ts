@@ -5,7 +5,6 @@ import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
 import {IMessage} from '../../models/IMessage';
 import {IMyUser} from '../../models/IMyUser';
-import {IMyUser} from '../../models/IMyUser';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
