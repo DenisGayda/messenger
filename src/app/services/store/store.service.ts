@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {AngularFireDatabase} from 'angularfire2/database';
-import {IMyUser} from '../../interfaces/IMyUser';
-
+import {IMyUser} from '../../models/IMyUser';
 
 @Injectable()
 export class StoreService {
@@ -15,6 +14,7 @@ export class StoreService {
 
   setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
+    localStorage.setItem('userInMyApp', JSON.stringify(user));
   }
 
   get user(): Observable<IMyUser> {

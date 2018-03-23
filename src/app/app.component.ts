@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import 'rxjs/add/operator/map';
+import {StoreService} from './services/store/store.service';
+
+const LOGGED = 'logged';
+const USER_IN_MY_APP = 'userInMyApp';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +12,13 @@ import 'rxjs/add/operator/map';
 })
 export class AppComponent implements OnInit {
 
-  constructor() {}
+  constructor(private storeService: StoreService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (JSON.parse(localStorage.getItem(LOGGED))) {
+      this.storeService.setUser(JSON.parse(localStorage.getItem(USER_IN_MY_APP)));
+    }
+  }
 
 }

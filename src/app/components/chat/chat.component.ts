@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {DbService} from '../services/db/db.service';
+import {DbService} from '../../services/db/db.service';
 import {ActivatedRoute} from '@angular/router';
-import {StoreService} from '../services/store/store.service';
+import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
 import {FirebaseApp} from 'angularfire2';
 import 'firebase/storage';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
-import {IMessage} from '../interfaces/IMessage';
-import {IMyUser} from '../interfaces/IMyUser';
+import {IMessage} from '../../models/IMessage';
+import {IMyUser} from '../../models//IMyUser';
 
 @Component({
   selector: 'app-chat',
