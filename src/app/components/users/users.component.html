@@ -2,8 +2,8 @@
   <input type="text" [formControl]="find" placeholder="Поиск">
 </div>
 <div class="user-btns">
-  <div *ngIf="!!currentUserChat">
-    <button >{{ currentUserChat}}</button>
+  <div *ngIf="!!currentUserChat.id">
+    <button >{{ currentUserChat.login}}</button>
   </div>
 
   <div *ngFor="let user of users | async">

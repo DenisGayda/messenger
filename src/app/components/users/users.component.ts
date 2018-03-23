@@ -20,11 +20,11 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 @Injectable()
 export class UsersComponent implements OnInit {
 
-  users: Observable<any>;
+  users: Observable<IMyUser[]>;
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
-  currentUserChat: string;
+  currentUserChat: IMyUser;
 
   constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
 
@@ -37,7 +37,7 @@ export class UsersComponent implements OnInit {
   }
 
   checkChat(user: IMyUser): void {
-    this.currentUserChat = user.login;
+    this.currentUserChat = user;
     this.currentUser.subscribe(data => {
       if (data.chats[user.id] !== undefined) {
         this.enterInRealChat(data.chats[user.id]);
