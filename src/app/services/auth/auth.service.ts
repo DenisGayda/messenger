@@ -8,12 +8,12 @@ import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../models/IMyUser';
-
+import {LocalStorage} from '../../decorators/local-storage.decorator';
 
 @Injectable()
 export class AuthService {
   user: Observable<User>;
-  localLogined:boolean = JSON.parse(localStorage.getItem('logged'));
+  @LocalStorage localLogined:boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
  
   constructor(private firebaseAuth: AngularFireAuth,
@@ -45,7 +45,7 @@ export class AuthService {
           chats: {}
         });
         this.logined.next(true);
-        localStorage.setItem('logged', JSON.stringify(true));
+        this.localLogined = true;
         const updates = {};
         updates['/users/' + newPostKey] = postData;
         this.router.navigateByUrl('/users');
@@ -65,7 +65,7 @@ export class AuthService {
           this.storeService.setUser(users[0]);
         });
         this.logined.next(true);
-        localStorage.setItem('logged', JSON.stringify(true));
+        this.localLogined = true;
         this.router.navigateByUrl('/users');
       })
       .catch(err => {
@@ -74,7 +74,7 @@ export class AuthService {
 
   logout() {
     this.logined.next(false);
-    localStorage.setItem('logged', JSON.stringify(false));
+    this.localLogined = false;
     this.firebaseAuth
       .auth
       .signOut();
