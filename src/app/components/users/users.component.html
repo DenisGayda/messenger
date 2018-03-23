@@ -3,12 +3,12 @@
 </div>
 <div class="user-btns">
   <div *ngIf="!!currentUserChat.id">
-    <button >{{ currentUserChat.login}}</button>
+    <button [ngStyle]="{'background': 'lightblue'}">{{ currentUserChat.login}}</button>
   </div>
 
   <div *ngFor="let user of users | async">
     <button (click)="checkChat(user)"
-    *ngIf="currentUserChat !== user.login">{{ user.login }}</button>
+    *ngIf="currentUserChat.login !== user.login">{{ user.login }}</button>
   </div>
 </div>
 <div class="chats">

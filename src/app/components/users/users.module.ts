@@ -2,8 +2,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {UsersComponent} from './users.component';
 import {Title} from '@angular/platform-browser';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {ChatModule} from '../chat/chat.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,9 @@ import {RouterModule} from '@angular/router';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ChatModule
   ],
   exports: [ UsersComponent ],
   providers: [

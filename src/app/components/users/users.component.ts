@@ -10,8 +10,8 @@ import {IMessage} from '../../models/IMessage';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
-import { startWith } from 'rxjs/operators';
-import { combineLatest } from 'rxjs/observable/combineLatest';
+import {startWith} from 'rxjs/operators';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'app-users',
@@ -26,20 +26,26 @@ export class UsersComponent implements OnInit, OnDestroy {
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
-  currentUserChat: IMyUser;
+  currentUserChat: IMyUser = {
+    id: '',
+    login: '',
+    mail: '',
+    password: ''
+  };
   private onDestroyStream$ = new Subject<void>();
+
   constructor(public dbService: DbService,
               private storeService: StoreService,
               private router: Router,
               private titleService: Title) {
-
   }
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.db.selectDB('users'))
-      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase().includes(searchString.toLowerCase())));
-    this.usersStart = this.db.selectDB<IMyUser>('users');
+    this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB('users'))
+      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
+        .includes(searchString.toLowerCase())));
+    this.usersStart = this.dbService.selectDB<IMyUser>('users');
     this.currentUser = this.storeService.user;
   }
 
