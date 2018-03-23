@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -9,9 +9,11 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../models/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined:boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
@@ -79,4 +81,10 @@ export class AuthService {
       .auth
       .signOut();
   }
+
+  ngOnDestroy(): void {
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
+  }
+
 }

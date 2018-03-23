@@ -1,8 +1,8 @@
 <div class="chat">
   <div class="chat-block">
-    <div class="messages-block">
-      <div *ngFor="let message of messages" class="mes-block">
-        <h5 [class.user-mi]="message.user === mi">
+    <div class="messages-block" *ngIf="messages$">
+      <div *ngFor="let message of messages$ | async" class="mes-block">
+        <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'" [src]="message.text">
 
@@ -13,11 +13,11 @@
   </div>
 
     <div>
-      <input (keyup.enter)="addNewContent('text')" type="text" [(ngModel)]="newContent" placeholder="New message">
+      <input (keyup.enter)="addNewContent()" type="text" [(ngModel)]="newContent" placeholder="New message">
 
-      <input type="file" (change)="addFile($event)">
+      <input type="file" (change)="addFile($event.target)">
 
-      <button (click)="addNewContent('text')">
+      <button (click)="addNewContent()">
         Send message
       </button>
     </div>

@@ -9,9 +9,14 @@ import {IMyUser} from '../../models/IMyUser';
 export class StoreService {
 
   _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
+<<<<<<< HEAD
   
   constructor(public  db: AngularFireDatabase) {   
   }
+=======
+
+  constructor(public  db: AngularFireDatabase) {}
+>>>>>>> master
 
   setUser(user: IMyUser): void {
     this._myUser.next({chats: {}, ...user});
