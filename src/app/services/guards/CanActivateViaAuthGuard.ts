@@ -8,6 +8,7 @@ export class CanActivateViaAuthGuard implements CanActivate {
   constructor (private authService: AuthService) {}
   
   canActivate() {
-    return JSON.parse(localStorage.getItem('logged'));
+    // return JSON.parse(localStorage.getItem('logged'));
+    return this.authService.logined.asObservable();
   }
 }

@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-
 import {AngularFireAuth} from 'angularfire2/auth';
-
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
@@ -14,7 +12,7 @@ import {IMyUser} from '../../models/IMyUser';
 @Injectable()
 export class AuthService {
   user: Observable<User>;
-  
+  logined: BehaviorSubject<boolean> = new BehaviorSubject(JSON.parse(localStorage.getItem('logged')));
  
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
@@ -44,6 +42,7 @@ export class AuthService {
           password: password,
           chats: {}
         });
+        this.logined.next(true);
         localStorage.setItem('logged', JSON.stringify(true));
         const updates = {};
         updates['/users/' + newPostKey] = postData;
@@ -63,6 +62,7 @@ export class AuthService {
           ref.orderByChild('mail').equalTo(value.email)).subscribe((users: IMyUser[]) => {
           this.storeService.setUser(users[0]);
         });
+        this.logined.next(true);
         localStorage.setItem('logged', JSON.stringify(true));
         this.router.navigateByUrl('/users');
       })
@@ -71,6 +71,7 @@ export class AuthService {
   }
 
   logout() {
+    this.logined.next(false);
     localStorage.setItem('logged', JSON.stringify(false));
     this.firebaseAuth
       .auth
