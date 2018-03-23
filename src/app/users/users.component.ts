@@ -7,46 +7,60 @@ import {FormControl} from '@angular/forms';
 import {IMyUser} from '../interfaces/IMyUser';
 import {IDictionary} from '../interfaces/IDictionary';
 import {IMessage} from '../interfaces/IMessage';
+import {Observable} from 'rxjs/Observable';
+import { startWith } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.less']
 })
+
+
+
 @Injectable()
 export class UsersComponent implements OnInit {
 
-  users: IMyUser[] = [];
-  usersStart: IMyUser[] = [];
-  currentUser: IMyUser;
+  users: Observable<any>;
+  usersStart: Observable<IMyUser[]>;
+  currentUser: Observable<IMyUser>;
   find = new FormControl();
   tmpEl;
-  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {
-  }
+  constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.db.selectDB<IMyUser>('users').subscribe(users => {
-        this.usersStart = users;
-        this.users = users;
-      }
-    );
-    this.storeService.user.subscribe((user: IMyUser) => {
-      this.currentUser = user;
-    });
-
-    this.find.valueChanges.subscribe(find => {
-      this.users = this.usersStart.filter(({login}: IMyUser) => login.toUpperCase().includes(find.toUpperCase()));
-    });
+    this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.db.selectDB('users'))
+      .map(res => {
+        if (res[0] === '') {
+          return res[1];
+        } else {
+          const txt = res[0];
+          const users = res[1];
+          const trueUsers = [];
+          users.forEach((user: IMyUser) => {
+            if (txt.indexOf(user.login.toLowerCase()) !== -1) {
+              trueUsers.push(user);
+            }
+          });
+          return trueUsers;
+        }
+      })
+      .map(data => data)
+    this.usersStart = this.db.selectDB<IMyUser>('uersers')
+    this.currentUser = this.storeService.user;
   }
 
   checkChat(chat: string, btn): void {
     this.activeBtn(btn);
-    if (this.currentUser.chats[chat] !== undefined) {
-      this.enterInRealChat(this.currentUser.chats[chat]);
-    } else {
-      this.createChat(chat);
-    }
+    this.currentUser.subscribe(data => {
+      if (data.chats[chat] !== undefined) {
+        this.enterInRealChat(data.chats[chat]);
+      } else {
+        this.createChat(chat);
+      }
+    });
   }
 
   enterInRealChat(check: string): void {
@@ -61,8 +75,11 @@ export class UsersComponent implements OnInit {
       idChat: newPostKey,
       messages: {}
     };
-    this.addChatToClient(chat, this.currentUser.id, newPostKey);
-    this.addChatToClient(this.currentUser.id, chat, newPostKey);
+    this.currentUser.subscribe(data => {
+      this.addChatToClient(chat, data.id, newPostKey);
+      this.addChatToClient(data.id, chat, newPostKey);
+    });
+
 
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
@@ -78,15 +95,14 @@ export class UsersComponent implements OnInit {
   }
 
   activeBtn(btn) {
-    if (!this.tmpEl){this.tmpEl = btn};
-    console.log(this.tmpEl.classList)
-    for (let clss of this.tmpEl.classList) {
-      if (clss === 'activeChat') {
-        this.tmpEl.classList.remove('activeChat');
-      }else{
-        btn.classList.add('activeChat');
+    this.users.subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].login.toLowerCase() === btn.innerText.toLowerCase()) {
+          [data[0], data[i]] = [Object.assign({}, data[i]), Object.assign({}, data[0])] ;
+          break;
+        }
       }
-    }
-    this.tmpEl = btn;
+      return data;
+    });
   }
 }

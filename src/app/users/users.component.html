@@ -2,8 +2,8 @@
   <input type="text" [formControl]="find" placeholder="Поиск">
 </div>
 <div class="user-btns">
-  <div *ngFor="let user of users">
-    <button (click)="checkChat(user.id, el)" #el class="btn">{{ user.login }}</button>
+  <div *ngFor="let user of users | async">
+    <button (click)="checkChat(user.id, el)" #el>{{ user.login }}</button>
   </div>
 </div>
 <div class="chats">
