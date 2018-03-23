@@ -9,8 +9,11 @@ export class CanLoadViaAuthGuard implements CanLoad {
   constructor (private authService: AuthService) {}
 
   canLoad() {
+    // if (localStorage.getItem('logged') === 'true'){
+    //   return true;
+    // }
+    // return false;
+    console.log('can load',this.authService.logined.asObservable());
     return this.authService.logined.asObservable();
-    // console.log(localStorage.getItem('logged'));
-    // return true;
   }
 }

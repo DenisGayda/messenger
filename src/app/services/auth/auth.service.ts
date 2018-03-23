@@ -15,7 +15,7 @@ import {IMyUser} from '../../models/IMyUser';
 export class AuthService {
   user: Observable<User>;
   logined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem('logged')));
-
+ 
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
               private myDb: DbService,
@@ -65,6 +65,7 @@ export class AuthService {
           this.storeService.setUser(users[0]);
         });
         this.logined = new BehaviorSubject<boolean>(true);
+        console.log('logined true',this.logined);
         localStorage.setItem('logged', JSON.stringify(true));
         this.router.navigateByUrl('/users');
       })
@@ -74,6 +75,7 @@ export class AuthService {
 
   logout() {
     this.logined = new BehaviorSubject<boolean>(false);
+    console.log('logined false', this.logined);
     localStorage.setItem('logged', JSON.stringify(false));
     this.firebaseAuth
       .auth

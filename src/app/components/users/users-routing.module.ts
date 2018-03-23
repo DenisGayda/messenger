@@ -1,6 +1,6 @@
 import {Routes, RouterModule} from '@angular/router';
 import {UsersComponent} from "./users.component";
-import {CanActivateViaAuthGuard} from '../../services/guards/CanActivateViaAuthGuard';
+import {CanLoadViaAuthGuard} from '../../services/guards/CanLoadViaAuthGuard';
 import {NgModule} from '@angular/core';
 
 
@@ -12,7 +12,8 @@ const USERS_ROUTER: Routes = [
         children:[
             {
                 path:'chat/:id',
-                loadChildren:'app/components/chat/chat.module#ChatModule'
+                loadChildren:'app/components/chat/chat.module#ChatModule',
+                canLoad:[CanLoadViaAuthGuard]
             }
         ]
     }

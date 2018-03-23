@@ -9,7 +9,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {Title} from '@angular/platform-browser';
 import {LoginModule} from './components/login/login.module';
 import {ChatModule} from './components/chat/chat.module';
 import {AuthService} from './services/auth/auth.service';
@@ -42,7 +42,11 @@ export const firebaseConfig = {
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [AuthService, StoreService, DbService],
+  providers: [
+    AuthService, 
+    StoreService, 
+    DbService,
+    Title],
   bootstrap: [AppComponent],
 })
 export class AppModule {
