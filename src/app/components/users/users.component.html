@@ -5,6 +5,7 @@
   <div *ngIf="!!currentUserChat">
     <button >{{ currentUserChat}}</button>
   </div>
+
   <div *ngFor="let user of users | async">
     <button (click)="checkChat(user)"
     *ngIf="currentUserChat !== user.login">{{ user.login }}</button>

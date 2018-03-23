@@ -1,12 +1,12 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {StoreService} from '../services/store/store.service';
-import {DbService} from '../services/db/db.service';
+import {StoreService} from '../../services/store/store.service';
+import {DbService} from '../../services/db/db.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
-import {IMyUser} from '../interfaces/IMyUser';
-import {IDictionary} from '../interfaces/IDictionary';
-import {IMessage} from '../interfaces/IMessage';
+import {IMyUser} from '../../models/IMyUser';
+import {IDictionary} from '../../models/IDictionary';
+import {IMessage} from '../../models/IMessage';
 import {Observable} from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
@@ -31,8 +31,8 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
     this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.db.selectDB('users'))
-      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase().includes(searchString.toLowerCase())))
-    this.usersStart = this.db.selectDB<IMyUser>('uersers')
+      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase().includes(searchString.toLowerCase())));
+    this.usersStart = this.db.selectDB<IMyUser>('users');
     this.currentUser = this.storeService.user;
   }
 
