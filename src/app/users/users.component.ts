@@ -24,39 +24,25 @@ export class UsersComponent implements OnInit {
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
   find = new FormControl();
+  currentUserChat: string;
 
   constructor(public db: DbService, private storeService: StoreService, private router: Router, private titleService: Title) {}
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
     this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.db.selectDB('users'))
-      .map(res => {
-        if (res[0] === '') {
-          return res[1];
-        } else {
-          const txt = res[0];
-          const users = res[1];
-          const trueUsers = [];
-          users.forEach((user: IMyUser) => {
-            if (user.login.toLowerCase().indexOf(txt) !== -1) {
-              trueUsers.push(user);
-            }
-          });
-          return trueUsers;
-        }
-      })
-      .map(data => data)
+      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase().includes(searchString.toLowerCase())))
     this.usersStart = this.db.selectDB<IMyUser>('uersers')
     this.currentUser = this.storeService.user;
   }
 
-  checkChat(chat: string, btn): void {
-    this.activeBtn(btn);
+  checkChat(user: IMyUser): void {
+    this.currentUserChat = user.login;
     this.currentUser.subscribe(data => {
-      if (data.chats[chat] !== undefined) {
-        this.enterInRealChat(data.chats[chat]);
+      if (data.chats[user.id] !== undefined) {
+        this.enterInRealChat(data.chats[user.id]);
       } else {
-        this.createChat(chat);
+        this.createChat(user.id);
       }
     });
   }
@@ -78,7 +64,6 @@ export class UsersComponent implements OnInit {
       this.addChatToClient(data.id, chat, newPostKey);
     });
 
-
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
     this.db.updateDB(updates).then(() => {
@@ -92,15 +77,4 @@ export class UsersComponent implements OnInit {
     this.db.addNewChat(updates2);
   }
 
-  activeBtn(btn) {
-    this.users.subscribe(data => {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].login.toLowerCase() === btn.innerText.toLowerCase()) {
-          [data[0], data[i]] = [Object.assign({}, data[i]), Object.assign({}, data[0])] ;
-          break;
-        }
-      }
-      return data;
-    });
-  }
 }
