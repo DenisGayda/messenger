@@ -6,7 +6,7 @@ import {IMyUser} from '../../models/IMyUser';
 
 @Injectable()
 export class StoreService {
-  private myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
+  private myUser = new ReplaySubject<IMyUser>();
 
   constructor(public  db: AngularFireDatabase) {}
 
