@@ -1,14 +1,12 @@
 export function LocalStorage(
-    target: Object, // The prototype of the class
-    decoratedPropertyName: string // The name of the property
-    ) {
+    target: Object,
+    decoratedPropertyName: string) {
 
-    // get and set methods
     Object.defineProperty(target, decoratedPropertyName, {
-        get: function () {
+        get: () => {
             return localStorage.getItem(decoratedPropertyName) || '';
         },
-        set: function (newValue) {
+        set: newValue => {
             localStorage.setItem(decoratedPropertyName, newValue);
         }
     });
