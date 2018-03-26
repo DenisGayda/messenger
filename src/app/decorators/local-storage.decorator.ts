@@ -6,7 +6,7 @@ export function LocalStorage(
     // get and set methods
     Object.defineProperty(target, decoratedPropertyName, {
         get: function () {
-            return localStorage.getItem(decoratedPropertyName) || '';
+            return JSON.parse(localStorage.getItem(decoratedPropertyName)) || '';
         },
         set: function (newValue) {
             localStorage.setItem(decoratedPropertyName, newValue);
