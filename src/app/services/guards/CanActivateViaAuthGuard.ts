@@ -7,8 +7,8 @@ import {Observable} from 'rxjs';
 export class CanActivateViaAuthGuard implements CanActivate {
 
   constructor (private authService: AuthService) {}
-  
-  canActivate():Observable<boolean> {
+
+  canActivate(): Observable<boolean> {
     return this.authService.logined.asObservable();
   }
 }
