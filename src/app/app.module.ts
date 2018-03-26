@@ -18,6 +18,7 @@ import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HeaderModule} from './components/header/header.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -42,7 +43,8 @@ export const firebaseConfig = {
     AngularFireStorageModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HeaderModule
   ],
   providers: [
     AuthService, 
