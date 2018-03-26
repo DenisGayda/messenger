@@ -6,16 +6,16 @@ import {IMyUser} from '../../models/IMyUser';
 
 @Injectable()
 export class StoreService {
-  _myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
+  private myUser: ReplaySubject<IMyUser> = new ReplaySubject<IMyUser>();
 
   constructor(public  db: AngularFireDatabase) {}
 
   setUser(user: IMyUser): void {
-    this._myUser.next({chats: {}, ...user});
+    this.myUser.next({chats: {}, ...user});
     localStorage.setItem('userInMyApp', JSON.stringify(user));
   }
 
   get user(): Observable<IMyUser> {
-    return this._myUser.asObservable();
+    return this.myUser.asObservable();
   }
 }

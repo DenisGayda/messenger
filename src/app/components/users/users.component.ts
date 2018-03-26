@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   currentUser$: Observable<IMyUser>;
   find = new FormControl();
   currentUserChat: IMyUser;
+
   private onDestroy$ = new Subject<void>();
 
   constructor(public dbService: DbService,
@@ -46,11 +47,14 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   checkChat(user: IMyUser) {
     this.currentUserChat = user;
-    this.currentUser$.subscribe(data => {
-      data.chats[user.id] !== undefined
+    this.currentUser$
+      .map(data => {
+      !!data.chats[user.id]
         ? this.enterInRealChat(data.chats[user.id])
         : this.createChat(user.id);
-    });
+      })
+      .takeUntil(this.onDestroy$)
+    ;
   }
 
   enterInRealChat(check: string) {
@@ -70,7 +74,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.addChatToClient(chat, data.id, newPostKey);
       this.addChatToClient(data.id, chat, newPostKey);
     });
-
     const updates = {};
     updates['/chats/' + newPostKey] = postData;
     this.dbService.updateDB(updates)
@@ -86,7 +89,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
