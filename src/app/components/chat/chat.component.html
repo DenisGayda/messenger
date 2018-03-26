@@ -13,8 +13,14 @@
   </div>
 
   <div>
-    <input type="text" placeholder="New message" [(ngModel)]="newContent" (keyup.enter)="addNewContent()">
-    <input type="file" (change)="addFile($event.target)">
+    <input type="text"
+           placeholder="New message"
+           [(ngModel)]="newContent"
+           (keyup.enter)="addNewContent()">
+    
+    <input type="file"
+           (change)="addFile($event.target)">
+
     <button (click)="addNewContent()">
       Send message
     </button>

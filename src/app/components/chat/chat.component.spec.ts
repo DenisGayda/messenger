@@ -10,14 +10,17 @@ import {StoreServiceMock} from '../../services/store/store.service.mock';
 import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
 
 @Component({
-  template: `<router-outlet></router-outlet>`
+  template: `
+    <router-outlet></router-outlet>`
 })
-class RoutingComponent {}
+class RoutingComponent {
+}
 
 @Component({
   template: ''
 })
-class DummyComponent {}
+class DummyComponent {
+}
 
 describe('component: RoutingComponent', () => {
   let component: ChatComponent;
@@ -25,10 +28,16 @@ describe('component: RoutingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([
-        {path: 'home', component: DummyComponent}
-      ]), FormsModule, ReactiveFormsModule],
-      declarations: [RoutingComponent, DummyComponent, ChatComponent],
+      imports: [
+        RouterTestingModule.withRoutes([
+          {path: 'home', component: DummyComponent}
+        ]),
+        FormsModule,
+        ReactiveFormsModule],
+      declarations: [
+        RoutingComponent,
+        DummyComponent,
+        ChatComponent],
       providers: [
         {provide: DataBaseService, useClass: DataBaseServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
@@ -49,7 +58,7 @@ describe('component: RoutingComponent', () => {
   }));
 
   it('Method "addNewContent" test', async(() => {
-      expect(component.addNewContent);
+    expect(component.addNewContent);
   }));
 
 });

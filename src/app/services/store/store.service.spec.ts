@@ -1,5 +1,5 @@
 import {TestBed, inject, async} from '@angular/core/testing';
-import { StoreService } from './store.service';
+import {StoreService} from './store.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {Router, RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';
@@ -17,19 +17,28 @@ import {AppRoutingModule} from '../../routes/app-routing.module';
 describe('StoreService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
         AppRoutingModule],
-      providers: [AuthService, StoreService, DataBaseService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }]
     })
       .compileComponents();
   }));

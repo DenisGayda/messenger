@@ -18,8 +18,13 @@ import {DataBaseService} from './dataBase';
 describe('DataBaseService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
@@ -27,11 +32,16 @@ describe('DataBaseService', () => {
         AngularFireStorageModule,
         ReactiveFormsModule,
         AppRoutingModule],
-      providers: [AuthService, StoreService, DataBaseService, AngularFireStorage, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        AngularFireStorage,
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }]
     })
       .compileComponents();
   }));

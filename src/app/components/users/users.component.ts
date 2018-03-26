@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   currentUser: Observable<IMyUser>;
   find = new FormControl();
   currentUserChat: IMyUser;
+
   private onDestroyStream$ = new Subject<void>();
 
   constructor(public dbService: DataBaseService,

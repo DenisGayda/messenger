@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import {LoginComponent} from './login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
@@ -22,8 +22,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFireStorageModule,
@@ -31,11 +36,15 @@ describe('LoginComponent', () => {
         AngularFireDatabaseModule,
         ReactiveFormsModule,
         AppRoutingModule],
-      providers: [AuthService, StoreService, DataBaseService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }]
     })
       .compileComponents();
   }));

@@ -19,8 +19,13 @@ import {AppRoutingModule} from '../../routes/app-routing.module';
 describe('AuthService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
@@ -28,11 +33,15 @@ describe('AuthService', () => {
         AngularFireStorageModule,
         ReactiveFormsModule,
         AppRoutingModule],
-      providers: [AuthService, StoreService, DataBaseService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }]
     })
       .compileComponents();
   }));

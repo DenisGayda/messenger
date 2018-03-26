@@ -22,8 +22,13 @@ describe('UsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
@@ -31,11 +36,15 @@ describe('UsersComponent', () => {
         AngularFireDatabaseModule,
         ReactiveFormsModule,
         AppRoutingModule],
-      providers: [AuthService, StoreService, DataBaseService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        }]
     })
       .compileComponents();
   }));
