@@ -48,12 +48,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   checkChat(user: IMyUser) {
     this.currentUserChat = user;
     this.currentUser$
-      .map(data => {
+      .takeUntil(this.onDestroy$)
+      .subscribe(data => {
       !!data.chats[user.id]
         ? this.enterInRealChat(data.chats[user.id])
         : this.createChat(user.id);
       })
-      .takeUntil(this.onDestroy$)
     ;
   }
 
