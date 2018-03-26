@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {Subject} from 'rxjs/Subject';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {IMyUser} from '../../models/IMyUser';
 

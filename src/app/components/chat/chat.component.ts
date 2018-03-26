@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatId: string;
   userLogin: string;
 
-  private onDestroyStream$ = new Subject<void>();
+  private onDestroyStream = new Subject<void>();
 
   constructor(public dbService: DbService,
               private storeService: StoreService,
@@ -30,10 +30,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Чат');
-    this.storeService.user.takeUntil(this.onDestroyStream$).subscribe((user: IMyUser) => {
+    this.storeService.user.takeUntil(this.onDestroyStream).subscribe((user: IMyUser) => {
       this.userLogin = user.login;
     });
-    this.route.paramMap.takeUntil(this.onDestroyStream$).subscribe(id => {
+    this.route.paramMap.takeUntil(this.onDestroyStream).subscribe(id => {
       this.chatId = id.get('id');
       this.messages$ = this.dbService.getMessages(this.chatId);
     });
@@ -51,14 +51,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   addFile(target: HTMLInputElement): void {
     const file = target.files.item(0);
     if (file) {
-      this.dbService.addFile(file).takeUntil(this.onDestroyStream$).subscribe(response => {
+      this.dbService.addFile(file).takeUntil(this.onDestroyStream).subscribe(response => {
         this.dbService.sendMessage('img', response, this.chatId, this.userLogin);
       });
     }
   }
 
   ngOnDestroy(): void {
-    this.onDestroyStream$.next();
-    this.onDestroyStream$.complete();
+    this.onDestroyStream.next();
+    this.onDestroyStream.complete();
   }
 }

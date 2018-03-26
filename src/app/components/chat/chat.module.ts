@@ -1,22 +1,20 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {ChatComponent} from './chat.component';
-import {Title} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {ChatRoutingModule} from './chat-routing.module'
 
 @NgModule({
   declarations: [
     ChatComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    FormsModule
-  ],
-  providers: [
-    Title
+    FormsModule,
+    ChatRoutingModule
   ],
   exports: [ChatComponent]
 })

@@ -5,15 +5,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireModule} from 'angularfire2';
+import {StoreService} from '../../services/store/store.service';
+import {DbService} from '../../services/db/db.service';
+import {AppRouterModule} from '../routes/app.router.module';
 import {UsersComponent} from '../users/users.component';
 import {ChatComponent} from '../chat/chat.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {firebaseConfig} from '../../app.module';
-import {MyRoutesModule} from '../../routes/my-routes.module';
 import {AuthService} from '../../services/auth/auth.service';
-import {StoreService} from '../../services/store/store.service';
-import {DbService} from '../../services/db/db.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 
 describe('LoginComponent', () => {
@@ -30,7 +30,7 @@ describe('LoginComponent', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        MyRoutesModule],
+        AppRouterModule],
       providers: [AuthService, StoreService, DbService, {
         provide: Router, useClass: class {
           navigate = jasmine.createSpy('navigate');
