@@ -1,6 +1,6 @@
 import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
-import {DbService} from '../../services/db/db.service';
+import {DataBaseService} from '../../services/db/dataBase';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   currentUserChat: IMyUser;
   private onDestroyStream$ = new Subject<void>();
 
-  constructor(public dbService: DbService,
+  constructor(public dbService: DataBaseService,
               private storeService: StoreService,
               private router: Router,
               private titleService: Title) {

@@ -7,31 +7,31 @@ import 'rxjs/add/operator/takeUntil';
 import {IMessage} from '../../models/IMessage';
 
 @Injectable()
-export class DbService {
+export class DataBaseService {
 
-  constructor(public  db: AngularFireDatabase, public afStor: AngularFireStorage) {
+  constructor(private  angularDataBase: AngularFireDatabase, private afStor: AngularFireStorage) {
   }
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
-    const list: AngularFireList<T> = this.db.list(from, callback);
+    const list: AngularFireList<T> = this.angularDataBase.list(from, callback);
     return list.valueChanges();
   }
 
-  updateDB(updates: any): Observable<any> {
-    this.db.database.ref().update(updates);
+  updateDB(updates: Object): Observable<Object> {
+    this.angularDataBase.database.ref().update(updates);
     return new Observable();
   }
 
-  insertDB(from: string, objToPush: any): ThenableReference {
-    return this.db.list(from).push(objToPush);
+  insertDB(from: string, objToPush: Object): ThenableReference {
+    return this.angularDataBase.list(from).push(objToPush);
   }
 
   getNewId(from: string): string {
-    return this.db.database.ref().child(from).push().key;
+    return this.angularDataBase.database.ref().child(from).push().key;
   }
 
-  addNewChat(newChat: any): void {
-    this.db.database.ref().update({...newChat});
+  addNewChat(newChat: Object): void {
+    this.angularDataBase.database.ref().update({...newChat});
   }
 
   addFile(file: File): Observable<string> {

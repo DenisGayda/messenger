@@ -10,10 +10,9 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {LoginModule} from './components/login/login.module';
-import {ChatModule} from './components/chat/chat.module';
 import {AuthService} from './services/auth/auth.service';
 import {StoreService} from './services/store/store.service';
-import {DbService} from './services/db/db.service';
+import {DataBaseService} from './services/db/dataBase';
 import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
@@ -42,12 +41,14 @@ export const firebaseConfig = {
     AngularFireStorageModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    UsersModule,
+    LoginModule
   ],
   providers: [
-    AuthService, 
-    StoreService, 
-    DbService,
+    AuthService,
+    StoreService,
+    DataBaseService,
     Title,
     CanActivateViaAuthGuard
   ],

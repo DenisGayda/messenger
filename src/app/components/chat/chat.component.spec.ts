@@ -4,10 +4,10 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ChatComponent} from './chat.component';
 import {FirebaseApp} from 'angularfire2';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DbService} from '../../services/db/db.service';
+import {DataBaseService} from '../../services/db/dataBase';
 import {StoreService} from '../../services/store/store.service';
 import {StoreServiceMock} from '../../services/store/store.service.mock';
-import {DbServiceMock} from '../../services/db/db.service.mock';
+import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
 
 @Component({
   template: `<router-outlet></router-outlet>`
@@ -30,7 +30,7 @@ describe('component: RoutingComponent', () => {
       ]), FormsModule, ReactiveFormsModule],
       declarations: [RoutingComponent, DummyComponent, ChatComponent],
       providers: [
-        {provide: DbService, useClass: DbServiceMock},
+        {provide: DataBaseService, useClass: DataBaseServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
         FirebaseApp]
     });

@@ -5,17 +5,17 @@ import {ThenableReference} from 'firebase/database';
 import {IMessage} from '../../models/IMessage';
 
 @Injectable()
-export class DbServiceMock {
+export class DataBaseServiceMock {
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     return Observable.of([]);
   }
 
-  updateDB(updates: any): Observable<any> {
+  updateDB(updates: Object): Observable<Object> {
     return;
   }
 
-  insertDB(from: string, objToPush: any): ThenableReference {
+  insertDB(from: string, objToPush: Object): ThenableReference {
     return;
   }
 
@@ -23,12 +23,9 @@ export class DbServiceMock {
     return;
   }
 
-  addNewChat(newChat: any) {
-  }
+  addNewChat(newChat: Object) {}
 
-  sendMessage(type: string, text: string, chat: string, user: string): void {
-    return;
-  }
+  sendMessage(type: string, text: string, chat: string, user: string) {}
 
   getMessages(chatId: string): Observable<IMessage[]> {
     return;
