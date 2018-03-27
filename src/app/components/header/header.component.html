@@ -1,0 +1,8 @@
+<mat-toolbar>
+  <a routerLink="/" >My Application</a>
+  <button class="mat-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/">Login</button>
+    <button mat-menu-item routerLink="/users">Users</button>
+  </mat-menu>
+</mat-toolbar>
