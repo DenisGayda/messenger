@@ -11,6 +11,7 @@ import {IMyUser} from '../../models/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService implements OnDestroy {
@@ -57,7 +58,16 @@ export class AuthService implements OnDestroy {
       .catch(err => {
       });
   }
-
+  
+  loginWithGoogle(){
+    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+      (success) => {
+      this.router.navigateByUrl('/users');
+    }).catch(
+      (err) => {
+      })
+  }
+  
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
