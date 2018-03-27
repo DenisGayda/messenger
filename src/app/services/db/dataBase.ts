@@ -4,8 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'rxjs/add/operator/takeUntil';
-import {IMessage} from '../../models/IMessage';
-import {INewChat} from '../../models/INewChat';
+import {IMessage} from '../../components/chat/config/interfaces/IMessage';
+import {INewChat} from '../../config/interfaces/INewChat';
 
 @Injectable()
 export class DataBaseService {

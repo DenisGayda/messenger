@@ -3,10 +3,11 @@ import {DataBaseService} from '../../services/db/dataBase';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
-import {IMessage} from '../../models/IMessage';
+import {IMessage} from './config/interfaces/IMessage';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
+import {EMessageType} from './config/enums/EMessageType';
 
 @Component({
   selector: 'app-chat',
@@ -47,12 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addNewContent() {
-    this.dbService.sendMessage(this.chatId, {
-      type: 'text',
-      text: this.newContent,
-      user: this.userLogin,
-      date: Date.now()
-    });
+    this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
     this.newContent = '';
   }
 
@@ -64,14 +60,18 @@ export class ChatComponent implements OnInit, OnDestroy {
         .addFile(file)
         .takeUntil(this.onDestroyStream$)
         .subscribe(response => {
-          this.dbService.sendMessage(this.chatId, {
-            type: 'img',
-            text: response,
-            user: this.userLogin,
-            date: Date.now()
-          });
+          this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.IMAGE, response));
         });
     }
+  }
+
+  generateMessage(type: EMessageType, text: string): IMessage {
+    return {
+      type: type,
+      text: text,
+      user: this.userLogin,
+      date: Date.now()
+    };
   }
 
   ngOnDestroy(): void {

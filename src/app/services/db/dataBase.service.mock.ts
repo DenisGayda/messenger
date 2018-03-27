@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
-import {IMessage} from '../../models/IMessage';
-import {INewChat} from '../../models/INewChat';
+import {IMessage} from '../../components/chat/config/interfaces/IMessage';
+import {INewChat} from '../../config/interfaces/INewChat';
 
 @Injectable()
 export class DataBaseServiceMock {

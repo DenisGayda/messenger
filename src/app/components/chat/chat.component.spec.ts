@@ -3,12 +3,11 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ChatComponent} from './chat.component';
 import {FirebaseApp} from 'angularfire2';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {DataBaseService} from '../../services/db/dataBase';
 import {StoreService} from '../../services/store/store.service';
 import {StoreServiceMock} from '../../services/store/store.service.mock';
 import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
-import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   template: `<router-outlet></router-outlet>`

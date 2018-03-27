@@ -7,7 +7,7 @@ import {DataBaseService} from '../db/dataBase';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
-import {IMyUser} from '../../models/IMyUser';
+import {IMyUser} from '../../config/interfaces/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
