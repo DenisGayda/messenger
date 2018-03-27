@@ -1,4 +1,4 @@
-import {IDictionary} from './IDictionary';
+import {IDictionary} from '../dictionaris/IDictionary';
 
 export interface IMyUser {
   id: string;

@@ -1,26 +1,30 @@
 <div class="chat">
   <div class="chat-block">
-    <div class="messages-block" *ngIf="messages$">
+    <div *ngIf="messages$" class="messages-block">
       <div *ngFor="let message of messages$ | async" class="mes-block">
         <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'" [src]="message.text">
 
-          <span class="date-span">{{ checkDate(message.date)}}</span>
+          <span class="date-span">{{ generateDate(message.date)}}</span>
         </h5>
       </div>
     </div>
   </div>
 
-    <div>
-      <input (keyup.enter)="addNewContent()" type="text" [(ngModel)]="newContent" placeholder="New message">
+  <div>
+    <input type="text"
+           placeholder="New message"
+           [(ngModel)]="newContent"
+           (keyup.enter)="addNewContent()">
 
-      <input type="file" (change)="addFile($event.target)">
+    <input type="file"
+           (change)="addFile($event.target)">
 
-      <button (click)="addNewContent()">
-        Send message
-      </button>
-    </div>
+    <button (click)="addNewContent()">
+      Send message
+    </button>
+  </div>
 
   <span></span>
-  </div>
+</div>
