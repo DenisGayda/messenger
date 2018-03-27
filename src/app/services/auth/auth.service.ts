@@ -15,10 +15,11 @@ import 'rxjs/add/operator/takeUntil';
 @Injectable()
 export class AuthService implements OnDestroy {
   user: Observable<User>;
-  @LocalStorage localLogined:boolean;
-  logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
+  @LocalStorage localLogined: boolean;
+  logined = new BehaviorSubject(this.localLogined);
+
   private onDestroyStream$ = new Subject<void>();
- 
+
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
               private myDb: DbService,
@@ -27,11 +28,11 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  signup(email: string, password: string, newLogin: string) {
+  signup(email: string, password: string, newLogin: string): void {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
-      .then(value => {
+      .then(() => {
         // Get a key for a new Post.
         const newPostKey = this.myDb.getNewId('users');
         const postData = {
@@ -58,7 +59,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): void {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email.toLowerCase(), password)
@@ -78,7 +79,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  logout() {
+  logout(): void {
     this.logined.next(false);
     this.localLogined = false;
     this.firebaseAuth
@@ -90,5 +91,4 @@ export class AuthService implements OnDestroy {
     this.onDestroyStream$.next();
     this.onDestroyStream$.complete();
   }
-
 }

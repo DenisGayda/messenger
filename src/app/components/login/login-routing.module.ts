@@ -1,12 +1,11 @@
 import {Routes, RouterModule} from '@angular/router';
-import {LoginComponent} from "./login.component";
+import {LoginComponent} from './login.component';
 import {NgModule} from '@angular/core';
 
 const LOGIN_ROUTER: Routes = [
-    { 
-        path: '',
+    {   path: '',
         component: LoginComponent,
-        pathMatch:'full'
+        pathMatch: 'full'
     }
 ];
 

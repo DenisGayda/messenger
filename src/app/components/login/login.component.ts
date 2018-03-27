@@ -13,8 +13,7 @@ export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
 
-  constructor(public authService: AuthService, private titleService: Title) {
-  }
+  constructor(public authService: AuthService, private titleService: Title) {}
 
   ngOnInit() {
     this.titleService.setTitle('Вход');
@@ -30,10 +29,11 @@ export class LoginComponent implements OnInit {
       this.authService.signup(email, password, newLogin);
       return;
     }
+
     this.authService.login(email, password);
   }
 
-  signup(): void {
+  signUp(): void {
     this.newUserForm.addControl('newLogin', new FormControl('', Validators.required));
   }
 }

@@ -7,7 +7,6 @@ import {AngularFireModule} from 'angularfire2';
 import {StoreService} from '../store/store.service';
 import {DbService} from '../db/db.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MyRoutesModule} from '../../routes/my-routes.module';
 import {firebaseConfig} from '../../app.module';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -26,8 +25,7 @@ describe('AuthService', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         AngularFireStorageModule,
-        ReactiveFormsModule,
-        MyRoutesModule],
+        ReactiveFormsModule],
       providers: [AuthService, StoreService, DbService, {
         provide: Router, useClass: class {
           navigate = jasmine.createSpy('navigate');
