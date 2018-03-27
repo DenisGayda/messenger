@@ -5,7 +5,7 @@ import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'rxjs/add/operator/takeUntil';
 import {IMessage} from '../../components/chat/config/interfaces/IMessage';
-import {INewChat} from '../../config/interfaces/INewChat';
+import {IDictionary} from '../../config/dictionaris/IDictionary';
 
 @Injectable()
 export class DataBaseService {
@@ -32,7 +32,7 @@ export class DataBaseService {
     return this.angularDataBase.database.ref().child(from).push().key;
   }
 
-  addNewChat(newChat: INewChat): void {
+  addNewChat(newChat: IDictionary<string>): void {
     this.angularDataBase.database.ref().update({...newChat});
   }
 
