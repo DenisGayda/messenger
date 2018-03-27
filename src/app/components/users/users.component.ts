@@ -88,9 +88,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addChatToClient(id1: string, id2: string, key: string) {
-    const updates2 = {};
-    updates2[`/${USERS}/${id1}/${CHATS}/${id2}`] = key;
-    this.dbService.addNewChat(updates2);
+    const updates = {};
+    updates[`/${USERS}/${id1}/${CHATS}/${id2}`] = key;
+    this.dbService.addNewChat(updates);
   }
 
   ngOnDestroy() {
