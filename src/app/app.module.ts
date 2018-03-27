@@ -10,14 +10,15 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {LoginModule} from './components/login/login.module';
+import {ChatModule} from './components/chat/chat.module';
 import {AuthService} from './services/auth/auth.service';
 import {StoreService} from './services/store/store.service';
-import {DataBaseService} from './services/db/dataBase';
+import {DbService} from './services/db/db.service';
 import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {APP_BASE_HREF} from '@angular/common';
+import {HeaderModule} from './components/header/header.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -43,8 +44,7 @@ export const firebaseConfig = {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    UsersModule,
-    LoginModule
+    HeaderModule
   ],
   providers: [
     AuthService,
