@@ -32,9 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Чат');
     this.storeService.user
       .takeUntil(this.onDestroyStream$)
-      .subscribe(user => {
-        this.userLogin = user.login;
-      });
+      .subscribe(user => this.userLogin = user.login);
     this.route.paramMap
       .takeUntil(this.onDestroyStream$)
       .subscribe(id => {
@@ -67,8 +65,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   generateMessage(type: EMessageType, text: string): IMessage {
     return {
-      type: type,
-      text: text,
+      type,
+      text,
       user: this.userLogin,
       date: Date.now()
     };

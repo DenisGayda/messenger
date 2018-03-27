@@ -10,8 +10,8 @@ import {IMessage} from '../chat/config/interfaces/IMessage';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators';
 import {combineLatest} from 'rxjs/observable/combineLatest';
+import {startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   users: Observable<IMyUser[]>;
   usersStart: Observable<IMyUser[]>;
   currentUser: Observable<IMyUser>;
-  find = new FormControl();
+  find = new FormControl('');
   currentUserChat: IMyUser;
 
   private onDestroyStream$ = new Subject<void>();
@@ -38,13 +38,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.users = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB('users'))
-      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => {
-        if (login) {
-          return login.toLowerCase()
-            .includes(searchString.toLowerCase());
-        }
-      }));
+
+    this.users = combineLatest(
+      this.find.valueChanges.pipe(startWith('')),
+      this.dbService.selectDB('users').pipe(startWith([{login: ''}])))
+      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
+        .includes(searchString.toLowerCase())
+      ));
     this.usersStart = this.dbService.selectDB<IMyUser>('users');
     this.currentUser = this.storeService.user;
   }
@@ -90,7 +90,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     updates2[`/users/${id1}/chats/${id2}`] = key;
     this.dbService.addNewChat(updates2);
   }
-
 
   ngOnDestroy(): void {
     this.onDestroyStream$.next();
