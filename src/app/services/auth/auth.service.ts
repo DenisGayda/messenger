@@ -15,10 +15,10 @@ import 'rxjs/add/operator/takeUntil';
 @Injectable()
 export class AuthService implements OnDestroy {
   user: Observable<User>;
-  @LocalStorage localLogined:boolean;
+  @LocalStorage localLogined: boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
- 
+
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
               private myDb: DbService,

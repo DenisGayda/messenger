@@ -73,10 +73,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       idChat: newPostKey,
       messages: {}
     };
-    this.currentUser$.subscribe(data => {
-      this.addChatToClient(chat, data.id, newPostKey);
-      this.addChatToClient(data.id, chat, newPostKey);
-    });
+    this.currentUser$
+      .takeUntil(this.onDestroy$)
+      .subscribe(data => {
+        this.addChatToClient(chat, data.id, newPostKey);
+        this.addChatToClient(data.id, chat, newPostKey);
+      });
     const updates = {};
     updates[`/${CHATS}/` + newPostKey] = postData;
     this.dbService.updateDB(updates)
