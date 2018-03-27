@@ -29,14 +29,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.titleService.setTitle('Чат');
-    this.storeService
-      .user
+    this.storeService.user
       .takeUntil(this.onDestroyStream$)
       .subscribe(user => {
         this.userLogin = user.login;
       });
-    this.route
-      .paramMap
+    this.route.paramMap
       .takeUntil(this.onDestroyStream$)
       .subscribe(id => {
         this.chatId = id.get('id');
@@ -44,12 +42,17 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
-  checkDate(mesDate: Date): string {
+  generateDate(mesDate: Date): string {
     return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
   }
 
   addNewContent() {
-    this.dbService.sendMessage('text', this.newContent, this.chatId, this.userLogin);
+    this.dbService.sendMessage(this.chatId, {
+      type: 'text',
+      text: this.newContent,
+      user: this.userLogin,
+      date: Date.now()
+    });
     this.newContent = '';
   }
 
@@ -61,7 +64,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         .addFile(file)
         .takeUntil(this.onDestroyStream$)
         .subscribe(response => {
-          this.dbService.sendMessage('img', response, this.chatId, this.userLogin);
+          this.dbService.sendMessage(this.chatId, {
+            type: 'img',
+            text: response,
+            user: this.userLogin,
+            date: Date.now()
+          });
         });
     }
   }

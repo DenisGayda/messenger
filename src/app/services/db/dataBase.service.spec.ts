@@ -1,6 +1,6 @@
 import {TestBed, inject, async} from '@angular/core/testing';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';
 import {StoreService} from '../store/store.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,6 +14,7 @@ import {LoginComponent} from '../../components/login/login.component';
 import {AngularFireStorage, AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {DataBaseService} from './dataBase';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('DataBaseService', () => {
   beforeEach(async(() => {
@@ -21,7 +22,8 @@ describe('DataBaseService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent],
+        LoginComponent
+      ],
       imports: [
         FormsModule,
         RouterModule,
@@ -31,17 +33,15 @@ describe('DataBaseService', () => {
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         ReactiveFormsModule,
-        AppRoutingModule],
+        AppRoutingModule
+      ],
       providers: [
         AuthService,
         StoreService,
         DataBaseService,
         AngularFireStorage,
-        {
-          provide: Router, useClass: class {
-            navigate = jasmine.createSpy('navigate');
-          }
-        }]
+        {provide: APP_BASE_HREF, useValue : '/'}
+      ]
     })
       .compileComponents();
   }));

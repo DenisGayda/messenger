@@ -3,6 +3,7 @@ import {QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {IMessage} from '../../models/IMessage';
+import {INewChat} from '../../models/INewChat';
 
 @Injectable()
 export class DataBaseServiceMock {
@@ -11,21 +12,23 @@ export class DataBaseServiceMock {
     return Observable.of([]);
   }
 
-  updateDB(updates: Object): Observable<Object> {
+  updateDB<T>(updates: T): Observable<T> {
     return;
   }
 
-  insertDB(from: string, objToPush: Object): ThenableReference {
-    return;
+  insertDB<T>(from: string, objToPush: T): ThenableReference {
+    return '';
   }
 
   getNewId(from: string): string {
     return;
   }
 
-  addNewChat(newChat: Object) {}
+  addNewChat(newChat: INewChat) {
+  }
 
-  sendMessage(type: string, text: string, chat: string, user: string) {}
+  sendMessage(type: string, text: string, chat: string, user: string) {
+  }
 
   getMessages(chatId: string): Observable<IMessage[]> {
     return;

@@ -6,7 +6,7 @@
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'" [src]="message.text">
 
-          <span class="date-span">{{ checkDate(message.date)}}</span>
+          <span class="date-span">{{ generateDate(message.date)}}</span>
         </h5>
       </div>
     </div>
@@ -17,7 +17,7 @@
            placeholder="New message"
            [(ngModel)]="newContent"
            (keyup.enter)="addNewContent()">
-    
+
     <input type="file"
            (change)="addFile($event.target)">
 

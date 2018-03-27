@@ -8,10 +8,10 @@ import {DataBaseService} from '../../services/db/dataBase';
 import {StoreService} from '../../services/store/store.service';
 import {StoreServiceMock} from '../../services/store/store.service.mock';
 import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
-  template: `
-    <router-outlet></router-outlet>`
+  template: `<router-outlet></router-outlet>`
 })
 class RoutingComponent {
 }
@@ -32,16 +32,18 @@ describe('component: RoutingComponent', () => {
         RouterTestingModule.withRoutes([
           {path: 'home', component: DummyComponent}
         ]),
-        FormsModule,
-        ReactiveFormsModule],
+        FormsModule
+      ],
       declarations: [
         RoutingComponent,
         DummyComponent,
-        ChatComponent],
+        ChatComponent
+      ],
       providers: [
         {provide: DataBaseService, useClass: DataBaseServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
-        FirebaseApp]
+        FirebaseApp
+      ]
     });
   });
 
@@ -54,7 +56,7 @@ describe('component: RoutingComponent', () => {
   it('Method "checkDate" test', async(() => {
     const dateTest = Date.now();
     const toBe = `${new Date(dateTest).getHours()}:${new Date(dateTest).getMinutes()}`;
-    expect(component.checkDate(new Date(dateTest))).toBe(toBe);
+    expect(component.generateDate(new Date(dateTest))).toBe(toBe);
   }));
 
   it('Method "addNewContent" test', async(() => {

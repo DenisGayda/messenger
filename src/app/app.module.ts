@@ -17,6 +17,7 @@ import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {APP_BASE_HREF} from '@angular/common';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',

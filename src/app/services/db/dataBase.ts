@@ -5,6 +5,7 @@ import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
 import 'rxjs/add/operator/takeUntil';
 import {IMessage} from '../../models/IMessage';
+import {INewChat} from '../../models/INewChat';
 
 @Injectable()
 export class DataBaseService {
@@ -14,15 +15,16 @@ export class DataBaseService {
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     const list: AngularFireList<T> = this.angularDataBase.list(from, callback);
+
     return list.valueChanges();
   }
 
-  updateDB(updates: Object): Observable<Object> {
+  updateDB<T>(updates: T): Observable<T> {
     this.angularDataBase.database.ref().update(updates);
     return new Observable();
   }
 
-  insertDB(from: string, objToPush: Object): ThenableReference {
+  insertDB<T>(from: string, objToPush: T): ThenableReference {
     return this.angularDataBase.list(from).push(objToPush);
   }
 
@@ -30,7 +32,7 @@ export class DataBaseService {
     return this.angularDataBase.database.ref().child(from).push().key;
   }
 
-  addNewChat(newChat: Object): void {
+  addNewChat(newChat: INewChat): void {
     this.angularDataBase.database.ref().update({...newChat});
   }
 
@@ -41,19 +43,12 @@ export class DataBaseService {
       .downloadURL();
   }
 
-  sendMessage(type: string, text: string, chat: string, user: string): void {
-    this.insertDB(`/chats/${chat}/messages/`, {
-      text,
-      date: Date.now(),
-      user,
-      type
-    });
+  sendMessage(chat: string, newMessage: IMessage): void {
+    this.insertDB<IMessage>(`/chats/${chat}/messages/`, newMessage);
   }
 
   getMessages(chatId: string): Observable<IMessage[]> {
-    return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => {
-      return ref.orderByChild('date');
-    });
+    return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => ref.orderByChild('date'));
   }
 
 }
