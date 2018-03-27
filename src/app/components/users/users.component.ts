@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
-import {DbService} from '../../services/db/db.service';
+import {DataBaseService} from '../../services/db/dataBase';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
-import {IMyUser} from '../../models/IMyUser';
-import {IDictionary} from '../../models/IDictionary';
-import {IMessage} from '../../models/IMessage';
+import {IMyUser} from '../../config/interfaces/IMyUser';
+import {IDictionary} from '../../config/dictionaris/IDictionary';
+import {IMessage} from '../chat/config/interfaces/IMessage';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private onDestroy$ = new Subject<void>();
 
-  constructor(public dbService: DbService,
+  constructor(public dbService: DataBaseService,
               private storeService: StoreService,
               private router: Router,
               private titleService: Title) {
@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
     this.users$ = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB(USERS))
-      .map(([searchString, users]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
+      .map(([searchString, users = []]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
         .includes(searchString.toLowerCase())));
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
