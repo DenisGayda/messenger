@@ -5,6 +5,8 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less']
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit {
+  ngOnInit(): void {
+  }
 
 }

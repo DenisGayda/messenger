@@ -1,13 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import {LoginComponent} from './login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Router, RouterModule} from '@angular/router';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireModule} from 'angularfire2';
 import {StoreService} from '../../services/store/store.service';
-import {DbService} from '../../services/db/db.service';
-import {AppRouterModule} from '../routes/app.router.module';
+import {DataBaseService} from '../../services/db/dataBase';
 import {UsersComponent} from '../users/users.component';
 import {ChatComponent} from '../chat/chat.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
@@ -15,6 +13,8 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {firebaseConfig} from '../../app.module';
 import {AuthService} from '../../services/auth/auth.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
+import {AppRoutingModule} from '../../routes/app-routing.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -22,20 +22,27 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent
+      ],
+      imports: [
+        FormsModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFireStorageModule,
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRouterModule],
-      providers: [AuthService, StoreService, DbService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+        AppRoutingModule
+      ],
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {provide: APP_BASE_HREF, useValue : '/'}
+      ]
     })
       .compileComponents();
   }));

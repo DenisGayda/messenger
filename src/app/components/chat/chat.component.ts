@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DbService} from '../../services/db/db.service';
+import {DataBaseService} from '../../services/db/dataBase';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
-import {IMessage} from '../../models/IMessage';
-import {IMyUser} from '../../models/IMyUser';
+import {IMessage} from './config/interfaces/IMessage';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
+import {EMessageType} from './config/enums/EMessageType';
 
 @Component({
   selector: 'app-chat',
@@ -20,45 +20,60 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatId: string;
   userLogin: string;
 
-  private onDestroyStream = new Subject<void>();
+  private onDestroyStream$ = new Subject<void>();
 
-  constructor(public dbService: DbService,
+  constructor(private dbService: DataBaseService,
               private storeService: StoreService,
-              public route: ActivatedRoute,
+              private route: ActivatedRoute,
               private titleService: Title) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.titleService.setTitle('Чат');
-    this.storeService.user.takeUntil(this.onDestroyStream).subscribe((user: IMyUser) => {
-      this.userLogin = user.login;
-    });
-    this.route.paramMap.takeUntil(this.onDestroyStream).subscribe(id => {
-      this.chatId = id.get('id');
-      this.messages$ = this.dbService.getMessages(this.chatId);
-    });
+    this.storeService.user
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(user => this.userLogin = user.login);
+    this.route.paramMap
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(id => {
+        this.chatId = id.get('id');
+        this.messages$ = this.dbService.getMessages(this.chatId);
+      });
   }
 
-  checkDate(mesDate: Date): string {
+  generateDate(mesDate: Date): string {
     return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
   }
 
-  addNewContent(): void {
-    this.dbService.sendMessage('text', this.newContent, this.chatId, this.userLogin);
+  addNewContent() {
+    this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
     this.newContent = '';
   }
 
   addFile(target: HTMLInputElement): void {
     const file = target.files.item(0);
+
     if (file) {
-      this.dbService.addFile(file).takeUntil(this.onDestroyStream).subscribe(response => {
-        this.dbService.sendMessage('img', response, this.chatId, this.userLogin);
-      });
+      this.dbService
+        .addFile(file)
+        .takeUntil(this.onDestroyStream$)
+        .subscribe(response => {
+          this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.IMAGE, response));
+        });
     }
   }
 
+  generateMessage(type: EMessageType, text: string): IMessage {
+    return {
+      type,
+      text,
+      user: this.userLogin,
+      date: Date.now()
+    };
+  }
+
   ngOnDestroy(): void {
-    this.onDestroyStream.next();
-    this.onDestroyStream.complete();
+    this.onDestroyStream$.next();
+    this.onDestroyStream$.complete();
   }
 }

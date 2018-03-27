@@ -3,21 +3,23 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ChatComponent} from './chat.component';
 import {FirebaseApp} from 'angularfire2';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DbService} from '../../services/db/db.service';
+import {FormsModule} from '@angular/forms';
+import {DataBaseService} from '../../services/db/dataBase';
 import {StoreService} from '../../services/store/store.service';
 import {StoreServiceMock} from '../../services/store/store.service.mock';
-import {DbServiceMock} from '../../services/db/db.service.mock';
+import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
 
 @Component({
   template: `<router-outlet></router-outlet>`
 })
-class RoutingComponent {}
+class RoutingComponent {
+}
 
 @Component({
   template: ''
 })
-class DummyComponent {}
+class DummyComponent {
+}
 
 describe('component: RoutingComponent', () => {
   let component: ChatComponent;
@@ -25,14 +27,22 @@ describe('component: RoutingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([
-        {path: 'home', component: DummyComponent}
-      ]), FormsModule, ReactiveFormsModule],
-      declarations: [RoutingComponent, DummyComponent, ChatComponent],
+      imports: [
+        RouterTestingModule.withRoutes([
+          {path: 'home', component: DummyComponent}
+        ]),
+        FormsModule
+      ],
+      declarations: [
+        RoutingComponent,
+        DummyComponent,
+        ChatComponent
+      ],
       providers: [
-        {provide: DbService, useClass: DbServiceMock},
+        {provide: DataBaseService, useClass: DataBaseServiceMock},
         {provide: StoreService, useClass: StoreServiceMock},
-        FirebaseApp]
+        FirebaseApp
+      ]
     });
   });
 
@@ -45,11 +55,11 @@ describe('component: RoutingComponent', () => {
   it('Method "checkDate" test', async(() => {
     const dateTest = Date.now();
     const toBe = `${new Date(dateTest).getHours()}:${new Date(dateTest).getMinutes()}`;
-    expect(component.checkDate(new Date(dateTest))).toBe(toBe);
+    expect(component.generateDate(new Date(dateTest))).toBe(toBe);
   }));
 
   it('Method "addNewContent" test', async(() => {
-      expect(component.addNewContent);
+    expect(component.addNewContent);
   }));
 
 });

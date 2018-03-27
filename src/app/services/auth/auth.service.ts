@@ -3,11 +3,11 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
-import {DbService} from '../db/db.service';
+import {DataBaseService} from '../db/dataBase';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
-import {IMyUser} from '../../models/IMyUser';
+import {IMyUser} from '../../config/interfaces/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -16,13 +16,13 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService implements OnDestroy {
   user: Observable<User>;
-  @LocalStorage localLogined:boolean;
+  @LocalStorage localLogined: boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
- 
+
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
-              private myDb: DbService,
+              private myDb: DataBaseService,
               private storeService: StoreService,
               private router: Router) {
     this.user = firebaseAuth.authState;
