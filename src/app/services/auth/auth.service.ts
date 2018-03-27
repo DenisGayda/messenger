@@ -15,10 +15,10 @@ import 'rxjs/add/operator/takeUntil';
 @Injectable()
 export class AuthService implements OnDestroy {
   user: Observable<User>;
-  @LocalStorage localLogined:boolean;
+  @LocalStorage localLogined: boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
- 
+
   constructor(private firebaseAuth: AngularFireAuth,
               public  db: AngularFireDatabase,
               private myDb: DbService,
@@ -65,11 +65,11 @@ export class AuthService implements OnDestroy {
       .then(value => {
         this.myDb.selectDB('users', ref =>
           ref.orderByChild('mail')
-          .equalTo(value.email))
+            .equalTo(value.email))
           .takeUntil(this.onDestroyStream$)
           .subscribe((users: IMyUser[]) => {
-          this.storeService.setUser(users[0]);
-        });
+            this.storeService.setUser(users[0]);
+          });
         this.logined.next(true);
         this.localLogined = true;
         this.router.navigateByUrl('/users');

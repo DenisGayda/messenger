@@ -10,7 +10,6 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {LoginModule} from './components/login/login.module';
-import {ChatModule} from './components/chat/chat.module';
 import {AuthService} from './services/auth/auth.service';
 import {StoreService} from './services/store/store.service';
 import {DbService} from './services/db/db.service';
@@ -18,6 +17,7 @@ import {AppRoutingModule} from './routes/app-routing.module';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ProfileEditorModule} from './components/profile-editor/profile-editor.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -42,11 +42,12 @@ export const firebaseConfig = {
     AngularFireStorageModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ProfileEditorModule
   ],
   providers: [
-    AuthService, 
-    StoreService, 
+    AuthService,
+    StoreService,
     DbService,
     Title,
     CanActivateViaAuthGuard
