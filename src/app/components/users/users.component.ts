@@ -69,17 +69,19 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   createChat(chat: string) {
     const newPostKey = this.dbService.getNewId(`${CHATS}`);
+    const updates = {};
     const postData = {
       idChat: newPostKey,
       messages: {}
     };
+
     this.currentUser$
       .takeUntil(this.onDestroy$)
       .subscribe(data => {
         this.addChatToClient(chat, data.id, newPostKey);
         this.addChatToClient(data.id, chat, newPostKey);
       });
-    const updates = {};
+
     updates[`/${CHATS}/` + newPostKey] = postData;
     this.dbService.updateDB(updates)
       .map(() => {
@@ -89,6 +91,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   addChatToClient(id1: string, id2: string, key: string) {
     const updates = {};
+
     updates[`/${USERS}/${id1}/${CHATS}/${id2}`] = key;
     this.dbService.addNewChat(updates);
   }
