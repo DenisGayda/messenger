@@ -3,7 +3,7 @@ import {QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {IMessage} from '../../components/chat/config/interfaces/IMessage';
-import {INewChat} from '../../config/interfaces/INewChat';
+import {IDictionary} from '../../config/dictionaris/IDictionary';
 
 @Injectable()
 export class DataBaseServiceMock {
@@ -24,7 +24,7 @@ export class DataBaseServiceMock {
     return;
   }
 
-  addNewChat(newChat: INewChat) {
+  addNewChat(newChat: IDictionary<string>) {
   }
 
   sendMessage(type: string, text: string, chat: string, user: string) {

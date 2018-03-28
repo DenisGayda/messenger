@@ -5,7 +5,7 @@ import {RouterModule} from '@angular/router';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireModule} from 'angularfire2';
 import {StoreService} from './services/store/store.service';
-import {DataBaseService} from './services/db/dataBase';
+import {DataBaseService} from './services/db/dataBase.service';
 import {AppRoutingModule} from './routes/app-routing.module';
 import {UsersComponent} from './components/users/users.component';
 import {AuthService} from './services/auth/auth.service';

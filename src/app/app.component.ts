@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {StoreService} from './services/store/store.service';
 
-const LOGGED = 'logged';
+const LOGGED = 'localLogined';
 const USER_IN_MY_APP = 'userInMyApp';
 
 @Component({
