@@ -10,9 +10,12 @@
 
     <button type="submit">Login</button>
   </form>
-  <button (click)="loginGoogle()" id="google">Login With Google</button>
+  <button  *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" 
+           (click)="loginGoogle()" id="google">Login With Google</button>
 
-  <button *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" (click)="signup()">Signup</button>
+  <button *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" 
+           (click)="signup()">Signup</button>
+  <button (click)="signupGoogle()">Signup with Google</button>
 
 </div>
 <button class="logout" (click)="authService.logout()" *ngIf="authService.user | async">Logout</button>

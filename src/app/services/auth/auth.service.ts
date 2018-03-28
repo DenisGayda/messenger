@@ -28,6 +28,36 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
+  signupWithGoogle(){
+    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then(value => {
+      // Get a key for a new Post.
+      const newPostKey = this.myDb.getNewId('users');
+      const postData = {
+        login: value.user.displayName,
+        id: newPostKey,
+        mail: value.user.email,
+        googleAutentification:true
+      };
+      this.storeService.setUser({
+        id: newPostKey,
+        login: value.user.displayName,
+        mail: value.user.email,
+        googleAutentification:true,
+        chats: {}
+      });
+      this.logined.next(true);
+      this.localLogined = true;
+      const updates = {};
+      updates['/users/' + newPostKey] = postData;
+      this.router.navigateByUrl('/users');
+      return this.db.database.ref().update(updates);
+    })
+    .catch(err => {
+    });
+  }
+  // displayName
+  // email
   signup(email: string, password: string, newLogin: string) {
     this.firebaseAuth
       .auth
@@ -46,6 +76,7 @@ export class AuthService implements OnDestroy {
           login: newLogin,
           mail: email,
           password: password,
+          googleAutentification:false,
           chats: {}
         });
         this.logined.next(true);
@@ -60,12 +91,47 @@ export class AuthService implements OnDestroy {
   }
   
   loginWithGoogle(){
-    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
-      (success) => {
-      this.router.navigateByUrl('/users');
-    }).catch(
-      (err) => {
-      })
+    // console.log(this.firebaseAuth.auth.currentUser);
+    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then(value => {
+      // console.log(this.firebaseAuth.auth.currentUser);
+      this.myDb.selectDB('users', ref =>
+        ref.orderByChild('mail')
+        .equalTo(value.user.email))
+        .takeUntil(this.onDestroyStream$)
+        .subscribe((users: IMyUser[]) => {
+         if(users.length>0){
+           console.log(users);
+          this.storeService.setUser(users[0]);
+          return; 
+         }else{
+          const newPostKey = this.myDb.getNewId('users');
+          const postData = {
+            login: value.user.displayName,
+            id: newPostKey,
+            mail: value.user.email,
+            googleAutentification:true
+          };
+          this.storeService.setUser({
+            id: newPostKey,
+            login: value.user.displayName,
+            mail: value.user.email,
+            googleAutentification:true,
+            chats: {}
+          });
+          this.logined.next(true);
+          this.localLogined = true;
+          const updates = {};
+          updates['/users/' + newPostKey] = postData;
+          this.router.navigateByUrl('/users');
+          return this.db.database.ref().update(updates);
+         } 
+      });
+        
+     })
+      .catch(
+        (err) => {
+       })
   }
   
   login(email: string, password: string) {
