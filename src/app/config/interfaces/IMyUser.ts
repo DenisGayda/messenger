@@ -6,4 +6,5 @@ export interface IMyUser {
   mail: string;
   password: string;
   chats?: IDictionary<string>;
+  avatar?: string;
 }

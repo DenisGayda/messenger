@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
-import {DataBaseService} from '../../services/db/dataBase';
+import {DataBaseService} from '../../services/db/dataBase.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
@@ -53,7 +53,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.currentUser$
       .takeUntil(this.onDestroy$)
       .subscribe(data => {
-      !!data.chats[user.id]
+      data.chats[user.id]
         ? this.enterInRealChat(data.chats[user.id])
         : this.createChat(user.id);
       })
