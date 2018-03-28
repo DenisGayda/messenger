@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.currentUser
       .takeUntil(this.onDestroyStream$)
       .subscribe(data => {
-        if (data.chats[user.id] !== undefined) {
+        if (data.chats[user.id] !== undefined && data.chats[user.id] !== null) {
           this.enterInRealChat(data.chats[user.id]);
         } else {
           this.createChat(user.id);
