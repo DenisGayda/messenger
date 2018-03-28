@@ -46,7 +46,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addNewContent() {
-    if (!this.newContent) { return; }
+    if (!this.newContent) {
+      return;
+    }
+
     this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
     this.newContent = '';
   }
