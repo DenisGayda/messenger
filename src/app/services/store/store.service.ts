@@ -8,14 +8,14 @@ import {IMyUser} from '../../config/interfaces/IMyUser';
 @Injectable()
 export class StoreService {
 
-  @LocalStorage userInMyApp: IMyUser;
+  @LocalStorage userInMyApp: string;
   private myUser = new ReplaySubject<IMyUser>();
 
   constructor(public  db: AngularFireDatabase) {}
 
   setUser(user: IMyUser): void {
     this.myUser.next({chats: {}, ...user});
-    this.userInMyApp = user;
+    this.userInMyApp = JSON.stringify(user);
   }
 
   get user(): Observable<IMyUser> {

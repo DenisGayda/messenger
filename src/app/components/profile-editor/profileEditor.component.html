@@ -9,8 +9,8 @@
 
     <div class="avatar">
       <span>Photo:</span>
-      <img *ngIf="!!currentUser$.avatar"
-           [src]="currentUser$.avatar">
+      <img *ngIf="!!currentUser.avatar"
+           [src]="currentUser.avatar">
       <input type="file"
              (change)="changePhoto($event.target)">
     </div>
@@ -18,7 +18,7 @@
     <span>Login:</span>
     <input type="text"
            formControlName="login"
-           [value]="currentUser$.login" required>
+           [value]="currentUser.login" required>
 
     <span>Password:</span>
     <input type="password"
@@ -41,5 +41,3 @@
   <button routerLink="/users">Cancel</button>
 
 </div>
-
-

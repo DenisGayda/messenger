@@ -96,7 +96,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dbService.addNewChat(updates);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
