@@ -3,7 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
-import {DataBaseService} from '../db/dataBase';
+import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
@@ -84,6 +84,10 @@ export class AuthService implements OnDestroy {
     this.firebaseAuth
       .auth
       .signOut();
+  }
+
+  changePassword(newPassword: string): void {
+    this.firebaseAuth.auth.currentUser.updatePassword(newPassword);
   }
 
   ngOnDestroy(): void {

@@ -10,7 +10,7 @@ import {IDictionary} from '../../config/dictionaris/IDictionary';
 @Injectable()
 export class DataBaseService {
 
-  constructor(private  angularDataBase: AngularFireDatabase, private afStor: AngularFireStorage) {
+  constructor(private angularDataBase: AngularFireDatabase, private afStor: AngularFireStorage) {
   }
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {

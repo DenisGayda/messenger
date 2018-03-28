@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
-import {DataBaseService} from '../../services/db/dataBase';
+import {DataBaseService} from '../../services/db/dataBase.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';

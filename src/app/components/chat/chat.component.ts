@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataBaseService} from '../../services/db/dataBase';
+import {DataBaseService} from '../../services/db/dataBase.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
 import {Title} from '@angular/platform-browser';
@@ -46,6 +46,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addNewContent() {
+    if (!this.newContent) { return; }
     this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
     this.newContent = '';
   }
