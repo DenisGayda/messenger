@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {ChatComponent} from './chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {ChatRoutingModule} from './chat-routing.module'
+import {ChatRoutingModule} from './chatRouting.module';
 
 @NgModule({
   declarations: [

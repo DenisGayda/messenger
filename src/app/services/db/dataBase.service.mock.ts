@@ -2,32 +2,32 @@ import {Injectable} from '@angular/core';
 import {QueryFn} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
-import {IMessage} from '../../models/IMessage';
+import {IMessage} from '../../components/chat/config/interfaces/IMessage';
+import {INewChat} from '../../config/interfaces/INewChat';
 
 @Injectable()
-export class DbServiceMock {
+export class DataBaseServiceMock {
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     return Observable.of([]);
   }
 
-  updateDB(updates: any): Observable<any> {
+  updateDB<T>(updates: T): Observable<T> {
     return;
   }
 
-  insertDB(from: string, objToPush: any): ThenableReference {
-    return;
+  insertDB<T>(from: string, objToPush: T): ThenableReference {
+    return '';
   }
 
   getNewId(from: string): string {
     return;
   }
 
-  addNewChat(newChat: any) {
+  addNewChat(newChat: INewChat) {
   }
 
-  sendMessage(type: string, text: string, chat: string, user: string): void {
-    return;
+  sendMessage(type: string, text: string, chat: string, user: string) {
   }
 
   getMessages(chatId: string): Observable<IMessage[]> {

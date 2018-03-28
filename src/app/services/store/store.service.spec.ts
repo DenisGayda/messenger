@@ -1,9 +1,9 @@
 import {TestBed, inject, async} from '@angular/core/testing';
-import { StoreService } from './store.service';
+import {StoreService} from './store.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';
-import {DbService} from '../db/db.service';
+import {DataBaseService} from '../db/dataBase';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
 import {firebaseConfig} from '../../app.module';
@@ -12,22 +12,33 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {UsersComponent} from '../../components/users/users.component';
 import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
+import {AppRoutingModule} from '../../routes/app-routing.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersComponent, ChatComponent, LoginComponent],
-      imports: [FormsModule, RouterModule,
+      declarations: [
+        UsersComponent,
+        ChatComponent,
+        LoginComponent
+      ],
+      imports: [
+        FormsModule,
+        RouterModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
         AngularFireDatabaseModule,
-        ReactiveFormsModule],
-      providers: [AuthService, StoreService, DbService, {
-        provide: Router, useClass: class {
-          navigate = jasmine.createSpy('navigate');
-        }
-      }]
+        ReactiveFormsModule,
+        AppRoutingModule
+      ],
+      providers: [
+        AuthService,
+        StoreService,
+        DataBaseService,
+        {provide: APP_BASE_HREF, useValue : '/'}
+      ]
     })
       .compileComponents();
   }));

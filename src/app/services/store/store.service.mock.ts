@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {IMyUser} from '../../models/IMyUser';
+import {IMyUser} from '../../config/interfaces/IMyUser';
 
 @Injectable()
 export class StoreServiceMock {
