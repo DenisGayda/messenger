@@ -53,7 +53,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.currentUser$
       .takeUntil(this.onDestroy$)
       .subscribe(data => {
-      !!data.chats[user.id]
+      data.chats[user.id]
         ? this.enterInRealChat(data.chats[user.id])
         : this.createChat(user.id);
       })
