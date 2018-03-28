@@ -14,7 +14,6 @@ import {LocalStorage} from '../../decorators/local-storage.decorator';
   styleUrls: ['./profileEditor.component.less']
 })
 export class ProfileEditorComponent implements OnInit, OnDestroy {
-
   userProfile: FormGroup;
   @LocalStorage userInMyApp: IMyUser;
   currentUser = this.userInMyApp;
