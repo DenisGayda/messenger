@@ -6,6 +6,7 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {Subject} from 'rxjs/Subject';
 import {AuthService} from '../../services/auth/auth.service';
 import {StoreService} from '../../services/store/store.service';
+import {LocalStorage} from '../../decorators/local-storage.decorator';
 
 @Component({
   selector: 'app-profile-editor',
@@ -15,7 +16,8 @@ import {StoreService} from '../../services/store/store.service';
 export class ProfileEditorComponent implements OnInit, OnDestroy {
 
   userProfile: FormGroup;
-  currentUser$: IMyUser;
+  @LocalStorage userInMyApp: IMyUser;
+  currentUser = this.userInMyApp;
   currentPhoto: File;
 
   private onDestroyStream$ = new Subject<void>();
@@ -34,7 +36,6 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
       password: new FormControl(),
       passwordSecond: new FormControl()
     });
-    this.currentUser$ = JSON.parse(localStorage.getItem('userInMyApp'));
   }
 
   onSubmit(formValue: any): void {
@@ -43,9 +44,9 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
         .addFile(this.currentPhoto)
         .takeUntil(this.onDestroyStream$)
         .subscribe(response => {
-          this.currentUser$.avatar = response;
+          this.currentUser.avatar = response;
           this.sendData('avatar', response);
-          this.storeService.setUser(this.currentUser$);
+          this.storeService.setUser(this.currentUser);
         });
     }
 
@@ -61,11 +62,11 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
 
   sendData(dataName: string, data: string): void {
     const newData = {};
-    newData[`/users/${this.currentUser$.id}/${dataName}`] = data;
+    newData[`/users/${this.currentUser.id}/${dataName}`] = data;
     this.dbService.updateDB(newData);
 
-    this.currentUser$[dataName] = data;
-    this.storeService.setUser(this.currentUser$);
+    this.currentUser[dataName] = data;
+    this.storeService.setUser(this.currentUser);
   }
 
   changePhoto(target: HTMLInputElement): void {

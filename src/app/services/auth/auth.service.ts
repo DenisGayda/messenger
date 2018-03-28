@@ -17,6 +17,7 @@ export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
   logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
+
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
