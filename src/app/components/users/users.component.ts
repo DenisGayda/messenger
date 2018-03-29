@@ -67,21 +67,16 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   createChat(chat: string): void {
-    // console.log(chat);
     const newPostKey = this.dbService.getNewId('chats');
     const postData = {
       idChat: newPostKey,
       messages: {}
     };
     this.currentUser
-      // .takeUntil(this.onDestroyStream$)
-      .take(1)     
-      // .distinctUntilChanged()
+      .takeUntil(this.onDestroyStream$)
       .subscribe(data => {
-        console.log(data);
         this.addChatToClient(chat, data.id, newPostKey);
         this.addChatToClient(data.id, chat, newPostKey);  
-        // this.onDestroyStream$.complete();
       });
 
     const updates = {};
@@ -98,7 +93,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.currentUser.unsubscribe();
     this.onDestroyStream$.next();
     this.onDestroyStream$.complete();
   }

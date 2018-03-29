@@ -63,18 +63,16 @@ export class AuthService implements OnDestroy {
   }
   
   loginWithGoogle(){
-    // console.log(this.firebaseAuth.auth.currentUser);
-    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    this.firebaseAuth
+    .auth
+    .signInWithPopup(new firebase.auth.GoogleAuthProvider())
     .then(value => {
-      // console.log(this.firebaseAuth.auth.currentUser);
       this.myDb.selectDB('users', ref =>
         ref.orderByChild('mail')
         .equalTo(value.user.email))
         .takeUntil(this.onDestroyStream$)
         .subscribe((users: IMyUser[]) => {
-          // console.log(users);
          if(users.length>0){
-          //  console.log(users);
           this.storeService.setUser(users[0]);
           this.logined.next(true);
           this.localLogined = true;
