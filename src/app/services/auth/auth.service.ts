@@ -15,7 +15,7 @@ import 'rxjs/add/operator/takeUntil';
 @Injectable()
 export class AuthService implements OnDestroy {
   user: Observable<User>;
-  @LocalStorage localLogined:boolean;
+  @LocalStorage localLogined: boolean;
   logined = new BehaviorSubject<boolean>(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
 

@@ -13,7 +13,9 @@ export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
 
-  constructor(public authService: AuthService, private titleService: Title) {}
+  constructor(public authService: AuthService,
+              private titleService: Title) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Вход');
