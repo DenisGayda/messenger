@@ -15,7 +15,8 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
 import {CanActivateViaAuthGuard} from './services/guards/CanActivateViaAuthGuard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderModule} from './components/header/header.module';
-import {DataBaseService} from './services/db/dataBase';
+import {DataBaseService} from './services/db/dataBase.service';
+import {ProfileEditorModule} from './components/profile-editor/profile-editor.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -41,7 +42,8 @@ export const firebaseConfig = {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HeaderModule
+    HeaderModule,
+    ProfileEditorModule
   ],
   providers: [
     AuthService,

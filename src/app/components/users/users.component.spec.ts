@@ -12,7 +12,7 @@ import {LoginComponent} from '../login/login.component';
 import {firebaseConfig} from '../../app.module';
 import {AuthService} from '../../services/auth/auth.service';
 import {StoreService} from '../../services/store/store.service';
-import {DataBaseService} from '../../services/db/dataBase';
+import {DataBaseService} from '../../services/db/dataBase.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';

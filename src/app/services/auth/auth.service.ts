@@ -3,7 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
-import {DataBaseService} from '../db/dataBase';
+import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
@@ -16,6 +16,7 @@ import 'rxjs/add/operator/takeUntil';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
+
   logined = new BehaviorSubject<boolean>(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
 
@@ -65,11 +66,11 @@ export class AuthService implements OnDestroy {
       .then(value => {
         this.myDb.selectDB('users', ref =>
           ref.orderByChild('mail')
-          .equalTo(value.email))
+            .equalTo(value.email))
           .takeUntil(this.onDestroyStream$)
           .subscribe((users: IMyUser[]) => {
-          this.storeService.setUser(users[0]);
-        });
+            this.storeService.setUser(users[0]);
+          });
         this.logined.next(true);
         this.localLogined = true;
         this.router.navigateByUrl('/users');
@@ -84,6 +85,10 @@ export class AuthService implements OnDestroy {
     this.firebaseAuth
       .auth
       .signOut();
+  }
+
+  changePassword(newPassword: string): void {
+    this.firebaseAuth.auth.currentUser.updatePassword(newPassword);
   }
 
   ngOnDestroy(): void {

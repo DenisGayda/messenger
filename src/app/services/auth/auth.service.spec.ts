@@ -5,7 +5,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';
 import {StoreService} from '../store/store.service';
-import {DataBaseService} from '../db/dataBase';
+import {DataBaseService} from '../db/dataBase.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {firebaseConfig} from '../../app.module';
 import {AngularFireAuthModule} from 'angularfire2/auth';
