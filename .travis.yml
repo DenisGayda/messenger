@@ -13,10 +13,10 @@ before_script:
 script:
   - ng build --prod --aot
 
-deploy:
-  provider: firebase
-  token:
-    secure: FIREBASE_TOKEN
-  project: "mychatapp"
-  skip_cleanup: true
-  
+after_success:
+  - npm install -g firebase-tools
+  - firebase --non-interactive deploy --token "${FIREBASE_TOKEN}"
+
+cache:
+  directories:
+  - node_modules
