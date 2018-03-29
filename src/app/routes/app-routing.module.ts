@@ -9,6 +9,11 @@ const routes: Routes = [
     canActivate: [CanActivateViaAuthGuard]
   },
   {
+    path: 'profile',
+    loadChildren: 'app/components/profile-editor/profile-editor.module#ProfileEditorModule',
+    canActivate: [CanActivateViaAuthGuard]
+  },
+  {
     path: '',
     loadChildren: 'app/components/login/login.module#LoginModule'
   }

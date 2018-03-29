@@ -13,7 +13,7 @@ import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
 import {AngularFireStorage, AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
-import {DataBaseService} from './dataBase';
+import {DataBaseService} from './dataBase.service';
 import {APP_BASE_HREF} from '@angular/common';
 
 describe('DataBaseService', () => {

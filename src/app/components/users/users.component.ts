@@ -1,6 +1,6 @@
-import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreService} from '../../services/store/store.service';
-import {DataBaseService} from '../../services/db/dataBase';
+import {DataBaseService} from '../../services/db/dataBase.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {FormControl} from '@angular/forms';
@@ -18,8 +18,6 @@ import {startWith} from 'rxjs/operators';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.less']
 })
-
-@Injectable()
 export class UsersComponent implements OnInit, OnDestroy {
 
   users: Observable<IMyUser[]>;
@@ -50,13 +48,15 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   checkChat(user: IMyUser): void {
     this.currentUserChat = user;
-    this.currentUser.subscribe(data => {
-      if (data.chats[user.id] !== undefined) {
-        this.enterInRealChat(data.chats[user.id]);
-      } else {
-        this.createChat(user.id);
-      }
-    });
+    this.currentUser
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(data => {
+        if (data.chats[user.id] !== undefined && data.chats[user.id] !== null) {
+          this.enterInRealChat(data.chats[user.id]);
+        } else {
+          this.createChat(user.id);
+        }
+      });
   }
 
   enterInRealChat(check: string): void {
@@ -72,10 +72,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       idChat: newPostKey,
       messages: {}
     };
-    this.currentUser.subscribe(data => {
-      this.addChatToClient(chat, data.id, newPostKey);
-      this.addChatToClient(data.id, chat, newPostKey);
-    });
+    this.currentUser
+      .takeUntil(this.onDestroyStream$)
+      .subscribe(data => {
+        this.addChatToClient(chat, data.id, newPostKey);
+        this.addChatToClient(data.id, chat, newPostKey);
+      });
 
     const updates = {};
     updates['/chats/' + newPostKey] = postData;

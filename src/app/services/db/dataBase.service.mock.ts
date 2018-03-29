@@ -4,7 +4,6 @@ import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {IMessage} from '../../components/chat/config/interfaces/IMessage';
 import {IDictionary} from '../../config/dictionaris/IDictionary';
-// import {INewChat} from '../../config/interfaces/IDictionary<string>';
 
 @Injectable()
 export class DataBaseServiceMock {

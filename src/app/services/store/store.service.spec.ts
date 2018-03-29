@@ -3,7 +3,7 @@ import {StoreService} from './store.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {RouterModule} from '@angular/router';
 import {AngularFireModule} from 'angularfire2';
-import {DataBaseService} from '../db/dataBase';
+import {DataBaseService} from '../db/dataBase.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
 import {firebaseConfig} from '../../app.module';
