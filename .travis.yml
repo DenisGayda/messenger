@@ -13,5 +13,9 @@ before_script:
 script:
   - ng build --prod --aot
 
-after_success:
-  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
+deploy:
+  provider: firebase
+  token:
+    secure: $FIREBASE_TOKEN
+  project: "mychatapp"
+  skip_cleanup: true
