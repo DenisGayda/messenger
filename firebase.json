@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "firebase": "mychatapp",
     "public": "dist",
     "ignore": [
         "firebase.json",
