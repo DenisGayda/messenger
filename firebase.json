@@ -1,6 +1,6 @@
 {
   "firebase": "mychatapp",
-  "public": "public",
+  "public": "dist",
   "ignore": [
     "firebase.json",
     "**/.*",
