@@ -29,36 +29,7 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  signupWithGoogle(){
-    this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    .then(value => {
-      // Get a key for a new Post.
-      const newPostKey = this.myDb.getNewId('users');
-      const postData = {
-        login: value.user.displayName,
-        id: newPostKey,
-        mail: value.user.email,
-        googleAutentification:true
-      };
-      this.storeService.setUser({
-        id: newPostKey,
-        login: value.user.displayName,
-        mail: value.user.email,
-        googleAutentification:true,
-        chats: {}
-      });
-      this.logined.next(true);
-      this.localLogined = true;
-      const updates = {};
-      updates['/users/' + newPostKey] = postData;
-      this.router.navigateByUrl('/users');
-      return this.db.database.ref().update(updates);
-    })
-    .catch(err => {
-    });
-  }
-  // displayName
-  // email
+
   signup(email: string, password: string, newLogin: string) {
     this.firebaseAuth
       .auth
@@ -103,7 +74,7 @@ export class AuthService implements OnDestroy {
         .subscribe((users: IMyUser[]) => {
           // console.log(users);
          if(users.length>0){
-           console.log(users);
+          //  console.log(users);
           this.storeService.setUser(users[0]);
           this.logined.next(true);
           this.localLogined = true;
@@ -131,8 +102,7 @@ export class AuthService implements OnDestroy {
           this.router.navigateByUrl('/users');
           return this.db.database.ref().update(updates);
          } 
-      });
-        
+      });    
      })
       .catch(
         (err) => {
