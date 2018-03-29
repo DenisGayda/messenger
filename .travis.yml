@@ -8,10 +8,10 @@ branches:
 
 before_script:
   - npm install -g firebase-tools
-  - npm install -g @angular/cli
+  - npm install -g wintersmith
 
 script:
-  - ng build --prod --aot
+  - wintersmith build
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN --non-interactive
