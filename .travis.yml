@@ -14,5 +14,8 @@ script:
   - ng build --prod --aot
 
 after_success:
-  - firebase deploy --token "$FIREBASE_TOKEN"
-
+  - firebase --non-interactive deploy --token "${FIREBASE_TOKEN}"
+  
+cache:
+  directories:
+  - node_modules
