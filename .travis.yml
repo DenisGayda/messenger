@@ -5,7 +5,15 @@ node_js:
 branches:
   only:
     - master
+    - develop
+    - /^greenkeeper/.*$/
 
+addons:
+  chrome: stable
+
+before_install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  
 before_script:
   - npm install -g firebase-tools
   - npm install -g @angular/cli
