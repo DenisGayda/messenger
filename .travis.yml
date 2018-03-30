@@ -21,6 +21,7 @@ deploy:
   project: "mychatapp-mf"
   on:
     branch: "master"
+  skip_cleanup: true
     
 cache:
   directories:
