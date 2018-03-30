@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/first';
 
 const USERS = 'users';
 const CHATS = 'chats';
@@ -51,11 +52,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   checkChat(user: IMyUser) {
     this.currentUserChat = user;
     this.currentUser$
-      .takeUntil(this.onDestroy$)
+      .first()
       .subscribe(data => {
-      data.chats[user.id]
-        ? this.enterInRealChat(data.chats[user.id])
-        : this.createChat(user.id);
+        data.chats[user.id]
+          ? this.enterInRealChat(data.chats[user.id])
+          : this.createChat(user.id);
       })
     ;
   }
@@ -63,8 +64,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   enterInRealChat(check: string) {
     this.dbService.selectDB(`${CHATS}/` + check, ref => ref)
       .map((items: (string | IDictionary<IMessage>)[]) => items.find(element => typeof element === 'string'))
-      .takeUntil(this.onDestroy$)
-      .subscribe(id => this.router.navigate([`/${USERS}/${CHAT}/`, id]));
+      .first()
+      .subscribe(id => this.router.navigate([`/${USERS}/${CHAT}/${id}`]));
   }
 
   createChat(chat: string) {
@@ -76,17 +77,23 @@ export class UsersComponent implements OnInit, OnDestroy {
     };
 
     this.currentUser$
-      .takeUntil(this.onDestroy$)
+      .first()
       .subscribe(data => {
+        data.chats[chat] = newPostKey;
+        this.storeService.setUser(data);
         this.addChatToClient(chat, data.id, newPostKey);
-        this.addChatToClient(data.id, chat, newPostKey);
+
+        if (chat !== data.id) {
+          this.addChatToClient(data.id, chat, newPostKey);
+        }
       });
 
     updates[`/${CHATS}/` + newPostKey] = postData;
-    this.dbService.updateDB(updates)
-      .map(() => {
-        this.router.navigate([`/${USERS}/${CHAT}`, newPostKey]);
-      });
+    this.dbService.updateDB(updates).then(res => {
+      if (res) {
+        this.enterInRealChat(newPostKey);
+      }
+    });
   }
 
   addChatToClient(id1: string, id2: string, key: string) {
