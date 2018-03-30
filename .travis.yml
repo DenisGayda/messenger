@@ -20,7 +20,6 @@ before_script:
 
 script:
   - ng build --prod --aot
-  - ng test
 
 after_success:
   - firebase --non-interactive deploy --token "${FIREBASE_TOKEN}" --project "mychatapp-mf"
