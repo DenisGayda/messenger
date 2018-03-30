@@ -64,7 +64,7 @@ describe('UsersComponent', () => {
       id: 'some',
       login: '',
       mail: '',
-      googleAutentification:true,
+      googleAutentification:false,
       password: '',
       chats: {}
     }));

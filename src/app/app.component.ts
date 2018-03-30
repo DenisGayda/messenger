@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // const LOGGED = 'localLogined';
     if (JSON.parse(localStorage.getItem(LOGGED))) {
       this.storeService.setUser(JSON.parse(localStorage.getItem(USER_IN_MY_APP)));
     }
