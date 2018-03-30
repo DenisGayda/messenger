@@ -12,7 +12,6 @@ const USER_IN_MY_APP = 'userInMyApp';
 })
 export class AppComponent implements OnInit {
   
-  
   constructor(private storeService: StoreService) {
   }
 
@@ -21,5 +20,4 @@ export class AppComponent implements OnInit {
       this.storeService.setUser(JSON.parse(localStorage.getItem(USER_IN_MY_APP)));
     }
   }
-
 }

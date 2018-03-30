@@ -4,17 +4,16 @@
 <div *ngIf="!(authService.user | async)">
 
   <form action="" [formGroup]="newUserForm" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
-    <input *ngIf="!!(newUserForm.controls.hasOwnProperty('newLogin'))"
+    <input *ngIf="!getNewLogin()"
            type="text" formControlName="newLogin" placeholder="login" required>
     <input type="text" formControlName="email" placeholder="email" required>
     <input type="password" formControlName="password" placeholder="password" required>
 
     <button type="submit">Login</button>
   </form>
-  <button  *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" 
-           (click)="loginGoogle()" id="google">Login With Google</button>
+  <button (click)="loginGoogle()"  [ngClass]="'google'">Login With Google</button>
 
-  <button *ngIf="!(newUserForm.controls.hasOwnProperty('newLogin'))" 
+  <button *ngIf="getNewLogin()" 
            (click)="signup()">Signup</button>
 
 </div>

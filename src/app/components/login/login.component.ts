@@ -40,4 +40,9 @@ export class LoginComponent implements OnInit {
   signup(): void {
     this.newUserForm.addControl('newLogin', new FormControl('', Validators.required));
   }
+  
+  getNewLogin(){
+    return !(this.newUserForm.controls.hasOwnProperty('newLogin'));
+  }
+  
 }

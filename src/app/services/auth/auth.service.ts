@@ -72,13 +72,15 @@ export class AuthService implements OnDestroy {
         .equalTo(value.user.email))
         .takeUntil(this.onDestroyStream$)
         .subscribe((users: IMyUser[]) => {
+
          if(users.length>0){
           this.storeService.setUser(users[0]);
           this.logined.next(true);
           this.localLogined = true;
           this.router.navigateByUrl('/users');
           return;
-         }else{
+         }
+
           const newPostKey = this.myDb.getNewId('users');
           const postData = {
             login: value.user.displayName,
@@ -86,6 +88,7 @@ export class AuthService implements OnDestroy {
             mail: value.user.email,
             googleAutentification:true
           };
+
           this.storeService.setUser({
             id: newPostKey,
             login: value.user.displayName,
@@ -93,13 +96,15 @@ export class AuthService implements OnDestroy {
             googleAutentification:true,
             chats: {}
           });
+          
           this.logined.next(true);
           this.localLogined = true;
+
           const updates = {};
+
           updates['/users/' + newPostKey] = postData;
           this.router.navigateByUrl('/users');
           return this.db.database.ref().update(updates);
-         } 
       });    
      })
       .catch(

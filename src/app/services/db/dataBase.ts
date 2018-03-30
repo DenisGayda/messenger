@@ -15,7 +15,6 @@ export class DataBaseService {
 
   selectDB<T>(from: string, callback: QueryFn = ref => ref): Observable<T[]> {
     const list: AngularFireList<T> = this.angularDataBase.list(from, callback);
-
     return list.valueChanges();
   }
 
