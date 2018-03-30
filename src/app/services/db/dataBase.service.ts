@@ -3,7 +3,6 @@ import {AngularFireDatabase, AngularFireList, QueryFn} from 'angularfire2/databa
 import {Observable} from 'rxjs/Observable';
 import {ThenableReference} from 'firebase/database';
 import {AngularFireStorage} from 'angularfire2/storage';
-import 'rxjs/add/operator/takeUntil';
 import {IMessage} from '../../components/chat/config/interfaces/IMessage';
 import {IDictionary} from '../../config/dictionaris/IDictionary';
 
@@ -19,9 +18,8 @@ export class DataBaseService {
     return list.valueChanges();
   }
 
-  updateDB<T>(updates: T): Observable<T> {
-    this.angularDataBase.database.ref().update(updates);
-    return new Observable();
+  updateDB<T>(updates: T): Promise<Observable<{}>> {
+    return this.angularDataBase.database.ref().update(updates).then(() => new Observable());
   }
 
   insertDB<T>(from: string, objToPush: T): ThenableReference {
