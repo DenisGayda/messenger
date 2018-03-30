@@ -18,6 +18,7 @@ deploy:
   provider: firebase
   token:
     secure: "FIREBASE_TOKEN"
+  project: "mychatapp-mf"
   on:
     branch: master
     
