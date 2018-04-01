@@ -44,9 +44,5 @@ export class LoginComponent implements OnInit {
   get NewLogin():boolean{
     return !(this.newUserForm.controls.hasOwnProperty('newLogin'));
   }
-
-  getNewLogin(){
-    return this.NewLogin;
-  }
   
 }

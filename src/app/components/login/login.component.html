@@ -4,7 +4,7 @@
 <div *ngIf="!(authService.user | async)">
 
   <form action="" [formGroup]="newUserForm" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
-    <input *ngIf="!getNewLogin()"
+    <input *ngIf="!NewLogin"
            type="text" formControlName="newLogin" placeholder="login" required>
     <input type="text" formControlName="email" placeholder="email" required>
     <input type="password" formControlName="password" placeholder="password" required>
@@ -13,7 +13,7 @@
   </form>
   <button (click)="loginGoogle()" [ngClass]="'google'">Login With Google</button>
 
-  <button *ngIf="getNewLogin()" 
+  <button *ngIf="NewLogin" 
            (click)="signup()">Signup</button>
 
 </div>
