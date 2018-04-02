@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataBaseService} from '../../services/db/dataBase.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreService} from '../../services/store/store.service';
@@ -14,11 +14,13 @@ import {EMessageType} from './config/enums/EMessageType';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.less']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked{
   messages$: Observable<IMessage[]>;
   newContent = '';
   chatId: string;
   userLogin: string;
+
+  @ViewChild('scrollhere') scroll: ElementRef;
 
   private onDestroyStream$ = new Subject<void>();
 
@@ -26,6 +28,10 @@ export class ChatComponent implements OnInit, OnDestroy {
               private storeService: StoreService,
               private route: ActivatedRoute,
               private titleService: Title) {
+  }
+
+  ngAfterViewChecked(){
+    this.scroll.nativeElement.scrollIntoView();
   }
 
   ngOnInit(): void {
