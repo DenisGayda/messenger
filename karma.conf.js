@@ -28,6 +28,8 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    browserDisconnectTolerance: 2,
+    browserNoActivityTimeout: 50000,
     singleRun: false,
 
     customLaunchers: {
