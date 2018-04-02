@@ -5,7 +5,6 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
 import {DataBaseService} from '../db/dataBase';
 import {User} from 'firebase/app';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
@@ -16,7 +15,7 @@ import 'rxjs/add/operator/takeUntil';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  logined = new BehaviorSubject<boolean>(this.localLogined);
+
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
@@ -27,6 +26,11 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
+
+  get logined(): boolean {
+    return this.localLogined;
+  }
+                                         
   signup(email: string, password: string, newLogin: string): void {
     this.firebaseAuth
       .auth
@@ -47,15 +51,13 @@ export class AuthService implements OnDestroy {
           password: password,
           chats: {}
         });
-        this.logined.next(true);
         this.localLogined = true;
         const updates = {};
         updates['/users/' + newPostKey] = postData;
         this.router.navigateByUrl('/users');
         return this.db.database.ref().update(updates);
       })
-      .catch(err => {
-      });
+      .catch(err => console.error(err));
   }
 
   login(email: string, password: string): void {
@@ -68,18 +70,16 @@ export class AuthService implements OnDestroy {
           .equalTo(value.email))
           .takeUntil(this.onDestroyStream$)
           .subscribe((users: IMyUser[]) => {
-          this.storeService.setUser(users[0]);
-        });
-        this.logined.next(true);
+            this.storeService.setUser(users[0]);
+          });
+                                         
         this.localLogined = true;
         this.router.navigateByUrl('/users');
       })
-      .catch(err => {
-      });
+      .catch(err => console.error(err));
   }
 
   logout(): void {
-    this.logined.next(false);
     this.localLogined = false;
     this.firebaseAuth
       .auth
