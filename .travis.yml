@@ -19,8 +19,9 @@ before_install:
 before_script:
 - npm install -g firebase-tools
 - npm install -g @angular/cli
+- npm install -g karma
 script:
-- ng test --single-run
+- karma start config/karma.conf.js --single-run
 - ng build --prod --aot
 deploy:
   provider: firebase
