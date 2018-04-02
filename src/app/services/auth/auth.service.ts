@@ -5,12 +5,12 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
 import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
 import {IPostData} from '../../config/interfaces/IPostData';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/takeUntil';
 import * as firebase from 'firebase/app';
 
@@ -18,7 +18,7 @@ import * as firebase from 'firebase/app';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
+  logined = new BehaviorSubject(this.localLogined);
 
   private onDestroyStream$ = new Subject<void>();
 
@@ -30,19 +30,21 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  loginToSystem(){
+  loginToSystem():void{
     this.logined.next(true);
     this.localLogined = true;
     this.router.navigateByUrl('/users');
   }
 
-  signup( email:string, login:string, password?:string,){
+
+  signup( email:string, login:string, google:boolean, password?:string):void{
        // Get a key for a new Post.
        const newPostKey = this.myDb.getNewId('users');
        const postData:IPostData = {
         login:login,
         id: newPostKey,
-        mail: email
+        mail: email,
+        googleAutentification:google
       };
 
        if(password){
@@ -50,12 +52,11 @@ export class AuthService implements OnDestroy {
        }
        
        this.storeService.setUser({
-         googleAutentification:false,
+         googleAutentification:google,
          chats: {}, 
          ...postData
        });
 
-     
        const updates = {};
 
        updates['/users/' + newPostKey] = postData;
@@ -63,16 +64,17 @@ export class AuthService implements OnDestroy {
        this.db.database.ref().update(updates);
   }
 
-  signupWithEmail(email: string, password: string, newLogin: string) {
+  signupWithEmail(email: string, password: string, newLogin: string):void {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
-        this.signup(email, newLogin, password);
+        this.signup(email, newLogin, false, password);
       })
+      .catch(err => console.error(err));
   }
 
-  login(email:string, name?:string){
+  login(email:string, name?:string):void {
     this.myDb.selectDB('users', ref =>
         ref.orderByChild('mail')
       .equalTo(email))
@@ -84,32 +86,32 @@ export class AuthService implements OnDestroy {
           return;
         }
         if(name){
-          this.signup(email,name);
+          this.signup(email, name, true);
         } 
       });
   }
 
-  loginWithEmail(email: string, password: string) {
+  loginWithEmail(email: string, password: string):void {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.login(value.email);
       })
+      .catch(err => console.error(err));
   }
   
-  loginWithGoogle(){
+  loginWithGoogle():void{
     this.firebaseAuth
     .auth
     .signInWithPopup(new firebase.auth.GoogleAuthProvider())
     .then(value => {
       this.login(value.user.email, value.user.displayName);
      })
+     .catch(err => console.error(err));
   }
   
- 
-
-  logout() {
+  logout(): void {
     this.logined.next(false);
     this.localLogined = false;
     this.firebaseAuth
@@ -125,5 +127,4 @@ export class AuthService implements OnDestroy {
     this.onDestroyStream$.next();
     this.onDestroyStream$.complete();
   }
-
 }

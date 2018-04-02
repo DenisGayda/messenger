@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
 
-  constructor(public authService: AuthService, private titleService: Title) {
+  constructor(public authService: AuthService,
+              private titleService: Title) {
   }
 
   ngOnInit() {
@@ -28,7 +29,6 @@ export class LoginComponent implements OnInit {
   onSubmit({newLogin, email, password}: ILogin): void {
     if (newLogin) {
       this.authService.signupWithEmail(email, password, newLogin);
-      return;
     }
     this.authService.loginWithEmail(email, password);
   }
