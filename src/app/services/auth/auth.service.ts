@@ -17,7 +17,6 @@ export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
 
-  logined = new BehaviorSubject<boolean>(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
@@ -26,6 +25,10 @@ export class AuthService implements OnDestroy {
               private storeService: StoreService,
               private router: Router) {
     this.user = firebaseAuth.authState;
+  }
+
+  get logined(): BehaviorSubject<boolean> {
+    return new BehaviorSubject<boolean>(this.localLogined);
   }
 
   signup(email: string, password: string, newLogin: string): void {
@@ -48,7 +51,6 @@ export class AuthService implements OnDestroy {
           password: password,
           chats: {}
         });
-        this.logined.next(true);
         this.localLogined = true;
         const updates = {};
         updates['/users/' + newPostKey] = postData;
@@ -71,7 +73,6 @@ export class AuthService implements OnDestroy {
           .subscribe((users: IMyUser[]) => {
             this.storeService.setUser(users[0]);
           });
-        this.logined.next(true);
         this.localLogined = true;
         this.router.navigateByUrl('/users');
       })
@@ -80,7 +81,6 @@ export class AuthService implements OnDestroy {
   }
 
   logout(): void {
-    this.logined.next(false);
     this.localLogined = false;
     this.firebaseAuth
       .auth
