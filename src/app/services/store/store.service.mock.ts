@@ -11,7 +11,7 @@ export class StoreServiceMock {
       login: 'Test',
       mail: 'test@gmail.com',
       password: 'testtest',
-      googleAutentification:true,
+      googleAutentification:false,
       chats: {},
     });
   }
