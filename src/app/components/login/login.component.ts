@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit({newLogin, email, password}: ILogin): void {
     if (newLogin) {
-      this.authService.signup(email, password, newLogin);
+      this.authService.signupWithEmail(email, password, newLogin);
       return;
     }
-    this.authService.login(email, password);
+    this.authService.loginWithEmail(email, password);
   }
 
   loginGoogle(){
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.newUserForm.addControl('newLogin', new FormControl('', Validators.required));
   }
 
-  get NewLogin():boolean{
+  get newLogin():boolean{
     return !(this.newUserForm.controls.hasOwnProperty('newLogin'));
   }
   
