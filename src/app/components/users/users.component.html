@@ -1,16 +1,20 @@
 <div class="ggl">
-  <input type="text" [formControl]="find" placeholder="Поиск">
+  <input type="text"
+         placeholder="Поиск"
+         [formControl]="find">
 </div>
+
 <div class="user-btns">
   <div *ngIf="!!currentUserChat">
     <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}</button>
   </div>
 
-    <div *ngFor="let user of users | async">
-      <button (click)="checkChat(user)"
-      *ngIf="currentUserChat?.id !== user.id">{{ user.login }}</button>
-    </div>
+  <div *ngFor="let user of users$ | async">
+    <button *ngIf="currentUserChat?.id !== user.id"
+            (click)="checkChat(user)">{{ user.login }}</button>
+  </div>
 </div>
+
 <div class="chats">
   <router-outlet></router-outlet>
 </div>

@@ -1,0 +1,34 @@
+language: node_js
+node_js:
+- '6.9'
+branches:
+  only:
+  - master
+  - develop
+addons:
+apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+    - google-chrome-beta
+before_install:
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+before_script:
+- npm install -g firebase-tools
+- npm install -g @angular/cli
+- npm install -g karma
+script:
+- karma start ./karma.conf.js --single-run
+- ng build --prod --aot
+deploy:
+  provider: firebase
+  project: "mychatapp-mf"
+  skip_cleanup: true
+  token:
+    secure: c/a/G5Qq1XOw+YgLo1U1JGkpX+pDPxU0h9ZbHVikzu9BorhQ5kNOOZnwWEfXc7adPbciv56tbP8Oo5iweD+yE/qvz69uMKa0lJw+j11qMrq+l63yzogF7hcis90u3247LrGNI/FB4tyt4bq7kb8To0zXx3egFTCqZbdqGHUH6/KPocHMgJCYupbBw6Hv2Uep0OuM3hs7bu0TF72KcfBtC2YF/UpmxBTnjyeKpdqvYWHCYlD/4p3DISt35SHFxuB/CTJRa2or7pUcaZOYbTKEX25VNCKanqlDBOS82LObaXtMwvcrChtnJs3Cwg3RizG0fFyrYJGbdfGNjfY7V32iaNqpUu27pPYotmX9RyTvgJQNPYobVSAwEooTayk6nhvBTa9ZMX2Eot9q82zfe2FoUX58d0zDanikeoEUaz4kiTbtihed4mbuCRObW/b+vVki/wbz/Py5k7oeBeR2n2vkH8e1mcUTrOemfCjBkG7N1zgLjHV9YzcC6k2ORh8dqq0yFQJ3AD9KVMrfqHHwKtr6wed/jXf5GaOlLf86j1nvNo9nzaHmXg5GsrJaC7Rcn0USAEObiLoGiaINlkxhXkEn2Efw0sFJtoosgmjNrqXXrCskNTu8XGum4fJ1V6JnmW6Xy8EhpvC2MKozME/6OsBUsx3gv3dwa4RPPqMx6MBUplY=
+cache:
+  directories:
+  - node_modules
