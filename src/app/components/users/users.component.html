@@ -6,10 +6,10 @@
     <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}</button>
   </div>
 
-  <div *ngFor="let user of users | async">
-    <button (click)="checkChat(user)"
-    *ngIf="currentUserChat?.id !== user.id">{{ user.login }}</button>
-  </div>
+    <div *ngFor="let user of users | async">
+      <button (click)="checkChat(user)"
+      *ngIf="currentUserChat?.id !== user.id">{{ user.login }}</button>
+    </div>
 </div>
 <div class="chats">
   <router-outlet></router-outlet>
