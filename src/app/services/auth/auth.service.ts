@@ -15,11 +15,12 @@ import 'rxjs/add/operator/takeUntil';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
+  @LocalStorage userInMyApp: IMyUser;
 
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
-              public  db: AngularFireDatabase,
+              private db: AngularFireDatabase,
               private myDb: DataBaseService,
               private storeService: StoreService,
               private router: Router) {
@@ -47,12 +48,14 @@ export class AuthService implements OnDestroy {
           id: newPostKey,
           login: newLogin,
           mail: email,
-          password: password,
+          password,
+          status: 'online',
           chats: {}
         });
         this.localLogined = true;
         const updates = {};
         updates['/users/' + newPostKey] = postData;
+        this.updateStatus('offline');
         this.router.navigateByUrl('/users');
         return this.db.database.ref().update(updates);
       })
@@ -72,6 +75,7 @@ export class AuthService implements OnDestroy {
             this.storeService.setUser(users[0]);
           });
         this.localLogined = true;
+        this.updateStatus('online');
         this.router.navigateByUrl('/users');
       })
       .catch(err => console.error(err));
@@ -82,6 +86,13 @@ export class AuthService implements OnDestroy {
     this.firebaseAuth
       .auth
       .signOut();
+    this.updateStatus('offline');
+  }
+
+  updateStatus(newStatus: string): void {
+    const updates = {};
+    updates[`/users/${this.userInMyApp.id}/status`] = newStatus;
+    this.myDb.updateDB(updates);
   }
 
   changePassword(newPassword: string): void {

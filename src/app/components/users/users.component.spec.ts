@@ -43,7 +43,7 @@ describe('UsersComponent', () => {
         AuthService,
         StoreService,
         DataBaseService,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {provide: APP_BASE_HREF, useValue: '/'}
       ]
     })
       .compileComponents();
@@ -63,6 +63,7 @@ describe('UsersComponent', () => {
     expect(component.checkChat({
       id: 'some',
       login: '',
+      status: 'online',
       mail: '',
       password: '',
       chats: {}
