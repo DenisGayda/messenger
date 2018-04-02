@@ -8,7 +8,7 @@
   <div *ngIf="!!currentUserChat">
     <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}</button>
   </div>
- 
+
   <div *ngFor="let user of users$ | async">
     <button *ngIf="currentUserChat?.id !== user.id"
             (click)="checkChat(user)">{{ user.login }}</button>
