@@ -3,7 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
-import {DataBaseService} from '../db/dataBase.service';
+import {DataBaseService} from '../db/dataBase';
 import {User} from 'firebase/app';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
@@ -16,8 +16,7 @@ import 'rxjs/add/operator/takeUntil';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  logined: BehaviorSubject<boolean> = new BehaviorSubject(this.localLogined);
-
+  logined = new BehaviorSubject<boolean>(this.localLogined);
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
@@ -28,11 +27,11 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  signup(email: string, password: string, newLogin: string) {
+  signup(email: string, password: string, newLogin: string): void {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
-      .then(value => {
+      .then(() => {
         // Get a key for a new Post.
         const newPostKey = this.myDb.getNewId('users');
         const postData = {
@@ -59,18 +58,18 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): void {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email.toLowerCase(), password)
       .then(value => {
         this.myDb.selectDB('users', ref =>
           ref.orderByChild('mail')
-            .equalTo(value.email))
+          .equalTo(value.email))
           .takeUntil(this.onDestroyStream$)
           .subscribe((users: IMyUser[]) => {
-            this.storeService.setUser(users[0]);
-          });
+          this.storeService.setUser(users[0]);
+        });
         this.logined.next(true);
         this.localLogined = true;
         this.router.navigateByUrl('/users');
@@ -79,7 +78,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  logout() {
+  logout(): void {
     this.logined.next(false);
     this.localLogined = false;
     this.firebaseAuth
@@ -87,13 +86,8 @@ export class AuthService implements OnDestroy {
       .signOut();
   }
 
-  changePassword(newPassword: string): void {
-    this.firebaseAuth.auth.currentUser.updatePassword(newPassword);
-  }
-
   ngOnDestroy(): void {
     this.onDestroyStream$.next();
     this.onDestroyStream$.complete();
   }
-
 }
