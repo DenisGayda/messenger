@@ -5,7 +5,6 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
 import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
@@ -27,8 +26,8 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  get logined(): BehaviorSubject<boolean> {
-    return new BehaviorSubject<boolean>(this.localLogined);
+  get logined(): boolean {
+    return this.localLogined;
   }
 
   signup(email: string, password: string, newLogin: string): void {
@@ -57,8 +56,7 @@ export class AuthService implements OnDestroy {
         this.router.navigateByUrl('/users');
         return this.db.database.ref().update(updates);
       })
-      .catch(err => {
-      });
+      .catch(err => console.error(err));
   }
 
   login(email: string, password: string): void {
@@ -76,8 +74,7 @@ export class AuthService implements OnDestroy {
         this.localLogined = true;
         this.router.navigateByUrl('/users');
       })
-      .catch(err => {
-      });
+      .catch(err => console.error(err));
   }
 
   logout(): void {
