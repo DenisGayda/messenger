@@ -15,10 +15,15 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/first';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {IChat} from './config/interfaces/IChat';
+import {IIconData} from './config/interfaces/IIconData';
 
 const USERS = 'users';
 const CHATS = 'chats';
 const CHAT = 'chat';
+const SCALED_SIZE = {
+  height: 40,
+  width: 40
+};
 
 @Component({
   selector: 'app-users',
@@ -55,7 +60,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
 
-    navigator.geolocation.getCurrentPosition(location  => {
+    navigator.geolocation.getCurrentPosition(location => {
       this.dbService.updateDB(
         this.dbService.generateData<number>(`/${USERS}/${this.userInMyApp.id}/lat/`, location.coords.latitude)
       );
@@ -104,7 +109,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       });
 
     this.dbService.updateDB(
-        this.dbService.generateData<IChat>(`/${CHATS}/${newPostKey}`, postData)
+      this.dbService.generateData<IChat>(`/${CHATS}/${newPostKey}`, postData)
     ).then(res => {
       if (res) {
         this.enterInRealChat(newPostKey);
@@ -116,6 +121,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dbService.addNewChat(
       this.dbService.generateData<string>(`/${USERS}/${id1}/${CHATS}/${id2}`, key)
     );
+  }
+
+  getIcon(url: string): IIconData {
+    return {
+      scaledSize: SCALED_SIZE,
+      url
+    };
   }
 
   ngOnDestroy(): void {

@@ -27,16 +27,14 @@
   <router-outlet></router-outlet>
 </div>
 <div class="map-place">
-  <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+  <agm-map [latitude]="lat"
+           [longitude]="lng"
+           [zoom]="zoom">
     <agm-marker *ngFor="let user of users$ | async"
                 [latitude]="user.lat"
                 [longitude]="user.lng"
                 [title]="user.login"
-                [iconUrl]="{
-                scaledSize: {
-                  height: 40,
-                  width: 40
-                },
-                url: user.avatar}"></agm-marker>
+                [iconUrl]="getIcon(user.avatar)">
+    </agm-marker>
   </agm-map>
 </div>
