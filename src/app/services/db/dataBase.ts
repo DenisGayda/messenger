@@ -20,6 +20,7 @@ export class DataBaseService {
 
   updateDB<T>(updates: T): Observable<T> {
     this.angularDataBase.database.ref().update(updates);
+    
     return new Observable();
   }
 

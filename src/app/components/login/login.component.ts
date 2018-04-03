@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   onSubmit({newLogin, email, password}: ILogin): void {
     if (newLogin) {
       this.authService.signupWithEmail(email, password, newLogin);
+      return;
     }
     this.authService.loginWithEmail(email, password);
   }
