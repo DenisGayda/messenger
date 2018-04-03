@@ -8,4 +8,6 @@ export interface IMyUser {
   status?: string;
   chats?: IDictionary<string>;
   avatar?: string;
+  lat?: number;
+  lng?: number;
 }

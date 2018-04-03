@@ -13,6 +13,7 @@ import {startWith} from 'rxjs/operators';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/first';
+import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {IChat} from './config/interfaces/IChat';
 
 const USERS = 'users';
@@ -32,6 +33,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   currentUser$: Observable<IMyUser>;
   find = new FormControl();
   currentUserChat: IMyUser;
+  @LocalStorage userInMyApp: IMyUser;
+
+  lat = 49;
+  lng = 33;
+  zoom = 6;
 
   private onDestroy$ = new Subject<void>();
 
@@ -48,6 +54,15 @@ export class UsersComponent implements OnInit, OnDestroy {
         .includes(searchString.toLowerCase())));
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
+
+    navigator.geolocation.getCurrentPosition(location  => {
+      this.dbService.updateDB(
+        this.dbService.generateData<number>(`/${USERS}/${this.userInMyApp.id}/lat/`, location.coords.latitude)
+      );
+      this.dbService.updateDB(
+        this.dbService.generateData<number>(`/${USERS}/${this.userInMyApp.id}/lng/`, location.coords.longitude)
+      );
+    });
   }
 
   checkChat(user: IMyUser) {

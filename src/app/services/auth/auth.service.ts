@@ -42,7 +42,8 @@ export class AuthService implements OnDestroy {
           login: newLogin,
           id: newPostKey,
           password: password,
-          mail: email
+          mail: email,
+          avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg'
         };
         this.storeService.setUser({
           id: newPostKey,
@@ -50,6 +51,7 @@ export class AuthService implements OnDestroy {
           mail: email,
           password,
           status: 'online',
+          avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg',
           chats: {}
         });
         this.localLogined = true;
