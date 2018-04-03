@@ -29,7 +29,10 @@ describe('component: RoutingComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          {path: 'home', component: DummyComponent}
+          {
+            path: 'home',
+            component: DummyComponent
+          }
         ]),
         FormsModule
       ],
@@ -39,8 +42,14 @@ describe('component: RoutingComponent', () => {
         ChatComponent
       ],
       providers: [
-        {provide: DataBaseService, useClass: DataBaseServiceMock},
-        {provide: StoreService, useClass: StoreServiceMock},
+        {
+          provide: DataBaseService,
+          useClass: DataBaseServiceMock
+        },
+        {
+          provide: StoreService,
+          useClass: StoreServiceMock
+        },
         FirebaseApp
       ]
     });
