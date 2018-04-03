@@ -3,7 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {StoreService} from '../store/store.service';
-import {DataBaseService} from '../db/dataBase.service';
+import {DataBaseService} from '../db/dataBase';
 import {User} from 'firebase/app';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
@@ -27,10 +27,11 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
+
   get logined(): boolean {
     return this.localLogined;
   }
-
+                                         
   signup(email: string, password: string, newLogin: string): void {
     this.firebaseAuth
       .auth
@@ -69,11 +70,12 @@ export class AuthService implements OnDestroy {
       .then(value => {
         this.myDb.selectDB('users', ref =>
           ref.orderByChild('mail')
-            .equalTo(value.email))
+          .equalTo(value.email))
           .takeUntil(this.onDestroyStream$)
           .subscribe((users: IMyUser[]) => {
             this.storeService.setUser(users[0]);
           });
+                                         
         this.localLogined = true;
         this.updateStatus('online');
         this.router.navigateByUrl('/users');
@@ -93,10 +95,6 @@ export class AuthService implements OnDestroy {
     this.myDb.updateDB(
       this.myDb.generateData<string>(`/users/${this.userInMyApp.id}/status`, newStatus)
     );
-  }
-
-  changePassword(newPassword: string): void {
-    this.firebaseAuth.auth.currentUser.updatePassword(newPassword);
   }
 
   ngOnDestroy(): void {
