@@ -10,6 +10,7 @@ import {IMyUser} from '../../config/interfaces/IMyUser';
 })
 export class HeaderComponent implements OnInit {
 
+  @LocalStorage localLogined: boolean;
   @LocalStorage userInMyApp: IMyUser;
 
   constructor(private dbService: DataBaseService) {

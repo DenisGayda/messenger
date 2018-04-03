@@ -40,7 +40,10 @@ describe('LoginComponent', () => {
         AuthService,
         StoreService,
         DataBaseService,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {
+          provide: APP_BASE_HREF,
+          useValue : '/'
+        }
       ]
     })
       .compileComponents();

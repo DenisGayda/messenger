@@ -90,9 +90,9 @@ export class AuthService implements OnDestroy {
   }
 
   updateStatus(newStatus: string): void {
-    const updates = {};
-    updates[`/users/${this.userInMyApp.id}/status`] = newStatus;
-    this.myDb.updateDB(updates);
+    this.myDb.updateDB(
+      this.myDb.generateData<string>(`/users/${this.userInMyApp.id}/status`, newStatus)
+    );
   }
 
   changePassword(newPassword: string): void {
