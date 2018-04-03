@@ -15,7 +15,8 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/first';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {IChat} from './config/interfaces/IChat';
-import {IIconData} from './config/interfaces/IIconData';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {ICoordinates} from './config/interfaces/ICoordinates';
 
 const USERS = 'users';
 const CHATS = 'chats';
@@ -33,7 +34,8 @@ const SCALED_SIZE = {
 
 export class UsersComponent implements OnInit, OnDestroy {
 
-  users$: Observable<IMyUser[]>;
+  users$ = new BehaviorSubject<IMyUser[]>([]);
+  coordinates$ = new BehaviorSubject<ICoordinates[]>([]);
   usersStart$: Observable<IMyUser[]>;
   currentUser$: Observable<IMyUser>;
   find = new FormControl();
@@ -54,9 +56,23 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.users$ = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB(USERS))
+    combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB<IMyUser>(USERS))
       .map(([searchString, users = []]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
-        .includes(searchString.toLowerCase())));
+        .includes(searchString.toLowerCase())))
+      .subscribe((users: IMyUser[]) => {
+        this.users$.next(users);
+        this.coordinates$.next(users.map(user => {
+            return {
+              login: user.login,
+              lat: user.lat,
+              lng: user.lng,
+              scaledSize: {
+                scaledSize: SCALED_SIZE,
+                url: user.avatar
+              }
+            };
+          }));
+      });
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
 
@@ -123,11 +139,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     );
   }
 
-  getIcon(url: string): IIconData {
-    return {
-      scaledSize: SCALED_SIZE,
-      url
-    };
+  changeStatus(status: string): string {
+    switch (status) {
+      case 'online': return 'online';
+      case 'offline': return 'offline';
+      case 'walked-away': return 'walked-away';
+      default: return 'offline';
+    }
   }
 
   ngOnDestroy(): void {

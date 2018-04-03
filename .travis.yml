@@ -19,7 +19,7 @@ before_install:
 before_script:
 - npm install -g firebase-tools
 - npm install -g @angular/cli
-- npm install -g @agm/core --save
+- npm install -g @agm/core
 - npm install -g karma
 script:
 - karma start ./karma.conf.js --single-run

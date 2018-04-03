@@ -7,18 +7,14 @@
 <div class="user-btns">
   <div *ngIf="!!currentUserChat">
     <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}
-      <div [ngClass]="{'online': currentUserChat.status === 'online',
-        'offline': currentUserChat.status === 'offline',
-        'walked-away': currentUserChat.status === 'walked-away'}"></div>
+      <div [class]="changeStatus(currentUserChat.status)"></div>
     </button>
   </div>
 
   <div *ngFor="let user of users$ | async">
     <button *ngIf="currentUserChat?.id !== user.id"
             (click)="checkChat(user)">{{ user.login }}
-      <div [ngClass]="{'online': user.status === 'online',
-        'offline': user.status === 'offline',
-        'walked-away': user.status === 'walked-away'}"></div>
+      <div [class]="changeStatus(user.status)"></div>
     </button>
   </div>
 </div>
@@ -30,11 +26,11 @@
   <agm-map [latitude]="lat"
            [longitude]="lng"
            [zoom]="zoom">
-    <agm-marker *ngFor="let user of users$ | async"
-                [latitude]="user.lat"
-                [longitude]="user.lng"
-                [title]="user.login"
-                [iconUrl]="getIcon(user.avatar)">
+    <agm-marker *ngFor="let cord of coordinates$ | async"
+                [latitude]="cord.lat"
+                [longitude]="cord.lng"
+                [title]="cord.login"
+                [iconUrl]="cord.scaledSize">
     </agm-marker>
   </agm-map>
 </div>
