@@ -18,13 +18,13 @@ import * as firebase from 'firebase/app';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  @LocalStorage userInMyApp:string;
+  @LocalStorage userInMyApp: string;
   logined = new BehaviorSubject(this.localLogined);
 
   private onDestroyStream$ = new Subject<void>();
 
   constructor(private firebaseAuth: AngularFireAuth,
-              public  db: AngularFireDatabase,
+              private db: AngularFireDatabase,
               private myDb: DataBaseService,
               private storeService: StoreService,
               private router: Router) {
@@ -121,6 +121,13 @@ export class AuthService implements OnDestroy {
     this.firebaseAuth
       .auth
       .signOut();
+    this.updateStatus('offline');
+  }
+
+  updateStatus(newStatus: string): void {
+    this.myDb.updateDB(
+      this.myDb.generateData<string>(`/users/${JSON.parse(this.userInMyApp).id}/status`, newStatus)
+    );
   }
 
   changePassword(newPassword: string): void {

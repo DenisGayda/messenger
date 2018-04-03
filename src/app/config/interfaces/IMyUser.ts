@@ -5,7 +5,8 @@ export interface IMyUser {
   login: string;
   mail: string;
   password?: string;
+  status?: string;
   chats?: IDictionary<string>;
-  googleAutentification?:boolean;
+  googleAutentification?: boolean;
   avatar?: string;
 }
