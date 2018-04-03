@@ -49,4 +49,10 @@ export class DataBaseService {
     return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => ref.orderByChild('date'));
   }
 
+  generateData<T>(where: string, newData: T): IDictionary<T> {
+    const updates = {};
+    updates[where] = newData;
+    return updates;
+  }
+
 }
