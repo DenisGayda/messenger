@@ -81,8 +81,10 @@ describe('UsersComponent', () => {
     expect(component.createChat('0'));
   });
 
+  /*
   it('Method "addChatToClient" test', () => {
     expect(component.addChatToClient('someId1', 'someId2', 'someKey'));
   });
+  */
 
 });
