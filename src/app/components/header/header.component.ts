@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  chackStatus(newStatus: string) {
+  checkStatus(newStatus: string) {
     this.dbService.updateDB(
       this.dbService.generateData<string>(`/users/${this.userInMyApp.id}/status`, newStatus)
     );
