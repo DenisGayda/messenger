@@ -42,6 +42,7 @@ export class AuthService implements OnDestroy {
     // Get a key for a new Post.
     const newPostKey = this.myDb.getNewId('users');
     const postData: IPostData = {
+      avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg',
       login: login,
       id: newPostKey,
       mail: email,
@@ -117,11 +118,11 @@ export class AuthService implements OnDestroy {
   logout(): void {
     this.logined.next(false);
     this.localLogined = false;
-    this.userInMyApp = null;
     this.firebaseAuth
       .auth
       .signOut();
     this.updateStatus('offline');
+    this.userInMyApp = null;
   }
 
   updateStatus(newStatus: string): void {
