@@ -54,14 +54,10 @@ export class AuthService implements OnDestroy {
     }
 
     this.storeService.setUser(postData);
-    this.userInMyApp = postData;
-
-    const updates = {};
-
-    updates['/users/' + newPostKey] = postData;
-
     this.loginToSystem();
-    this.db.database.ref().update(updates);
+    this.db.database.ref().update(
+      this.myDb.generateData(`/users/${newPostKey}/`, postData)
+    );
   }
 
   signupWithEmail(email: string, password: string, newLogin: string): void {
