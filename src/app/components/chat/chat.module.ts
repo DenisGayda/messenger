@@ -4,6 +4,7 @@ import {ChatComponent} from './chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {ChatRoutingModule} from './chatRouting.module';
+import { ContextMenuModule } from './context-menu/context-menu.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {ChatRoutingModule} from './chatRouting.module';
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
-    ChatRoutingModule
+    ChatRoutingModule,
+    ContextMenuModule
   ],
   exports: [ChatComponent]
 })

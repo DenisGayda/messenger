@@ -1,11 +1,16 @@
-<div class="chat">
+<div class="chat"
+     (click)="disableContextMenu($event)"
+     oncontextmenu="return false;">
   <div class="chat-block">
-    <div *ngIf="messages$" class="messages-block">
-      <div *ngFor="let message of messages$ | async" class="mes-block">
+    <div *ngIf="messages$"
+         class="messages-block">
+      <div *ngFor="let message of messages$ | async"
+           class="mes-block"
+           (contextmenu)="onrightClick($event, message)">
         <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
-          <img *ngIf="message.type === 'img'" [src]="message.text">
-
+          <img *ngIf="message.type === 'img'"
+               [src]="message.text">
           <span class="date-span">{{ generateDate(message.date)}}</span>
         </h5>
       </div>
@@ -25,6 +30,10 @@
       Send message
     </button>
   </div>
+</div>
 
-  <span></span>
+<div *ngIf="contextmenu === true">
+  <app-context-menu [x]="contextmenuX"
+                    [y]="contextmenuY"
+                    [mes]="message"></app-context-menu>
 </div>

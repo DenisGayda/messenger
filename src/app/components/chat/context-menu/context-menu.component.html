@@ -1,0 +1,7 @@
+<mat-list class="contextmenu"
+          [ngStyle]="{'left.px': x, 'top.px': y}">
+  <button mat-button data="edit"
+          (click)="editMessage()">Edit message</button>
+  <button mat-button data="forward">Forward message</button>
+  <button mat-button data="delete">Delete message</button>
+</mat-list>
