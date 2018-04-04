@@ -11,6 +11,7 @@ import {EMessageType} from '../config/enums/EMessageType';
 export class ContextMenuComponent {
   @Input() x = 0;
   @Input() y = 0;
+  @Input() id = 0;
   @Input('mes') message = {
     idMes: '',
     date: 0,
@@ -23,5 +24,9 @@ export class ContextMenuComponent {
 
   editMessage() {
     this.control.setData(this.message.text);
+  }
+
+  deleteMessage() {
+    return this.dbServise.deleteData(`/chats/${this.id}/messages/${this.message.idMes}`);
   }
 }

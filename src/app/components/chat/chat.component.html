@@ -32,8 +32,9 @@
   </div>
 </div>
 
-<div *ngIf="contextMenu === true">
+<div *ngIf="contextMenu">
   <app-context-menu [x]="contextMenuX"
                     [y]="contextMenuY"
-                    [mes]="message"></app-context-menu>
+                    [mes]="message"
+                    [id]="chatId"></app-context-menu>
 </div>

@@ -51,4 +51,8 @@ export class DataBaseService {
     return updates;
   }
 
+  deleteData(key: string) {
+    return this.angularDataBase.database.ref(key).remove();
+  }
+
 }
