@@ -18,7 +18,7 @@ import * as firebase from 'firebase/app';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  @LocalStorage userInMyApp: string;
+  @LocalStorage userInMyApp: IMyUser;
   logined = new BehaviorSubject(this.localLogined);
 
   private onDestroyStream$ = new Subject<void>();
@@ -57,7 +57,7 @@ export class AuthService implements OnDestroy {
     }
 
     this.storeService.setUser(userData);
-    this.userInMyApp = JSON.stringify(userData);
+    this.userInMyApp = userData;
 
     const updates = {};
 
@@ -117,7 +117,7 @@ export class AuthService implements OnDestroy {
   logout(): void {
     this.logined.next(false);
     this.localLogined = false;
-    this.userInMyApp = '';
+    this.userInMyApp = null;
     this.firebaseAuth
       .auth
       .signOut();
@@ -126,7 +126,7 @@ export class AuthService implements OnDestroy {
 
   updateStatus(newStatus: string): void {
     this.myDb.updateDB(
-      this.myDb.generateData<string>(`/users/${JSON.parse(this.userInMyApp).id}/status`, newStatus)
+      this.myDb.generateData<string>(`/users/${this.userInMyApp.id}/status`, newStatus)
     );
   }
 

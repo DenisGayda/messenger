@@ -1,40 +1,40 @@
 <div class="logo">
   <h1>My Profile</h1>
- </div>
- <div>
-    <form [formGroup]="userProfile"
-    (ngSubmit)="onSubmit(userProfile.value)"
-    novalidate>
-  
-      <div class="avatar">
-        <span>Photo:</span>
-        <img *ngIf="!!currentUser.avatar"
-        [src]="currentUser.avatar">
-        <input type="file"
-        (change)="changePhoto($event.target)">
-      </div>
-    
-      <span>Login:</span>
-      <input type="text"
-      formControlName="login">
-    
-      <span>Password:</span>
-      <input type="password"
-      formControlName="password"
-      placeholder="new password">
-    
-      <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
-        <span>Password (again):</span>
-        <input type="password"
-        formControlName="passwordSecond"
-        placeholder="new password again">
-      </div>
-    
-      <button *ngIf="userProfile.value.password === userProfile.value.passwordSecond"
-      type="submit">
-      Change profile data
-      </button>
-    </form>
+</div>
+<div>
+  <form [formGroup]="userProfile"
+        (ngSubmit)="onSubmit(userProfile.value)"
+        novalidate>
 
-    <button routerLink="/users">Cancel</button>
- </div>
+    <div class="avatar">
+      <span>Photo:</span>
+      <img *ngIf="!!currentUser.avatar"
+           [src]="currentUser.avatar">
+      <input type="file"
+             (change)="changePhoto($event.target)">
+    </div>
+
+    <span>Login:</span>
+    <input type="text"
+           formControlName="login">
+
+    <span>Password:</span>
+    <input type="password"
+           formControlName="password"
+           placeholder="new password">
+
+    <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
+      <span>Password (again):</span>
+      <input type="password"
+             formControlName="passwordSecond"
+             placeholder="new password again">
+    </div>
+
+    <button *ngIf="userProfile.value.password === userProfile.value.passwordSecond"
+            type="submit">
+      Change profile data
+    </button>
+  </form>
+
+  <button routerLink="/users">Cancel</button>
+</div>

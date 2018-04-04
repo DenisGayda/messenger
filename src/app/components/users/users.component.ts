@@ -62,16 +62,16 @@ export class UsersComponent implements OnInit, OnDestroy {
       .subscribe((users: IMyUser[]) => {
         this.users$.next(users);
         this.coordinates$.next(users.map(user => {
-            return {
-              login: user.login,
-              lat: user.lat,
-              lng: user.lng,
-              scaledSize: {
-                scaledSize: SCALED_SIZE,
-                url: user.avatar
-              }
-            };
-          }));
+          return {
+            login: user.login,
+            lat: user.lat,
+            lng: user.lng,
+            scaledSize: {
+              scaledSize: SCALED_SIZE,
+              url: user.avatar
+            }
+          };
+        }));
       });
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
@@ -141,10 +141,14 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   changeStatus(status: string): string {
     switch (status) {
-      case 'online': return 'online';
-      case 'offline': return 'offline';
-      case 'walked-away': return 'walked-away';
-      default: return 'offline';
+      case 'online':
+        return 'online';
+      case 'offline':
+        return 'offline';
+      case 'walked-away':
+        return 'walked-away';
+      default:
+        return 'offline';
     }
   }
 
