@@ -42,8 +42,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.contextMenuY = event.clientY;
       this.contextMenu = true;
       this.message = mes;
-      console.log(this.message);
-      console.log(event);
       this.selectMessage.emit(mes);
       this.control.data
         .takeUntil(this.onDestroyStream$)
