@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {StoreService} from './services/store/store.service';
-import {DataBaseService} from './services/db/dataBase.service';
 import {LocalStorage} from './decorators/local-storage.decorator';
 import {IMyUser} from './config/interfaces/IMyUser';
+import {DataBaseService} from './services/db/dataBase.service';
 
 @Component({
   selector: 'app-root',
@@ -22,23 +22,15 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.localLogined) {
       this.storeService.setUser(this.userInMyApp);
-
-      window.onload = () => {
-        this.updateStatus('online');
-      };
     }
-
-    window.onunload = () => {
-      if (this.localLogined) {
-        this.updateStatus('offline');
-      }
-    };
   }
 
-  updateStatus(status: string): void {
-    this.dbService.updateDB(
-      this.dbService.generateData(`/users/${this.userInMyApp.id}/status`, status)
-    );
+  windowEvent(status: string): void {
+    if (this.localLogined) {
+      this.dbService.updateDB(
+        this.dbService.generateData(`/users/${this.userInMyApp.id}/status`, status)
+      );
+    }
   }
 
 }
