@@ -40,7 +40,10 @@ describe('DataBaseService', () => {
         StoreService,
         DataBaseService,
         AngularFireStorage,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {
+          provide: APP_BASE_HREF,
+          useValue : '/'
+        }
       ]
     })
       .compileComponents();

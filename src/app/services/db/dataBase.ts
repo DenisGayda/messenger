@@ -46,7 +46,7 @@ export class DataBaseService {
   }
 
   getMessages(chatId: string): Observable<IMessage[]> {
-    return this.selectDB(`/chats/${chatId}/messages/`, ref => ref.orderByChild('date'));
+    return this.selectDB<IMessage>(`/chats/${chatId}/messages/`, ref => ref.orderByChild('date'));
   }
 
   generateData<T>(where: string, newData: T): IDictionary<T> {

@@ -13,6 +13,7 @@ import {startWith} from 'rxjs/operators';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/first';
+import {IChat} from './config/interfaces/IChat';
 
 const USERS = 'users';
 const CHATS = 'chats';
@@ -70,7 +71,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   createChat(chat: string) {
     const newPostKey = this.dbService.getNewId(`${CHATS}`);
-    const updates = {};
     const postData = {
       idChat: newPostKey,
       messages: {}
@@ -88,8 +88,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       });
 
-    updates[`/${CHATS}/` + newPostKey] = postData;
-    this.dbService.updateDB(updates).then(res => {
+    this.dbService.updateDB(
+        this.dbService.generateData<IChat>(`/${CHATS}/${newPostKey}`, postData)
+    ).then(res => {
       if (res) {
         this.enterInRealChat(newPostKey);
       }
@@ -97,10 +98,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addChatToClient(id1: string, id2: string, key: string) {
-    const updates = {};
-
-    updates[`/${USERS}/${id1}/${CHATS}/${id2}`] = key;
-    this.dbService.addNewChat(updates);
+    this.dbService.addNewChat(
+      this.dbService.generateData<string>(`/${USERS}/${id1}/${CHATS}/${id2}`, key)
+    );
   }
 
   ngOnDestroy(): void {
