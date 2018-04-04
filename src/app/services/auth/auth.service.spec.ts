@@ -16,6 +16,9 @@ import {LoginComponent} from '../../components/login/login.component';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
 
 describe('AuthService', () => {
   beforeEach(async(() => {
@@ -23,7 +26,8 @@ describe('AuthService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -34,7 +38,9 @@ describe('AuthService', () => {
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule
       ],
       providers: [
         AuthService,

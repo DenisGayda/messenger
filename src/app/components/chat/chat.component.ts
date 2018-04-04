@@ -20,10 +20,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatId: string;
   userLogin: string;
   message: IMessage;
-  newContent = '';
-  contextmenu = false;
-  contextmenuX = 0;
-  contextmenuY = 0;
+  newContent: string;
+  contextMenu = false;
+  contextMenuX: number;
+  contextMenuY: number;
 
   @Input('text') txtForEdit = '';
   @Output() selectMessage = new EventEmitter();
@@ -36,12 +36,14 @@ export class ChatComponent implements OnInit, OnDestroy {
               private control: EditingControlService) {
   }
 
-  onrightClick(event, mes: IMessage) {
-    if (event.target.className === 'user-mi' || event.target.className === 'date-span') {
-      this.contextmenuX = event.clientX;
-      this.contextmenuY = event.clientY;
-      this.contextmenu = true;
+  onRightClick(event: MouseEvent, mes: IMessage): void {
+    if (event.target['className'] === 'user-mi' || event.target['className'] === 'date-span') {
+      this.contextMenuX = event.clientX;
+      this.contextMenuY = event.clientY;
+      this.contextMenu = true;
       this.message = mes;
+      console.log(this.message);
+      console.log(event);
       this.selectMessage.emit(mes);
       this.control.data
         .takeUntil(this.onDestroyStream$)
@@ -66,18 +68,23 @@ export class ChatComponent implements OnInit, OnDestroy {
     return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
   }
 
-  addNewContent() {
+  addNewContent(): void {
     if (!this.newContent) {
       return;
     }
     if (this.control.getData()) {
       const updates = {};
-      updates[`/chats/${this.chatId}/messages/${this.message.idMes}`] = this.generateMessage(EMessageType.TEXT, this.newContent);
-      this.dbService.updateDB(updates)
+      updates[`/chats/${this.chatId}/messages/${this.message.idMes}`]
+        = this.generateMessage(EMessageType.TEXT, this.newContent);
+      this.dbService.updateDB(updates);
       this.newContent = '';
+      this.control.setData('');
       return;
     }
-    this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
+    const id = this.dbService.getNewId('messages');
+
+    this.dbService.sendMessage(this.chatId,
+      this.generateMessage(EMessageType.TEXT, this.newContent, id), id);
     this.newContent = '';
   }
 
@@ -89,34 +96,28 @@ export class ChatComponent implements OnInit, OnDestroy {
         .addFile(file)
         .takeUntil(this.onDestroyStream$)
         .subscribe(response => {
-          this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.IMAGE, response));
+          const id = this.dbService.getNewId('messages');
+
+          this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.IMAGE, response), id);
         });
     }
   }
 
-  generateMessage(type: EMessageType, text: string) {
-    let newPostKey;
-    if (this.control.getData()) {
-      newPostKey = this.message.idMes;
-    } else {
-      newPostKey = this.dbService.getNewId('messages');
-    }
-
+  generateMessage(type: EMessageType, text: string, id?: string): IMessage {
     return {
-      idMes: newPostKey,
+      idMes: id ? id : this.message.idMes,
       type,
       text,
       user: this.userLogin,
-      date: this.message.date || Date.now()
+      date: id ? Date.now() : this.message.date
     };
   }
 
-  disableContextMenu(event) {
-    if (event.target.localName !== 'input') {
-      this.contextmenu = false;
+  disableContextMenu(event: HTMLElement): void {
+    if (event.localName !== 'input') {
+      this.contextMenu = false;
       this.newContent = '';
     }
-    return;
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,10 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {StoreService} from '../../services/store/store.service';
 import {StoreServiceMock} from '../../services/store/store.service.mock';
 import {DataBaseServiceMock} from '../../services/db/dataBase.service.mock';
+import {ContextMenuComponent} from './context-menu/context-menu.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {EditingControlService} from '../../services/control/editing-control.service';
 
 @Component({
   template: `<router-outlet></router-outlet>`
@@ -34,12 +38,15 @@ describe('component: RoutingComponent', () => {
             component: DummyComponent
           }
         ]),
-        FormsModule
+        FormsModule,
+        MatButtonModule,
+        MatListModule
       ],
       declarations: [
         RoutingComponent,
         DummyComponent,
-        ChatComponent
+        ChatComponent,
+        ContextMenuComponent
       ],
       providers: [
         {
@@ -50,6 +57,7 @@ describe('component: RoutingComponent', () => {
           provide: StoreService,
           useClass: StoreServiceMock
         },
+        EditingControlService,
         FirebaseApp
       ]
     });

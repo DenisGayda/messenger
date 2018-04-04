@@ -22,10 +22,6 @@ export class DataBaseService {
     return this.angularDataBase.database.ref().update(updates).then(() => new Observable());
   }
 
-  insertDB<T>(from: string, objToPush: T): ThenableReference {
-    return this.angularDataBase.list(from).push(objToPush);
-  }
-
   getNewId(from: string): string {
     return this.angularDataBase.database.ref().child(from).push().key;
   }
@@ -41,8 +37,8 @@ export class DataBaseService {
       .downloadURL();
   }
 
-  sendMessage(chat: string, newMessage: IMessage): void {
-    this.insertDB<IMessage>(`/chats/${chat}/messages/`, newMessage);
+  sendMessage(chat: string, newMessage: IMessage, id: string): void {
+    this.updateDB(this.generateData<IMessage>(`/chats/${chat}/messages/${id}/`, newMessage));
   }
 
   getMessages(chatId: string): Observable<IMessage[]> {

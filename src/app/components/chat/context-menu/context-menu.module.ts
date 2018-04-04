@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
-import { ContextMenuComponent } from './context-menu.component';
+import {ContextMenuComponent} from './context-menu.component';
 import {MatListModule} from '@angular/material/list';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';import {MatButtonModule} from '@angular/material/button';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,4 +18,5 @@ import {CommonModule} from '@angular/common';import {MatButtonModule} from '@ang
   exports: [ContextMenuComponent]
 })
 
-export class ContextMenuModule {}
+export class ContextMenuModule {
+}

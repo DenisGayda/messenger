@@ -1,12 +1,12 @@
 <div class="chat"
-     (click)="disableContextMenu($event)"
+     (click)="disableContextMenu($event.target)"
      oncontextmenu="return false;">
   <div class="chat-block">
     <div *ngIf="messages$"
          class="messages-block">
       <div *ngFor="let message of messages$ | async"
            class="mes-block"
-           (contextmenu)="onrightClick($event, message)">
+           (contextmenu)="onRightClick($event, message)">
         <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
           <img *ngIf="message.type === 'img'"
@@ -32,8 +32,8 @@
   </div>
 </div>
 
-<div *ngIf="contextmenu === true">
-  <app-context-menu [x]="contextmenuX"
-                    [y]="contextmenuY"
+<div *ngIf="contextMenu === true">
+  <app-context-menu [x]="contextMenuX"
+                    [y]="contextMenuY"
                     [mes]="message"></app-context-menu>
 </div>

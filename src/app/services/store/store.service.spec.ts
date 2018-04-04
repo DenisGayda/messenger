@@ -14,6 +14,9 @@ import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
@@ -21,7 +24,8 @@ describe('StoreService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -31,7 +35,9 @@ describe('StoreService', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule
       ],
       providers: [
         AuthService,

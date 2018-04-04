@@ -16,6 +16,9 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {ContextMenuComponent} from '../chat/context-menu/context-menu.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -26,7 +29,8 @@ describe('UsersComponent', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -37,7 +41,9 @@ describe('UsersComponent', () => {
         AngularFireStorageModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule
       ],
       providers: [
         AuthService,
