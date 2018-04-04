@@ -1,44 +1,40 @@
 <div class="logo">
   <h1>My Profile</h1>
-</div>
-<div>
-  <form [formGroup]="userProfile"
-        #myForm="ngForm"
-        (ngSubmit)="onSubmit(myForm.value)"
-        novalidate>
-
-    <div class="avatar">
-      <span>Photo:</span>
-      <img *ngIf="!!currentUser.avatar"
-           [src]="currentUser.avatar">
-      <input type="file"
-             (change)="changePhoto($event.target)">
-    </div>
-
-    <span>Login:</span>
-    <input type="text"
-           formControlName="login"
-           [value]="currentUser.login" required>
-
-    <span>Password:</span>
-    <input type="password"
-           formControlName="password"
-           placeholder="new password">
-
-    <div *ngIf="myForm.value.password || myForm.value.passwordSecond">
-      <span>Password (again):</span>
+ </div>
+ <div>
+    <form [formGroup]="userProfile"
+    (ngSubmit)="onSubmit(userProfile.value)"
+    novalidate>
+  
+      <div class="avatar">
+        <span>Photo:</span>
+        <img *ngIf="!!currentUser.avatar"
+        [src]="currentUser.avatar">
+        <input type="file"
+        (change)="changePhoto($event.target)">
+      </div>
+    
+      <span>Login:</span>
+      <input type="text"
+      formControlName="login">
+    
+      <span>Password:</span>
       <input type="password"
-             formControlName="passwordSecond"
-             placeholder="new password again">
-    </div>
-
-    <button *ngIf="myForm.value.password === myForm.value.passwordSecond"
-            type="submit">
+      formControlName="password"
+      placeholder="new password">
+    
+      <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
+        <span>Password (again):</span>
+        <input type="password"
+        formControlName="passwordSecond"
+        placeholder="new password again">
+      </div>
+    
+      <button *ngIf="userProfile.value.password === userProfile.value.passwordSecond"
+      type="submit">
       Change profile data
-    </button>
-  </form>
+      </button>
+    </form>
 
-  <button routerLink="/users">Cancel</button>
-
-</div>
-
+    <button routerLink="/users">Cancel</button>
+ </div>

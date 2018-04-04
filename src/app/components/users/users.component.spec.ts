@@ -68,6 +68,7 @@ describe('UsersComponent', () => {
       login: '',
       status: 'online',
       mail: '',
+      googleAutentification:false,
       password: '',
       chats: {}
     }));
