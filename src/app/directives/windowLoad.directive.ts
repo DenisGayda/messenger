@@ -1,22 +1,19 @@
 import {Directive, EventEmitter, HostListener, Output} from '@angular/core';
-import {IMyUser} from '../config/interfaces/IMyUser';
-import {LocalStorage} from '../decorators/local-storage.decorator';
+import {EStatusType} from './config/enums/EStatusType';
 
 @Directive({
   selector: '[windowLoad]'
 })
 export class WindowLoadDirective {
 
-  @LocalStorage localLogined: boolean;
-  @LocalStorage userInMyApp: IMyUser;
-  @Output() eventType = new EventEmitter();
+  @Output() statusType = new EventEmitter();
 
   @HostListener('window:load', []) onWindowLoad() {
-    this.eventType.emit('online');
+    this.statusType.emit(EStatusType.ONLINE);
   }
 
   @HostListener('window:unload', []) onWindowUnLoad() {
-    this.eventType.emit('offline');
+    this.statusType.emit(EStatusType.OFFLINE);
   }
 
 }

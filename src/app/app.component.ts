@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import 'rxjs/add/operator/map';
+import {Component, OnInit} from '@angular/core';
 import {StoreService} from './services/store/store.service';
 import {LocalStorage} from './decorators/local-storage.decorator';
 import {IMyUser} from './config/interfaces/IMyUser';
