@@ -38,7 +38,6 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(formValue: any): void {
-    console.log(formValue);
     if (this.currentPhoto) {
       this.dbService
         .addFile(this.currentPhoto)
