@@ -1,8 +1,8 @@
 import {IDictionary} from '../dictionaris/IDictionary';
 
 export interface IMyUser {
-  id: string;
-  login: string;
+  id?: string;
+  login?: string;
   mail: string;
   password?: string;
   status?: string;

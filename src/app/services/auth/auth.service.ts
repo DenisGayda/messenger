@@ -7,7 +7,6 @@ import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
-import {IPostData} from '../../config/interfaces/IPostData';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -38,27 +37,24 @@ export class AuthService implements OnDestroy {
   }
 
 
-  signup(email: string, login: string, google: boolean, password?: string): void {
+  signup( {mail, login, googleAutentification, password}: IMyUser): void {
     // Get a key for a new Post.
     const newPostKey = this.myDb.getNewId('users');
-    const postData: IPostData = {
+    const postData: IMyUser = {
       avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg',
       login: login,
       id: newPostKey,
-      mail: email,
-      googleAutentification: google
-    };
-    const userData: IMyUser = {
+      mail: mail,
+      googleAutentification: googleAutentification,
       chats: {},
-      ...postData
     };
 
     if (password) {
       postData.password = password;
     }
 
-    this.storeService.setUser(userData);
-    this.userInMyApp = userData;
+    this.storeService.setUser(postData);
+    this.userInMyApp = postData;
 
     const updates = {};
 
@@ -72,8 +68,8 @@ export class AuthService implements OnDestroy {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
-      .then(value => {
-        this.signup(email, newLogin, false, password);
+      .then(() => {
+        this.signup({mail: email, login: newLogin, googleAutentification: false, password});
       })
       .catch(err => console.error(err));
   }
@@ -90,7 +86,7 @@ export class AuthService implements OnDestroy {
           return;
         }
         if (name) {
-          this.signup(email, name, true);
+          this.signup({mail: email, login: name, googleAutentification: true});
         }
       });
   }
