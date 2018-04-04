@@ -140,16 +140,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(status: string): string {
-    switch (status) {
-      case 'online':
-        return 'online';
-      case 'offline':
-        return 'offline';
-      case 'walked-away':
-        return 'walked-away';
-      default:
-        return 'offline';
-    }
+    return status ? status : 'offline';
   }
 
   ngOnDestroy(): void {

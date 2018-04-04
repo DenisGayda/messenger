@@ -1,5 +1,5 @@
-<div class="logo">
-  <h1>My Profile</h1>
+<div>
+  <h1 class="logo">My Profile</h1>
 </div>
 <div>
   <form [formGroup]="userProfile"
@@ -7,25 +7,29 @@
         novalidate>
 
     <div class="avatar">
-      <span>Photo:</span>
+      <span class="label">Photo:</span>
       <img *ngIf="!!currentUser.avatar"
+           class="avatar-img"
            [src]="currentUser.avatar">
       <input type="file"
              (change)="changePhoto($event.target)">
     </div>
 
-    <span>Login:</span>
+    <span class="label">Login:</span>
     <input type="text"
+           class="profile-data"
            formControlName="login">
 
-    <span>Password:</span>
+    <span class="label">Password:</span>
     <input type="password"
+           class="profile-data"
            formControlName="password"
            placeholder="new password">
 
     <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
-      <span>Password (again):</span>
+      <span class="label">Password (again):</span>
       <input type="password"
+             class="profile-data"
              formControlName="passwordSecond"
              placeholder="new password again">
     </div>
