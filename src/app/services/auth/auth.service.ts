@@ -38,7 +38,7 @@ export class AuthService implements OnDestroy {
   }
 
 
-  signup( email:string, login:string, google:boolean, password?:string):void{
+  signup(email:string, login:string, google:boolean, password?:string):void{
        // Get a key for a new Post.
        const newPostKey = this.myDb.getNewId('users');
        const postData:IPostData = {

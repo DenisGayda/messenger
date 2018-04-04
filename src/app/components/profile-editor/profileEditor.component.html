@@ -3,8 +3,7 @@
  </div>
  <div>
     <form [formGroup]="userProfile"
-    #myForm="ngForm"
-    (ngSubmit)="onSubmit(myForm.value)"
+    (ngSubmit)="onSubmit(userProfile.value)"
     novalidate>
   
       <div class="avatar">
@@ -17,22 +16,21 @@
     
       <span>Login:</span>
       <input type="text"
-      formControlName="login"
-      [value]="currentUser.login" required>
+      formControlName="login">
     
       <span>Password:</span>
       <input type="password"
       formControlName="password"
       placeholder="new password">
     
-      <div *ngIf="myForm.value.password || myForm.value.passwordSecond">
+      <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
         <span>Password (again):</span>
         <input type="password"
         formControlName="passwordSecond"
         placeholder="new password again">
       </div>
     
-      <button *ngIf="myForm.value.password === myForm.value.passwordSecond"
+      <button *ngIf="userProfile.value.password === userProfile.value.passwordSecond"
       type="submit">
       Change profile data
       </button>
