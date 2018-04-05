@@ -16,6 +16,7 @@ import {LoginComponent} from '../../components/login/login.component';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
@@ -41,6 +42,10 @@ describe('AuthService', () => {
         AppRoutingModule,
         MatButtonModule,
         MatListModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,

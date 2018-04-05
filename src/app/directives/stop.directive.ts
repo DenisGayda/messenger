@@ -5,8 +5,7 @@ import {Directive, HostListener} from '@angular/core';
 })
 export class StopDirective {
 
-  @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
     event.preventDefault();
   }
 

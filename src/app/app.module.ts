@@ -18,6 +18,7 @@ import {HeaderModule} from './components/header/header.module';
 import {DataBaseService} from './services/db/dataBase.service';
 import {ProfileEditorModule} from './components/profile-editor/profile-editor.module';
 import {EditingControlService} from './services/control/editing-control.service';
+import {DirModule} from './directives/dir.module';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyD1R647Wp9qUwqb8JK_tKSd_KlFPWwpTiA',
@@ -34,6 +35,7 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    DirModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,

@@ -4,6 +4,7 @@ import {UsersComponent} from './users.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {UsersRoutingModule} from './users-routing.module';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,10 @@ import {UsersRoutingModule} from './users-routing.module';
     ReactiveFormsModule,
     RouterModule,
     UsersRoutingModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+    })
   ],
   exports: [ UsersComponent ],
 })

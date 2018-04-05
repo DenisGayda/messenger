@@ -18,6 +18,7 @@ import {APP_BASE_HREF} from '@angular/common';
 import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
+import {AgmCoreModule} from '@agm/core';
 
 describe('DataBaseService', () => {
   beforeEach(async(() => {
@@ -40,6 +41,10 @@ describe('DataBaseService', () => {
         AppRoutingModule,
         MatButtonModule,
         MatListModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,

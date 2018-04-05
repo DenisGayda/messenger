@@ -17,6 +17,7 @@ import {APP_BASE_HREF} from '@angular/common';
 import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
+import {AgmCoreModule} from '@agm/core';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
@@ -35,6 +36,10 @@ describe('StoreService', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
         AppRoutingModule,
         MatButtonModule,
         MatListModule

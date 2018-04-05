@@ -19,6 +19,7 @@ import {APP_BASE_HREF} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {ContextMenuComponent} from '../chat/context-menu/context-menu.component';
+import {AgmCoreModule} from '@agm/core';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -44,6 +45,10 @@ describe('UsersComponent', () => {
         AppRoutingModule,
         MatButtonModule,
         MatListModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,
