@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {UsersComponent} from './users.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
@@ -44,7 +43,7 @@ describe('UsersComponent', () => {
         ReactiveFormsModule,
         AppRoutingModule,
         MatButtonModule,
-        MatListModule
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
@@ -79,7 +78,7 @@ describe('UsersComponent', () => {
       login: '',
       status: 'online',
       mail: '',
-      googleAutentification:false,
+      googleAutentification: false,
       password: '',
       chats: {}
     }));

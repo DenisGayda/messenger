@@ -1,5 +1,4 @@
 import {TestBed, inject, async} from '@angular/core/testing';
-
 import {AuthService} from './auth.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {RouterModule} from '@angular/router';
@@ -41,7 +40,7 @@ describe('AuthService', () => {
         ReactiveFormsModule,
         AppRoutingModule,
         MatButtonModule,
-        MatListModule
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'

@@ -39,7 +39,7 @@ describe('StoreService', () => {
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
-        })
+        }),
         AppRoutingModule,
         MatButtonModule,
         MatListModule
