@@ -11,7 +11,8 @@ export class StoreService {
   @LocalStorage userInMyApp: IMyUser;
   private myUser = new ReplaySubject<IMyUser>();
 
-  constructor(public  db: AngularFireDatabase) {}
+  constructor(public  db: AngularFireDatabase) {
+  }
 
   setUser(user: IMyUser): void {
     this.myUser.next({chats: {}, ...user});

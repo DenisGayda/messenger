@@ -14,6 +14,7 @@ import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
 
 describe('StoreService', () => {
   beforeEach(async(() => {
@@ -31,7 +32,10 @@ describe('StoreService', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,

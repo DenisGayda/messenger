@@ -1,12 +1,9 @@
-.user-btns{
+.user-btns {
   width: 350px;
   display: inline-block;
   height: 85vh;
   overflow-y: scroll;
-
-  div{
-    margin: 10px;
-  }
+  margin-bottom: 50px;
 
   .online, .offline, .walked-away{
     height: 10px;
@@ -14,6 +11,7 @@
     border-radius: 100%;
     display: inline-block;
     float: right;
+    margin: 10px;
   }
   .online{
     background-color: green;
@@ -42,7 +40,15 @@
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
-.chats{
+.map-place {
+  margin-bottom: 100px;
+
+  agm-map {
+    height: 500px;
+  }
+}
+
+.chats {
   position: absolute;
   width: 50%;
   display: inline-block;

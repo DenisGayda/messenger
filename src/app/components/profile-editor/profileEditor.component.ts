@@ -31,7 +31,7 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Профиль');
 
     this.userProfile = new FormGroup({
-      login: new FormControl(),
+      login: new FormControl(this.currentUser.login),
       password: new FormControl(),
       passwordSecond: new FormControl()
     });
