@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ILogin} from './ILogin';
+import {LocalStorage} from '../../decorators/local-storage.decorator';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import {ILogin} from './ILogin';
 export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
+  @LocalStorage newLogin: boolean; 
 
   constructor(public authService: AuthService,
               private titleService: Title) {
@@ -21,14 +23,15 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle('Вход');
 
     this.newUserForm = new FormGroup({
+      login: new FormControl(),
       email: new FormControl(),
       password: new FormControl(),
     });
   }
 
-  onSubmit({newLogin, email, password}: ILogin): void {
-    if (newLogin) {
-      this.authService.signupWithEmail(email, password, newLogin);
+  onSubmit({login, email, password}: ILogin): void {
+    if (login) {
+      this.authService.signupWithEmail(email, password, login);
       return;
     }
     this.authService.loginWithEmail(email, password);
@@ -39,11 +42,6 @@ export class LoginComponent implements OnInit {
   }
 
   signup(): void {
-    this.newUserForm.addControl('newLogin', new FormControl('', Validators.required));
+    this.newLogin = true;
   }
-
-  get newLogin(): boolean {
-    return !(this.newUserForm.controls.hasOwnProperty('newLogin'));
-  }
-
 }

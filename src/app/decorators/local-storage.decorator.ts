@@ -1,3 +1,4 @@
+
 export function LocalStorage(target: Object,
                              decoratedPropertyName: string) {
   Object.defineProperty(target, decoratedPropertyName, {

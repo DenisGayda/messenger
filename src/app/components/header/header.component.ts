@@ -12,11 +12,16 @@ export class HeaderComponent implements OnInit {
 
   @LocalStorage localLogined: boolean;
   @LocalStorage userInMyApp: IMyUser;
+  @LocalStorage newLogin: boolean;
 
   constructor(private dbService: DataBaseService) {
   }
 
   ngOnInit(): void {
+  }
+
+  setNewLogin(){
+     this.newLogin = false;
   }
 
   checkStatus(newStatus: string) {
