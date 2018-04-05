@@ -6,14 +6,18 @@
 
 <div class="user-btns">
   <div *ngIf="!!currentUserChat">
-    <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}
+    <button [ngStyle]="{'background': '#325ec19e'}">
+      <img class="img-avatar" [src]="currentUserChat.avatar">
+      {{ currentUserChat.login}}
       <div [class]="changeStatus(currentUserChat.status)"></div>
     </button>
   </div>
 
   <div *ngFor="let user of users$ | async">
     <button *ngIf="currentUserChat?.id !== user.id"
-            (click)="checkChat(user)">{{ user.login }}
+            (click)="checkChat(user)">
+      <img class="img-avatar" [src]="user.avatar">
+      {{ user.login }}
       <div [class]="changeStatus(user.status)"></div>
     </button>
   </div>

@@ -8,9 +8,9 @@
 
     <div class="avatar">
       <span class="label">Photo:</span>
-      <img *ngIf="!!currentUser.avatar"
+      <img *ngIf="!!userInMyApp.avatar"
            class="avatar-img"
-           [src]="currentUser.avatar">
+           [src]="userInMyApp.avatar">
       <input type="file"
              (change)="changePhoto($event.target)">
     </div>

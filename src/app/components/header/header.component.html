@@ -2,6 +2,7 @@
   <div class="my-app">
     <a routerLink="/" >My Application</a>
   </div>
+  <img *ngIf="localLogined" class="header-img-avatar" [src]="userInMyApp.avatar">
   <mat-radio-group *ngIf="localLogined" class="radio-place" (change)="checkStatus($event.value)">
     <mat-radio-button [value]="'online'" [checked]="true">online</mat-radio-button>
     <mat-radio-button [value]="'offline'">offline</mat-radio-button>
