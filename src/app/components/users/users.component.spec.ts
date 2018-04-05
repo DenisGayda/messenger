@@ -72,7 +72,7 @@ describe('UsersComponent', () => {
       login: '',
       status: 'online',
       mail: '',
-      googleAutentification:false,
+      googleAutentification: false,
       password: '',
       chats: {}
     }));
