@@ -6,7 +6,7 @@ import {EStatusType} from './config/enums/EStatusType';
 })
 export class WindowLoadDirective {
 
-  @Output() statusType = new EventEmitter();
+  @Output() statusType = new EventEmitter<string>();
 
   @HostListener('window:load', []) onWindowLoad() {
     this.statusType.emit(EStatusType.ONLINE);

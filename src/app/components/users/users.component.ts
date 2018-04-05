@@ -17,6 +17,7 @@ import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {IChat} from './config/interfaces/IChat';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {ICoordinates} from './config/interfaces/ICoordinates';
+import {EStatusType} from '../../directives/config/enums/EStatusType';
 
 const USERS = 'users';
 const CHATS = 'chats';
@@ -140,7 +141,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(status: string): string {
-    return status ? status : 'offline';
+    return status ? status : EStatusType.OFFLINE;
   }
 
   ngOnDestroy(): void {
