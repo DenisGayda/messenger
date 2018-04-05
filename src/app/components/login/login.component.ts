@@ -3,7 +3,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ILogin} from './ILogin';
-import { LocalStorage } from '../../decorators/local-storage.decorator';
+import {LocalStorage} from '../../decorators/local-storage.decorator';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import { LocalStorage } from '../../decorators/local-storage.decorator';
 export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
-  @LocalStorage newLogin:boolean; 
+  @LocalStorage newLogin: boolean; 
 
   constructor(public authService: AuthService,
               private titleService: Title) {
@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit({login, email, password}: ILogin): void {
-    console.log(login);
     if (login) {
       this.authService.signupWithEmail(email, password, login);
       return;
