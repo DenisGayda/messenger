@@ -1,9 +1,31 @@
 .mat-toolbar {
+  position: fixed;
   display: block;
+  z-index: 1;
 
-  .header-img-avatar {
-    border-radius: 20%;
-    max-height: 50px;
+  .my-app {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    display: inline-block;
+    font-size: 40px;
+  }
+
+  .after-logined {
+    display: inline-block;
+    margin-left: 280px;
+    padding-top: 10px;
+
+    .header-img-avatar {
+      border-radius: 20%;
+      max-height: 50px;
+    }
+
+    .radio-place {
+      margin-left: 20px;
+      position: absolute;
+      top: 15px;
+    }
   }
 
   .mat-button {
@@ -28,26 +50,7 @@
     border-radius: 2px;
     color: black;
   }
-
-  .radio-place {
-    margin-top: -10px;
-    margin-left: 20px;
-    display: inline-block;
-  }
-
-  label {
-    font-size: 16px;
-  }
-
-  input[type="radio"] {
-    position: static;
-    opacity: 1;
-    background-color: aqua;
-  }
-
-  .my-app {
-    display: inline-block;
-    font-size: 40px;
-  }
-
+}
+.empty {
+  height: 70px;
 }
