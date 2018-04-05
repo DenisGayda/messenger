@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {IMessage} from '../../components/chat/config/interfaces/IMessage';
 
 @Injectable()
 export class EditingControlService {
