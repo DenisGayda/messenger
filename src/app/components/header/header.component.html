@@ -13,7 +13,7 @@
 
   <button class="mat-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/">Login</button>
+    <button mat-menu-item routerLink="/" (click)="setNewLogin()">Login</button>
     <button mat-menu-item routerLink="/users">Users</button>
     <button mat-menu-item routerLink="/profile">Profile</button>
   </mat-menu>

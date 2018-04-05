@@ -110,6 +110,7 @@ export class AuthService implements OnDestroy {
   logout(): void {
     this.logined.next(false);
     this.localLogined = false;
+    this.userInMyApp = null;
     this.firebaseAuth
       .auth
       .signOut();
