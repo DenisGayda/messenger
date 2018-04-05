@@ -13,7 +13,7 @@ import {LocalStorage} from '../../decorators/local-storage.decorator';
 export class LoginComponent implements OnInit {
 
   newUserForm: FormGroup;
-  @LocalStorage newLogin: boolean; 
+  @LocalStorage newLogin: boolean;
 
   constructor(public authService: AuthService,
               private titleService: Title) {
