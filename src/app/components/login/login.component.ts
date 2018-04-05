@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
               private titleService: Title) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.titleService.setTitle('Вход');
 
     this.newUserForm = new FormGroup({
@@ -34,16 +34,16 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithEmail(email, password);
   }
 
-  loginGoogle(){
+  loginGoogle(): void {
     this.authService.loginWithGoogle();
   }
-  
+
   signup(): void {
     this.newUserForm.addControl('newLogin', new FormControl('', Validators.required));
   }
 
-  get newLogin():boolean{
+  get newLogin(): boolean {
     return !(this.newUserForm.controls.hasOwnProperty('newLogin'));
   }
-  
+
 }

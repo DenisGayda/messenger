@@ -16,6 +16,7 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -37,7 +38,10 @@ describe('UsersComponent', () => {
         AngularFireStorageModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,

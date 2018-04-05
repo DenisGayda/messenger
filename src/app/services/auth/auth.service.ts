@@ -7,7 +7,6 @@ import {DataBaseService} from '../db/dataBase.service';
 import {User} from 'firebase/app';
 import {Router} from '@angular/router';
 import {IMyUser} from '../../config/interfaces/IMyUser';
-import {IPostData} from '../../config/interfaces/IPostData';
 import {LocalStorage} from '../../decorators/local-storage.decorator';
 import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -18,7 +17,7 @@ import * as firebase from 'firebase/app';
 export class AuthService implements OnDestroy {
   user: Observable<User>;
   @LocalStorage localLogined: boolean;
-  @LocalStorage userInMyApp: string;
+  @LocalStorage userInMyApp: IMyUser;
   logined = new BehaviorSubject(this.localLogined);
 
   private onDestroyStream$ = new Subject<void>();
@@ -31,70 +30,64 @@ export class AuthService implements OnDestroy {
     this.user = firebaseAuth.authState;
   }
 
-  loginToSystem():void{
+  loginToSystem(): void {
     this.logined.next(true);
     this.localLogined = true;
     this.router.navigateByUrl('/users');
   }
 
 
-  signup(email:string, login:string, google:boolean, password?:string):void{
-       // Get a key for a new Post.
-       const newPostKey = this.myDb.getNewId('users');
-       const postData:IPostData = {
-        login:login,
-        id: newPostKey,
-        mail: email,
-        googleAutentification:google
-      };
-       const userData:IMyUser ={
-         chats: {}, 
-        ...postData
-       }
+  signup( {mail, login, googleAutentification, password}: IMyUser): void {
+    // Get a key for a new Post.
+    const newPostKey = this.myDb.getNewId('users');
+    const postData: IMyUser = {
+      avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg',
+      login: login,
+      id: newPostKey,
+      mail: mail,
+      googleAutentification: googleAutentification,
+      chats: {},
+    };
 
-       if(password){
-        postData.password = password;
-       }
-       
-       this.storeService.setUser(userData);
-       this.userInMyApp = JSON.stringify(userData);
-       
-       const updates = {};
+    if (password) {
+      postData.password = password;
+    }
 
-       updates['/users/' + newPostKey] = postData;
-       
-       this.loginToSystem()
-       this.db.database.ref().update(updates);
+    this.storeService.setUser(postData);
+    this.loginToSystem();
+    this.db.database.ref().update(
+      this.myDb.generateData(`/users/${newPostKey}/`, postData)
+    );
   }
 
-  signupWithEmail(email: string, password: string, newLogin: string):void {
+  signupWithEmail(email: string, password: string, newLogin: string): void {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
-      .then(value => {
-        this.signup(email, newLogin, false, password);
+      .then(() => {
+        this.signup({mail: email, login: newLogin, googleAutentification: false, password});
       })
       .catch(err => console.error(err));
   }
 
-  login(email:string, name?:string):void {
+  login(email: string, name?: string): void {
     this.myDb.selectDB('users', ref =>
-        ref.orderByChild('mail')
-      .equalTo(email))
+      ref.orderByChild('mail')
+        .equalTo(email))
       .takeUntil(this.onDestroyStream$)
       .subscribe((users: IMyUser[]) => {
-        if(users.length>0){
+        if (users.length > 0) {
           this.storeService.setUser(users[0]);
           this.loginToSystem();
           return;
         }
-        if(name){
-          this.signup(email, name, true);
-        } 
+        if (name) {
+          this.signup({mail: email, login: name, googleAutentification: true});
+        }
       });
   }
 
-  loginWithEmail(email: string, password: string):void {
+  loginWithEmail(email: string, password: string): void {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email.toLowerCase(), password)
@@ -103,30 +96,30 @@ export class AuthService implements OnDestroy {
       })
       .catch(err => console.error(err));
   }
-  
-  loginWithGoogle():void{
+
+  loginWithGoogle(): void {
     this.firebaseAuth
-    .auth
-    .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    .then(value => {
-      this.login(value.user.email, value.user.displayName);
-     })
-     .catch(err => console.error(err));
+      .auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(value => {
+        this.login(value.user.email, value.user.displayName);
+      })
+      .catch(err => console.error(err));
   }
-  
+
   logout(): void {
     this.logined.next(false);
     this.localLogined = false;
-    this.userInMyApp = '';
     this.firebaseAuth
       .auth
       .signOut();
     this.updateStatus('offline');
+    this.userInMyApp = null;
   }
 
   updateStatus(newStatus: string): void {
     this.myDb.updateDB(
-      this.myDb.generateData<string>(`/users/${JSON.parse(this.userInMyApp).id}/status`, newStatus)
+      this.myDb.generateData<string>(`/users/${this.userInMyApp.id}/status`, newStatus)
     );
   }
 
