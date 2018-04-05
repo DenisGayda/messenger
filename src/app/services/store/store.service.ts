@@ -9,7 +9,6 @@ import {IMyUser} from '../../config/interfaces/IMyUser';
 export class StoreService {
 
   @LocalStorage userInMyApp: IMyUser;
-
   private myUser = new ReplaySubject<IMyUser>();
 
   constructor(public  db: AngularFireDatabase) {
