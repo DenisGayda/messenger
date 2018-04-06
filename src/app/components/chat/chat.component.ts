@@ -45,13 +45,24 @@ export class ChatComponent implements OnInit, OnDestroy {
     return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
   }
 
-  addNewContent() {
+  addNewContent(): void {
     if (!this.newContent) {
       return;
     }
 
-    this.dbService.sendMessage(this.chatId, this.generateMessage(EMessageType.TEXT, this.newContent));
+    this.dbService.sendMessage(this.chatId, this.generateMessage(this.checkType(), this.newContent));
     this.newContent = '';
+  }
+
+  checkType(): EMessageType {
+    return this.checkIncludes('.jpg') ? EMessageType.IMAGE :
+      this.checkIncludes('.png') ? EMessageType.IMAGE :
+        this.checkIncludes('http') ? EMessageType.URL :
+          EMessageType.TEXT;
+  }
+
+  checkIncludes(testingPlace: string): boolean {
+    return this.newContent.includes(testingPlace);
   }
 
   addFile(target: HTMLInputElement): void {
