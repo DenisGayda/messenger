@@ -9,6 +9,12 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import {EMessageType} from './config/enums/EMessageType';
 
+const LIB = {
+  [EMessageType.IMAGE]: '.jpg',
+  [EMessageType.IMAGE_PNG]: '.png',
+  [EMessageType.URL]: 'http',
+};
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -54,15 +60,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.newContent = '';
   }
 
-  checkType(): EMessageType {
-    return this.checkIncludes('.jpg') ? EMessageType.IMAGE :
-      this.checkIncludes('.png') ? EMessageType.IMAGE :
-        this.checkIncludes('http') ? EMessageType.URL :
-          EMessageType.TEXT;
-  }
-
-  checkIncludes(testingPlace: string): boolean {
-    return this.newContent.includes(testingPlace);
+  checkType(): string {
+    return [...Object.keys(LIB)].reduceRight((prev, next) =>
+      this.newContent.includes(LIB[next]) ? next : prev, EMessageType.TEXT);
   }
 
   addFile(target: HTMLInputElement): void {
@@ -78,7 +78,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateMessage(type: EMessageType, text: string): IMessage {
+  generateMessage(type: string, text: string): IMessage {
     return {
       type,
       text,
