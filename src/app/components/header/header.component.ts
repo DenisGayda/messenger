@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setNewLogin(){
+  setNewLogin(): void {
      this.newLogin = false;
   }
 

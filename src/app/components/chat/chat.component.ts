@@ -42,7 +42,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   generateDate(mesDate: Date): string {
-    return `${new Date(mesDate).getHours()}:${new Date(mesDate).getMinutes()}`;
+    const dateMinutes = new Date(mesDate).getMinutes();
+    const strDate = dateMinutes > 9 ? dateMinutes : '0' + dateMinutes;
+    return `${new Date(mesDate).getHours()}:${strDate}`;
   }
 
   addNewContent() {

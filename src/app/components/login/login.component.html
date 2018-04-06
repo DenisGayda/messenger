@@ -13,8 +13,9 @@
   </form>
   <button (click)="loginGoogle()" [ngClass]="'google'">Login With Google</button>
 
-  <button *ngIf="!newLogin" 
+  <button *ngIf="!newLogin"
            (click)="signup()">Signup</button>
 
 </div>
 <button class="logout" (click)="authService.logout()" *ngIf="authService.user | async">Logout</button>
+<div class="empty"></div>
