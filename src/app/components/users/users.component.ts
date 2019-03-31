@@ -13,10 +13,19 @@ import {startWith} from 'rxjs/operators';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/first';
+import {LocalStorage} from '../../decorators/local-storage.decorator';
+import {IChat} from './config/interfaces/IChat';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {ICoordinates} from './config/interfaces/ICoordinates';
+import {EStatusType} from '../../directives/config/enums/EStatusType';
 
 const USERS = 'users';
 const CHATS = 'chats';
 const CHAT = 'chat';
+const SCALED_SIZE = {
+  height: 40,
+  width: 40
+};
 
 @Component({
   selector: 'app-users',
@@ -26,11 +35,17 @@ const CHAT = 'chat';
 
 export class UsersComponent implements OnInit, OnDestroy {
 
-  users$: Observable<IMyUser[]>;
+  users$ = new BehaviorSubject<IMyUser[]>([]);
+  coordinates$ = new BehaviorSubject<ICoordinates[]>([]);
   usersStart$: Observable<IMyUser[]>;
   currentUser$: Observable<IMyUser>;
   find = new FormControl();
   currentUserChat: IMyUser;
+  @LocalStorage userInMyApp: IMyUser;
+
+  lat = 49;
+  lng = 33;
+  zoom = 6;
 
   private onDestroy$ = new Subject<void>();
 
@@ -42,11 +57,34 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.titleService.setTitle('Пользователи');
-    this.users$ = combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB(USERS))
+    combineLatest(this.find.valueChanges.pipe(startWith('')), this.dbService.selectDB<IMyUser>(USERS))
       .map(([searchString, users = []]: [string, IMyUser[]]) => users.filter(({login}: IMyUser) => login.toLowerCase()
-        .includes(searchString.toLowerCase())));
+        .includes(searchString.toLowerCase())))
+      .subscribe((users: IMyUser[]) => {
+        this.users$.next(users);
+        this.coordinates$.next(users.map(user => {
+          return {
+            login: user.login,
+            lat: user.lat,
+            lng: user.lng,
+            scaledSize: {
+              scaledSize: SCALED_SIZE,
+              url: user.avatar
+            }
+          };
+        }));
+      });
     this.usersStart$ = this.dbService.selectDB<IMyUser>(USERS);
     this.currentUser$ = this.storeService.user;
+
+    navigator.geolocation.getCurrentPosition(location => {
+      this.dbService.updateDB(
+        this.dbService.generateData<number>(`/${USERS}/${this.userInMyApp.id}/lat/`, location.coords.latitude)
+      );
+      this.dbService.updateDB(
+        this.dbService.generateData<number>(`/${USERS}/${this.userInMyApp.id}/lng/`, location.coords.longitude)
+      );
+    });
   }
 
   checkChat(user: IMyUser) {
@@ -70,7 +108,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   createChat(chat: string) {
     const newPostKey = this.dbService.getNewId(`${CHATS}`);
-    const updates = {};
     const postData = {
       idChat: newPostKey,
       messages: {}
@@ -88,8 +125,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       });
 
-    updates[`/${CHATS}/` + newPostKey] = postData;
-    this.dbService.updateDB(updates).then(res => {
+    this.dbService.updateDB(
+      this.dbService.generateData<IChat>(`/${CHATS}/${newPostKey}`, postData)
+    ).then(res => {
       if (res) {
         this.enterInRealChat(newPostKey);
       }
@@ -97,10 +135,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addChatToClient(id1: string, id2: string, key: string) {
-    const updates = {};
+    this.dbService.addNewChat(
+      this.dbService.generateData<string>(`/${USERS}/${id1}/${CHATS}/${id2}`, key)
+    );
+  }
 
-    updates[`/${USERS}/${id1}/${CHATS}/${id2}`] = key;
-    this.dbService.addNewChat(updates);
+  changeStatus(status: string): string {
+    return status ? status : EStatusType.OFFLINE;
   }
 
   ngOnDestroy(): void {

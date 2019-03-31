@@ -1,9 +1,21 @@
 <mat-toolbar>
-  <a routerLink="/" >My Application</a>
+  <div class="my-app">
+    <a routerLink="/">My Application</a>
+  </div>
+  <div *ngIf="!!localLogined" class="after-logined">
+    <img class="header-img-avatar" [src]="userInMyApp.avatar">
+    <mat-radio-group class="radio-place" (change)="checkStatus($event.value)">
+      <mat-radio-button [value]="'online'" [checked]="true">online</mat-radio-button>
+      <mat-radio-button [value]="'offline'">offline</mat-radio-button>
+      <mat-radio-button [value]="'walked-away'">walked away</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
   <button class="mat-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/">Login</button>
+    <button mat-menu-item routerLink="/" (click)="setNewLogin()">Login</button>
     <button mat-menu-item routerLink="/users">Users</button>
     <button mat-menu-item routerLink="/profile">Profile</button>
   </mat-menu>
 </mat-toolbar>
+<div class="empty"></div>

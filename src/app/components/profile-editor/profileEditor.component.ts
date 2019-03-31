@@ -14,9 +14,9 @@ import {LocalStorage} from '../../decorators/local-storage.decorator';
   styleUrls: ['./profileEditor.component.less']
 })
 export class ProfileEditorComponent implements OnInit, OnDestroy {
+
   userProfile: FormGroup;
   @LocalStorage userInMyApp: IMyUser;
-  currentUser = this.userInMyApp;
   currentPhoto: File;
 
   private onDestroyStream$ = new Subject<void>();
@@ -31,7 +31,7 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Профиль');
 
     this.userProfile = new FormGroup({
-      login: new FormControl(),
+      login: new FormControl(this.userInMyApp.login),
       password: new FormControl(),
       passwordSecond: new FormControl()
     });
@@ -43,9 +43,9 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
         .addFile(this.currentPhoto)
         .takeUntil(this.onDestroyStream$)
         .subscribe(response => {
-          this.currentUser.avatar = response;
+          this.userInMyApp.avatar = response;
           this.sendData('avatar', response);
-          this.storeService.setUser(this.currentUser);
+          this.storeService.setUser(this.userInMyApp);
         });
     }
 
@@ -61,11 +61,11 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
 
   sendData(dataName: string, data: string): void {
     const newData = {};
-    newData[`/users/${this.currentUser.id}/${dataName}`] = data;
+    newData[`/users/${this.userInMyApp.id}/${dataName}`] = data;
     this.dbService.updateDB(newData);
 
-    this.currentUser[dataName] = data;
-    this.storeService.setUser(this.currentUser);
+    this.userInMyApp[dataName] = data;
+    this.storeService.setUser(this.userInMyApp);
   }
 
   changePhoto(target: HTMLInputElement): void {

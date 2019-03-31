@@ -16,6 +16,7 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -37,13 +38,19 @@ describe('UsersComponent', () => {
         AngularFireStorageModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,
         StoreService,
         DataBaseService,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {
+          provide: APP_BASE_HREF,
+          useValue: '/'
+        }
       ]
     })
       .compileComponents();
@@ -63,7 +70,9 @@ describe('UsersComponent', () => {
     expect(component.checkChat({
       id: 'some',
       login: '',
+      status: 'online',
       mail: '',
+      googleAutentification:false,
       password: '',
       chats: {}
     }));
@@ -77,8 +86,10 @@ describe('UsersComponent', () => {
     expect(component.createChat('0'));
   });
 
+  /*
   it('Method "addChatToClient" test', () => {
     expect(component.addChatToClient('someId1', 'someId2', 'someKey'));
   });
+  */
 
 });

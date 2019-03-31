@@ -1,44 +1,44 @@
-<div class="logo">
-  <h1>My Profile</h1>
+<div>
+  <h1 class="logo">My Profile</h1>
 </div>
 <div>
   <form [formGroup]="userProfile"
-        #myForm="ngForm"
-        (ngSubmit)="onSubmit(myForm.value)"
+        (ngSubmit)="onSubmit(userProfile.value)"
         novalidate>
 
     <div class="avatar">
-      <span>Photo:</span>
-      <img *ngIf="!!currentUser.avatar"
-           [src]="currentUser.avatar">
+      <span class="label">Photo:</span>
+      <img *ngIf="!!userInMyApp.avatar"
+           class="avatar-img"
+           [src]="userInMyApp.avatar">
       <input type="file"
              (change)="changePhoto($event.target)">
     </div>
 
-    <span>Login:</span>
+    <span class="label">Login:</span>
     <input type="text"
-           formControlName="login"
-           [value]="currentUser.login" required>
+           class="profile-data"
+           formControlName="login">
 
-    <span>Password:</span>
+    <span class="label">Password:</span>
     <input type="password"
+           class="profile-data"
            formControlName="password"
            placeholder="new password">
 
-    <div *ngIf="myForm.value.password || myForm.value.passwordSecond">
-      <span>Password (again):</span>
+    <div *ngIf="userProfile.value.password || userProfile.value.passwordSecond">
+      <span class="label">Password (again):</span>
       <input type="password"
+             class="profile-data"
              formControlName="passwordSecond"
              placeholder="new password again">
     </div>
 
-    <button *ngIf="myForm.value.password === myForm.value.passwordSecond"
+    <button *ngIf="userProfile.value.password === userProfile.value.passwordSecond"
             type="submit">
       Change profile data
     </button>
   </form>
 
   <button routerLink="/users">Cancel</button>
-
 </div>
-

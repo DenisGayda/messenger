@@ -6,18 +6,35 @@
 
 <div class="user-btns">
   <div *ngIf="!!currentUserChat">
-    <button [ngStyle]="{'background': '#325ec19e'}">{{ currentUserChat.login}}</button>
+    <button [ngStyle]="{'background': '#325ec19e'}">
+      <img class="img-avatar" [src]="currentUserChat.avatar">
+      {{ currentUserChat.login}}
+      <div [class]="changeStatus(currentUserChat.status)"></div>
+    </button>
   </div>
 
   <div *ngFor="let user of users$ | async">
     <button *ngIf="currentUserChat?.id !== user.id"
-            (click)="checkChat(user)">{{ user.login }}</button>
+            (click)="checkChat(user)">
+      <img class="img-avatar" [src]="user.avatar">
+      {{ user.login }}
+      <div [class]="changeStatus(user.status)"></div>
+    </button>
   </div>
 </div>
 
 <div class="chats">
   <router-outlet></router-outlet>
 </div>
-
-
-
+<div class="map-place">
+  <agm-map [latitude]="lat"
+           [longitude]="lng"
+           [zoom]="zoom">
+    <agm-marker *ngFor="let cord of coordinates$ | async"
+                [latitude]="cord.lat"
+                [longitude]="cord.lng"
+                [title]="cord.login"
+                [iconUrl]="cord.scaledSize">
+    </agm-marker>
+  </agm-map>
+</div>

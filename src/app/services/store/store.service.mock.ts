@@ -9,8 +9,10 @@ export class StoreServiceMock {
     return Observable.of({
       id: '0',
       login: 'Test',
+      status: 'online',
       mail: 'test@gmail.com',
       password: 'testtest',
+      googleAutentification: false,
       chats: {},
     });
   }

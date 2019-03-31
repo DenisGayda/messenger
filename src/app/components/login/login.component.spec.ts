@@ -14,6 +14,7 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
 import {DataBaseService} from '../../services/db/dataBase.service';
+import {AgmCoreModule} from '@agm/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -34,13 +35,19 @@ describe('LoginComponent', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,
         StoreService,
         DataBaseService,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {
+          provide: APP_BASE_HREF,
+          useValue : '/'
+        }
       ]
     })
       .compileComponents();

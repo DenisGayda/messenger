@@ -15,6 +15,7 @@ import {AngularFireStorage, AngularFireStorageModule} from 'angularfire2/storage
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {DataBaseService} from './dataBase.service';
 import {APP_BASE_HREF} from '@angular/common';
+import {AgmCoreModule} from '@agm/core';
 
 describe('DataBaseService', () => {
   beforeEach(async(() => {
@@ -33,14 +34,20 @@ describe('DataBaseService', () => {
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
+        })
       ],
       providers: [
         AuthService,
         StoreService,
         DataBaseService,
         AngularFireStorage,
-        {provide: APP_BASE_HREF, useValue : '/'}
+        {
+          provide: APP_BASE_HREF,
+          useValue : '/'
+        }
       ]
     })
       .compileComponents();
