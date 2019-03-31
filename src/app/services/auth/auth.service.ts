@@ -41,7 +41,7 @@ export class AuthService implements OnDestroy {
     // Get a key for a new Post.
     const newPostKey = this.myDb.getNewId('users');
     const postData: IMyUser = {
-      avatar: 'https://pp.userapi.com/c617331/v617331712/1a76e/kr3Gj23sWNg.jpg',
+      avatar: 'https://www.picpng.com/images/large/user-avatar-male-angry-person-png-files-107856',
       login: login,
       id: newPostKey,
       mail: mail,
