@@ -4,7 +4,8 @@
       <div *ngFor="let message of messages$ | async" class="mes-block">
         <h5 [class.user-mi]="message.user === userLogin">
           <span *ngIf="message.type === 'text'">{{ message.text }}</span>
-          <img *ngIf="message.type === 'img'" [src]="message.text">
+          <img *ngIf="message.type === 'img' || message.type === 'img_png'" [src]="message.text">
+          <a *ngIf="message.type === 'url'" [href]="message.text">{{message.text}}</a>
 
           <span class="date-span">{{ generateDate(message.date)}}</span>
         </h5>
