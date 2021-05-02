@@ -15,6 +15,9 @@ import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
 import {DataBaseService} from '../../services/db/dataBase.service';
 import {AgmCoreModule} from '@agm/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {ContextMenuComponent} from '../chat/context-menu/context-menu.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -25,7 +28,8 @@ describe('LoginComponent', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -35,6 +39,9 @@ describe('LoginComponent', () => {
         AngularFirestoreModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'

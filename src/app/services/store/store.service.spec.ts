@@ -14,6 +14,9 @@ import {ChatComponent} from '../../components/chat/chat.component';
 import {LoginComponent} from '../../components/login/login.component';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 import {AgmCoreModule} from '@agm/core';
 
 describe('StoreService', () => {
@@ -22,7 +25,8 @@ describe('StoreService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -35,7 +39,10 @@ describe('StoreService', () => {
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
-        })
+        }),
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule
       ],
       providers: [
         AuthService,

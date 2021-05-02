@@ -15,6 +15,9 @@ import {AngularFireStorage, AngularFireStorageModule} from 'angularfire2/storage
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {DataBaseService} from './dataBase.service';
 import {APP_BASE_HREF} from '@angular/common';
+import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 import {AgmCoreModule} from '@agm/core';
 
 describe('DataBaseService', () => {
@@ -23,7 +26,8 @@ describe('DataBaseService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -34,6 +38,9 @@ describe('DataBaseService', () => {
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         ReactiveFormsModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'

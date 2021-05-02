@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderModule} from './components/header/header.module';
 import {DataBaseService} from './services/db/dataBase.service';
 import {ProfileEditorModule} from './components/profile-editor/profile-editor.module';
+import {EditingControlService} from './services/control/editing-control.service';
 import {DirModule} from './directives/dir.module';
 
 export const firebaseConfig = {
@@ -52,7 +53,8 @@ export const firebaseConfig = {
     StoreService,
     DataBaseService,
     Title,
-    CanActivateViaAuthGuard
+    CanActivateViaAuthGuard,
+    EditingControlService
   ],
   bootstrap: [AppComponent],
 })

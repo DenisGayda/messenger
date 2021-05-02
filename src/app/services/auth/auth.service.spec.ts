@@ -1,5 +1,4 @@
 import {TestBed, inject, async} from '@angular/core/testing';
-
 import {AuthService} from './auth.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {RouterModule} from '@angular/router';
@@ -17,6 +16,9 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
 import {AgmCoreModule} from '@agm/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {ContextMenuComponent} from '../../components/chat/context-menu/context-menu.component';
 
 describe('AuthService', () => {
   beforeEach(async(() => {
@@ -24,7 +26,8 @@ describe('AuthService', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -35,6 +38,9 @@ describe('AuthService', () => {
         AngularFireDatabaseModule,
         AngularFireStorageModule,
         ReactiveFormsModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'

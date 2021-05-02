@@ -1,5 +1,4 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {UsersComponent} from './users.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
@@ -16,6 +15,9 @@ import {DataBaseService} from '../../services/db/dataBase.service';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AppRoutingModule} from '../../routes/app-routing.module';
 import {APP_BASE_HREF} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {ContextMenuComponent} from '../chat/context-menu/context-menu.component';
 import {AgmCoreModule} from '@agm/core';
 
 describe('UsersComponent', () => {
@@ -27,7 +29,8 @@ describe('UsersComponent', () => {
       declarations: [
         UsersComponent,
         ChatComponent,
-        LoginComponent
+        LoginComponent,
+        ContextMenuComponent
       ],
       imports: [
         FormsModule,
@@ -38,6 +41,9 @@ describe('UsersComponent', () => {
         AngularFireStorageModule,
         AngularFireDatabaseModule,
         ReactiveFormsModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatListModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyB0QFcZaBbhdA6J_4DmE61W4bqwa93LmLU'
@@ -72,7 +78,7 @@ describe('UsersComponent', () => {
       login: '',
       status: 'online',
       mail: '',
-      googleAutentification:false,
+      googleAutentification: false,
       password: '',
       chats: {}
     }));
